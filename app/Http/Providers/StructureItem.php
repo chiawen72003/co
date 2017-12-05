@@ -3,6 +3,7 @@
 namespace App\Http\Providers;
 
 use App\Http\Models\UnitStructure;
+use App\Http\Models\Course;
 use Illuminate\Support\Str;
 use \Input;
 
@@ -64,7 +65,6 @@ class StructureItem
             $update = UnitStructure::find($this->input_array['id']);
             $update->unit_title = $this->input_array['unit_title'];
             $update->save();
-            $getID = $this->input_array['id'];
             $this->msg = array(
                 'status' => true,
                 'msg' => '更新成功!',
@@ -82,6 +82,62 @@ class StructureItem
     {
         if (isset($this->input_array['id'])) {
             UnitStructure::destroy($this->input_array['id']);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '刪除成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
+    /**
+     * 新增 課程資料
+     *
+     */
+    public function add_course()
+    {
+        $update = new Course();
+        $update->school_year = $this->input_array['school_year'];
+        $update->semester = $this->input_array['semester'];
+        $update->course_title = $this->input_array['course_title'];
+        $update->save();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 更新 課程資料
+     *
+     */
+    public function update_course()
+    {
+        if (isset($this->input_array['id']) && isset($this->input_array['course_title'])) {
+            $update = Course::find($this->input_array['id']);
+            $update->course_title = $this->input_array['course_title'];
+            $update->save();
+            $this->msg = array(
+                'status' => true,
+                'msg' => '更新成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
+    /**
+     * 移除 課程資料
+     *
+     */
+    public function delete_course()
+    {
+        if (isset($this->input_array['id'])) {
+            Course::destroy($this->input_array['id']);
             $this->msg = array(
                 'status' => true,
                 'msg' => '刪除成功!',
