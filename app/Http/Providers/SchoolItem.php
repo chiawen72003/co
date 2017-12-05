@@ -85,4 +85,61 @@ class SchoolItem
         return $this->msg;
     }
 
+
+    /**
+     * 新增 學校資料
+     *
+     */
+    public function add_school()
+    {
+        $update = new School();
+        $update->city = $this->input_array['city'];
+        $update->code = $this->input_array['code'];
+        $update->school_title = $this->input_array['school_title'];
+        $update->save();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 更新 科系資料
+     *
+     */
+    public function update_school()
+    {
+        if (isset($this->input_array['id']) && isset($this->input_array['school_title'])) {
+            $update = School::find($this->input_array['id']);
+            $update->school_title = $this->input_array['school_title'];
+            $update->save();
+            $this->msg = array(
+                'status' => true,
+                'msg' => '更新成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
+    /**
+     * 移除 科系資料
+     *
+     */
+    public function delete_school()
+    {
+        if (isset($this->input_array['id'])) {
+            School::destroy($this->input_array['id']);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '刪除成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
 }
