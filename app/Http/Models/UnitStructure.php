@@ -8,5 +8,4 @@ class UnitStructure extends BaseModel
     protected $table = 'unit_structure';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    //版本、冊、單元名稱
 }
