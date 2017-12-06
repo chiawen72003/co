@@ -15,12 +15,11 @@ use \Input;
  */
 class SchoolItem
 {
-    private $input_array = array(
-        'id' => null,
-        'title' => null,
-        'dsc' => null,
-        'file' => null,
-        'updateFile' => null,
+    private $input_array = array();
+
+    private $msg = array(
+        'status' => false,
+        'msg' => '',
     );
 
     public function init($input_data = array())
@@ -31,10 +30,28 @@ class SchoolItem
     }
 
     /**
+     * 取得 科系資料
+     *
+     */
+    public function getSubject()
+    {
+        $update = new SchoolSubject();
+        $update->school_id = $this->input_array['school_id'];
+        $update->subject_title = $this->input_array['subject_title'];
+        $update->save();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 新增 科系資料
      *
      */
-    public function add_subject()
+    public function addSubject()
     {
         $update = new SchoolSubject();
         $update->school_id = $this->input_array['school_id'];
@@ -53,7 +70,7 @@ class SchoolItem
      * 更新 科系資料
      *
      */
-    public function update_subject()
+    public function updateSubject()
     {
         if (isset($this->input_array['id']) && isset($this->input_array['subject_title'])) {
             $update = SchoolSubject::find($this->input_array['id']);
@@ -72,7 +89,7 @@ class SchoolItem
      * 移除 科系資料
      *
      */
-    public function delete_subject()
+    public function deleteSubject()
     {
         if (isset($this->input_array['id'])) {
             SchoolSubject::destroy($this->input_array['id']);
@@ -85,21 +102,52 @@ class SchoolItem
         return $this->msg;
     }
 
+    /**
+     *  取得學校資料
+     *
+     */
+    public function getSchool()
+    {
+        $return_data = array();
+        $temp_obj = School::select('id','city', 'code', 'area', 'school_title')
+            ->orderby('city', 'ASC')
+            ->orderby('area', 'ASC')
+            ->orderby('code', 'ASC')
+            ->orderby('school_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
 
     /**
      * 新增 學校資料
      *
      */
-    public function add_school()
+    public function addSchool()
     {
         $update = new School();
         $update->city = $this->input_array['city'];
         $update->code = $this->input_array['code'];
+        $update->area = $this->input_array['area'];
         $update->school_title = $this->input_array['school_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'code' => $this->input_array['code'],
+            'school_title' => $this->input_array['code'],
+            'area' => $this->input_array['area'],
         );
 
         return $this->msg;
@@ -107,14 +155,15 @@ class SchoolItem
 
 
     /**
-     * 更新 科系資料
+     * 更新 學校資料
      *
      */
-    public function update_school()
+    public function updateSchool()
     {
         if (isset($this->input_array['id']) && isset($this->input_array['school_title'])) {
             $update = School::find($this->input_array['id']);
             $update->school_title = $this->input_array['school_title'];
+            $update->area = $this->input_array['area'];
             $update->save();
             $this->msg = array(
                 'status' => true,
@@ -126,10 +175,10 @@ class SchoolItem
     }
 
     /**
-     * 移除 科系資料
+     * 移除 學校資料
      *
      */
-    public function delete_school()
+    public function deleteSchool()
     {
         if (isset($this->input_array['id'])) {
             School::destroy($this->input_array['id']);
