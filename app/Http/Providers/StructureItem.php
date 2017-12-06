@@ -4,6 +4,7 @@ namespace App\Http\Providers;
 
 use App\Http\Models\UnitStructure;
 use App\Http\Models\Course;
+use App\Http\Models\Reel;
 use Illuminate\Support\Str;
 use \Input;
 
@@ -148,4 +149,61 @@ class StructureItem
     }
 
 
+    /**
+     * 新增 試卷資料
+     *
+     */
+    public function add_reel()
+    {
+        $update = new Reel();
+        $update->version = $this->input_array['version'];
+        $update->subject = $this->input_array['subject'];
+        $update->book = $this->input_array['book'];
+        $update->unit = $this->input_array['unit'];
+        $update->reel_title = $this->input_array['reel_title'];
+        $update->save();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 更新 試卷資料
+     *
+     */
+    public function update_reel()
+    {
+        if (isset($this->input_array['id']) && isset($this->input_array['reel_title'])) {
+            $update = Reel::find($this->input_array['id']);
+            $update->reel_title = $this->input_array['reel_title'];
+            $update->save();
+            $this->msg = array(
+                'status' => true,
+                'msg' => '更新成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
+    /**
+     * 移除 試卷資料
+     *
+     */
+    public function delete_reel()
+    {
+        if (isset($this->input_array['id'])) {
+            Reel::destroy($this->input_array['id']);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '刪除成功!',
+            );
+        }
+
+        return $this->msg;
+    }
 }
