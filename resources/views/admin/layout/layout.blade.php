@@ -64,11 +64,17 @@
                             試題結構控制
                         </a>
                     </li>
-                    <li id="li_question_bank">
+                    <li>
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
+                            <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
+                        <ul class="mainnav-sub">
+                            <li id="li_unit"><a href="[! route('ma.unit') !]">建立單元結構</a></li>
+                            <li id="li_member"><a href="">新增試卷</a></li>
+                            <li id="li_member"><a href="">新增試題</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="">
