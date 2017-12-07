@@ -166,7 +166,7 @@
                 dataType: "json",
                 data: {
                     _token: '[! csrf_token() !]',
-                    school_title:$('#subject_title').val(),
+                    subject_title:$('#subject_title').val(),
                     school_id:$('#school_id').val(),
                 },
                 error: function(xhr) {
@@ -179,8 +179,8 @@
                         subject_item.push(
                             {
                                 'id':response['id'],
-                                'school_id':response['data']['school_id'],
-                                'subject_title':response['data']['subject_title']
+                                'school_id':response['school_id'],
+                                'subject_title':response['subject_title']
                             }
                         );
                         addList(response['subject_title'],response['id']);

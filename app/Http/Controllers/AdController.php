@@ -43,6 +43,21 @@ class AdController extends Controller
     }
 
     /**
+     * 新增學校-科系的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function SchoolSubjectAdd()
+    {
+        $data = array();
+        $data['subject_title'] = app('request')->get('subject_title');
+        $data['school_id'] = app('request')->get('school_id');
+        $t_obj = new SchoolItem();
+        $t_obj ->init($data);
+        echo json_encode($t_obj->addSubject());
+    }
+
+    /**
      * 學校
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
