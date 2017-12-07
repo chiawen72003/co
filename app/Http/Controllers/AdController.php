@@ -138,4 +138,45 @@ class AdController extends Controller
         echo json_encode($t_obj->addCourse());
     }
 
+
+    /**
+     * 單元結構
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function Unit()
+    {
+        $data = array();
+
+        return view('admin.unit_structure.index', $data);
+    }
+
+    /**
+     * 所有單元結構的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function UnitList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getUnit());
+    }
+
+    /**
+     * 新增單元結構的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function UnitAdd()
+    {
+        $data = array();
+        $data['version'] = app('request')->get('version');
+        $data['subject'] = app('request')->get('subject');
+        $data['book'] = app('request')->get('book');
+        $data['unit_title'] = app('request')->get('unit_title');
+        $t_obj = new StructureItem();
+        $t_obj ->init($data);
+        echo json_encode($t_obj->addUnit());
+    }
 }
