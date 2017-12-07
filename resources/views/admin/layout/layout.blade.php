@@ -64,7 +64,7 @@
                             試題結構控制
                         </a>
                     </li>
-                    <li>
+                    <li id="li_question_bank">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
