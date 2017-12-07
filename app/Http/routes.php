@@ -31,3 +31,8 @@ Route::post('/Ma/School/Add', ['as' => 'ma.school.add', 'uses' => 'AdController@
 Route::get('/Ma/Course', ['as' => 'ma.course', 'uses' => 'AdController@Course']);
 Route::get('/Ma/Course/list', ['as' => 'ma.course.list', 'uses' => 'AdController@CourseList']);
 Route::post('/Ma/Course/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseAdd']);
+
+//管理員 課程設定
+Route::get('/Ma/Unit', ['as' => 'ma.unit', 'uses' => 'AdController@Unit']);
+Route::get('/Ma/Unit/list', ['as' => 'ma.unit.list', 'uses' => 'AdController@UnitList']);
+Route::post('/Ma/Unit/Add', ['as' => 'ma.unit.add', 'uses' => 'AdController@UnitAdd']);
