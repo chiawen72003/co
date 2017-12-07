@@ -212,7 +212,7 @@ class StructureItem
     public function getReel()
     {
         $return_data = array();
-        $temp_obj = Course::select('id','version', 'subject', 'book', 'unit', 'reel_title')
+        $temp_obj = Reel::select('id','version', 'subject', 'book', 'unit', 'reel_title')
             ->orderby('version', 'ASC')
             ->orderby('subject', 'ASC')
             ->orderby('book', 'ASC')
