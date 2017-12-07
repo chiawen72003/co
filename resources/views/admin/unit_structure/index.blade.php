@@ -86,7 +86,7 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_question_bank');
+    var li_item = $('#li_unit');
     var list_item = $('#unit_list');
     var tr_item = $('#copy_tr');
     var version_item = $('#version');
@@ -132,9 +132,12 @@
     function setList() {
         for(var x=0;x<unit_item.length;x++){
             var t = tr_item.clone();
-            t.find('#version_area').html(unit_item[x]['version']).removeAttr('id');
-            t.find('#subject_area').html(unit_item[x]['subject']).removeAttr('id');
-            t.find('#book_area').html(unit_item[x]['book']).removeAttr('id');
+            var v = $("#version option[value="+ unit_item[x]['version'] +"]").text();
+            var s = $("#subject option[value="+ unit_item[x]['subject'] +"]").text();
+            var b = $("#book option[value="+ unit_item[x]['book'] +"]").text();
+            t.find('#version_area').html(v).removeAttr('id');
+            t.find('#subject_area').html(s).removeAttr('id');
+            t.find('#book_area').html(b).removeAttr('id');
             t.find('#name_area').html(unit_item[x]['unit_title']).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
@@ -183,9 +186,9 @@
 
     function addList(version,subject,book,title) {
         var t = tr_item.clone();
-        var v = $("#version option[value="+ id +"]").text();
-        var s = $("#subject option[value="+ id +"]").text();
-        var b = $("#book option[value="+ id +"]").text();
+        var v = $("#version option[value="+ version +"]").text();
+        var s = $("#subject option[value="+ subject +"]").text();
+        var b = $("#book option[value="+ book +"]").text();
         t.find('#version_area').html(v).removeAttr('id');
         t.find('#subject_area').html(s).removeAttr('id');
         t.find('#book_area').html(b).removeAttr('id');
@@ -195,9 +198,9 @@
     }
 
     function clearInput() {
-        version_item.val(1);
-        subject_item.val(1);
-        book_item.val(1);
+        //version_item.val(1);
+        //subject_item.val(1);
+        //book_item.val(1);
         title_item.val('');
     }
 </script>
