@@ -64,9 +64,13 @@ class SchoolItem
         $update->school_id = $this->input_array['school_id'];
         $update->subject_title = $this->input_array['subject_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'school_id' => $this->input_array['school_id'],
+            'subject_title' => $this->input_array['subject_title'],
         );
 
         return $this->msg;
