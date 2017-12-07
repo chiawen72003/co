@@ -46,7 +46,7 @@
                             <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li id="li_course">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-calculator"></i>
                             課程設定
