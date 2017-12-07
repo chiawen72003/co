@@ -8,6 +8,7 @@ use \Session;
 use \DB;
 use \Response;
 use App\Http\Providers\SchoolItem;
+use App\Http\Providers\StructureItem;
 
 class AdController extends Controller
 {
@@ -27,6 +28,18 @@ class AdController extends Controller
         $data = array();
 
         return view('admin.school_subject.index', $data);
+    }
+
+    /**
+     * 所有學校-科系的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function SchoolSubjectList()
+    {
+        $school = new SchoolItem();
+
+        echo json_encode($school->getSubject());
     }
 
     /**
@@ -68,6 +81,46 @@ class AdController extends Controller
         $t_obj = new SchoolItem();
         $t_obj ->init($data);
         echo json_encode($t_obj->addSchool());
+    }
+
+    /**
+     * 課程設定
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function Course()
+    {
+        $data = array();
+
+        return view('admin.course.index', $data);
+    }
+
+    /**
+     * 所有課程的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function CourseList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getCourse());
+    }
+
+    /**
+     * 新增課程的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function CourseAdd()
+    {
+        $data = array();
+        $data['school_year'] = app('request')->get('school_year');
+        $data['semester'] = app('request')->get('semester');
+        $data['course_title'] = app('request')->get('course_title');
+        $t_obj = new StructureItem();
+        $t_obj ->init($data);
+        echo json_encode($t_obj->addCourse());
     }
 
 }

@@ -15,6 +15,7 @@ use \Input;
  */
 class SchoolItem
 {
+
     private $input_array = array();
 
     private $msg = array(
@@ -35,13 +36,19 @@ class SchoolItem
      */
     public function getSubject()
     {
-        $update = new SchoolSubject();
-        $update->school_id = $this->input_array['school_id'];
-        $update->subject_title = $this->input_array['subject_title'];
-        $update->save();
+        $return_data = array();
+        $temp_obj = SchoolSubject::select('id','school_id', 'subject_title')
+            ->orderby('school_id', 'ASC')
+            ->orderby('subject_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
         $this->msg = array(
             'status' => true,
-            'msg' => '新增成功!',
+            'msg' => '',
+            'data' => $return_data,
         );
 
         return $this->msg;
@@ -57,9 +64,13 @@ class SchoolItem
         $update->school_id = $this->input_array['school_id'];
         $update->subject_title = $this->input_array['subject_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'school_id' => $this->input_array['school_id'],
+            'subject_title' => $this->input_array['subject_title'],
         );
 
         return $this->msg;

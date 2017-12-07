@@ -16,13 +16,8 @@ use \Input;
  */
 class StructureItem
 {
-    private $input_array = array(
-        'id' => null,
-        'title' => null,
-        'dsc' => null,
-        'file' => null,
-        'updateFile' => null,
-    );
+    private $input_array = array();
+
     private $msg = array(
         'status' => false,
         'msg' => '',
@@ -36,10 +31,36 @@ class StructureItem
     }
 
     /**
+     * 取得 單元結構資料
+     *
+     */
+    public function getUnit()
+    {
+        $return_data = array();
+        $temp_obj = UnitStructure::select('id','version', 'subject', 'book', 'unit_title')
+            ->orderby('version', 'ASC')
+            ->orderby('subject', 'ASC')
+            ->orderby('book', 'ASC')
+            ->orderby('unit_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 新增 單元結構資料
      *
      */
-    public function add_unit()
+    public function addUnit()
     {
         $update = new UnitStructure();
         $update->version = $this->input_array['version'];
@@ -47,9 +68,15 @@ class StructureItem
         $update->book = $this->input_array['book'];
         $update->unit_title = $this->input_array['unit_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'version' => $this->input_array['version'],
+            'subject' => $this->input_array['subject'],
+            'book' => $this->input_array['book'],
+            'unit_title' => $this->input_array['unit_title'],
         );
 
         return $this->msg;
@@ -60,7 +87,7 @@ class StructureItem
      * 更新 單元結構資料
      *
      */
-    public function update_unit()
+    public function updateUnit()
     {
         if (isset($this->input_array['id']) && isset($this->input_array['unit_title'])) {
             $update = UnitStructure::find($this->input_array['id']);
@@ -79,7 +106,7 @@ class StructureItem
      * 移除 單元結構資料
      *
      */
-    public function delete_unit()
+    public function deleteUnit()
     {
         if (isset($this->input_array['id'])) {
             UnitStructure::destroy($this->input_array['id']);
@@ -93,19 +120,49 @@ class StructureItem
     }
 
     /**
+     * 取得 課程資料
+     *
+     */
+    public function getCourse()
+    {
+        $return_data = array();
+        $temp_obj = Course::select('id','school_year', 'semester', 'course_title')
+            ->orderby('school_year', 'ASC')
+            ->orderby('semester', 'ASC')
+            ->orderby('course_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 新增 課程資料
      *
      */
-    public function add_course()
+    public function addCourse()
     {
         $update = new Course();
         $update->school_year = $this->input_array['school_year'];
         $update->semester = $this->input_array['semester'];
         $update->course_title = $this->input_array['course_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'school_year' => $this->input_array['school_year'],
+            'semester' => $this->input_array['semester'],
+            'course_title' => $this->input_array['course_title'],
         );
 
         return $this->msg;
@@ -116,7 +173,7 @@ class StructureItem
      * 更新 課程資料
      *
      */
-    public function update_course()
+    public function updateCourse()
     {
         if (isset($this->input_array['id']) && isset($this->input_array['course_title'])) {
             $update = Course::find($this->input_array['id']);
@@ -135,7 +192,7 @@ class StructureItem
      * 移除 課程資料
      *
      */
-    public function delete_course()
+    public function deleteCourse()
     {
         if (isset($this->input_array['id'])) {
             Course::destroy($this->input_array['id']);
@@ -148,12 +205,38 @@ class StructureItem
         return $this->msg;
     }
 
+    /**
+     * 取得 試卷資料
+     *
+     */
+    public function getReel()
+    {
+        $return_data = array();
+        $temp_obj = Course::select('id','version', 'subject', 'book', 'unit', 'reel_title')
+            ->orderby('version', 'ASC')
+            ->orderby('subject', 'ASC')
+            ->orderby('book', 'ASC')
+            ->orderby('unit', 'ASC')
+            ->orderby('reel_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
 
     /**
      * 新增 試卷資料
      *
      */
-    public function add_reel()
+    public function addReel()
     {
         $update = new Reel();
         $update->version = $this->input_array['version'];
@@ -162,9 +245,16 @@ class StructureItem
         $update->unit = $this->input_array['unit'];
         $update->reel_title = $this->input_array['reel_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'version' => $this->input_array['version'],
+            'subject' => $this->input_array['subject'],
+            'book' => $this->input_array['book'],
+            'unit' => $this->input_array['unit'],
+            'reel_title' => $this->input_array['reel_title'],
         );
 
         return $this->msg;
@@ -175,7 +265,7 @@ class StructureItem
      * 更新 試卷資料
      *
      */
-    public function update_reel()
+    public function updateRreel()
     {
         if (isset($this->input_array['id']) && isset($this->input_array['reel_title'])) {
             $update = Reel::find($this->input_array['id']);
@@ -194,7 +284,7 @@ class StructureItem
      * 移除 試卷資料
      *
      */
-    public function delete_reel()
+    public function deleteReel()
     {
         if (isset($this->input_array['id'])) {
             Reel::destroy($this->input_array['id']);

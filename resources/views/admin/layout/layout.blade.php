@@ -46,7 +46,7 @@
                             <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li id="li_course">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-calculator"></i>
                             課程設定
@@ -64,7 +64,7 @@
                             試題結構控制
                         </a>
                     </li>
-                    <li>
+                    <li id="li_question_bank">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
