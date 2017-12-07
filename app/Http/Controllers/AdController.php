@@ -30,6 +30,18 @@ class AdController extends Controller
     }
 
     /**
+     * 所有學校-科系的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function SchoolSubjectList()
+    {
+        $school = new SchoolItem();
+
+        echo json_encode($school->getSubject());
+    }
+
+    /**
      * 學校
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
