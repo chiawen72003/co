@@ -99,8 +99,9 @@
     function setList() {
         for(var x=0;x<course_item.length;x++){
             var t = tr_item.clone();
+            var s = $("#semester option[value="+ course_item[x]['semester'] +"]").text();
             t.find('#year_area').html(course_item[x]['school_year']).removeAttr('id');
-            t.find('#semester_area').html(course_item[x]['semester']).removeAttr('id');
+            t.find('#semester_area').html(s).removeAttr('id');
             t.find('#name_area').html(course_item[x]['course_title']).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
@@ -147,7 +148,7 @@
 
     function addList(year,semester,title) {
         var t = tr_item.clone();
-        var s = $("#semester option[value="+ id +"]").text();
+        var s = $("#semester option[value="+ semester +"]").text();
         t.find('#year_area').html(year).removeAttr('id');
         t.find('#semester_area').html(s).removeAttr('id');
         t.find('#name_area').html(title).removeAttr('id');
