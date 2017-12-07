@@ -144,8 +144,8 @@
 
     function addList(title,code) {
         var t = tr_item.clone();
-        t.find('#code_area').html(title).removeAttr('id');
-        t.find('#name_area').html(code).removeAttr('id');
+        t.find('#code_area').html(code).removeAttr('id');
+        t.find('#name_area').html(title).removeAttr('id');
         t.removeAttr('id');
         list_item.append(t);
     }
