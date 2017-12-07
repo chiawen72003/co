@@ -205,6 +205,32 @@ class StructureItem
         return $this->msg;
     }
 
+    /**
+     * 取得 試卷資料
+     *
+     */
+    public function getReel()
+    {
+        $return_data = array();
+        $temp_obj = Course::select('id','version', 'subject', 'book', 'unit', 'reel_title')
+            ->orderby('version', 'ASC')
+            ->orderby('subject', 'ASC')
+            ->orderby('book', 'ASC')
+            ->orderby('unit', 'ASC')
+            ->orderby('reel_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
 
     /**
      * 新增 試卷資料
