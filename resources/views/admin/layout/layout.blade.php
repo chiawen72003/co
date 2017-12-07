@@ -47,7 +47,7 @@
                         </ul>
                     </li>
                     <li id="li_course">
-                        <a href="">
+                        <a href="[! route('ma.course') !]">
                             <i class="mainnav-title-icon ion-ios-calculator"></i>
                             課程設定
                         </a>
