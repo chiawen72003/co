@@ -99,9 +99,9 @@
     function setList() {
         for(var x=0;x<course_item.length;x++){
             var t = tr_item.clone();
-            t.find('#year_area').html(school_item[x]['school_year']).removeAttr('id');
-            t.find('#semester_area').html(school_item[x]['semester']).removeAttr('id');
-            t.find('#name_area').html(school_item[x]['course_title']).removeAttr('id');
+            t.find('#year_area').html(course_item[x]['school_year']).removeAttr('id');
+            t.find('#semester_area').html(course_item[x]['semester']).removeAttr('id');
+            t.find('#name_area').html(course_item[x]['course_title']).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -126,7 +126,7 @@
                 {
                     if(response['status'] == true)
                     {
-                        school_item.push(
+                        course_item.push(
                             {
                                 'id':response['id'],
                                 'school_year':response['school_year'],
@@ -147,7 +147,7 @@
 
     function addList(year,semester,title) {
         var t = tr_item.clone();
-        var s = getSemesterName(semester);
+        var s = $("#semester option[value="+ id +"]").text();
         t.find('#year_area').html(year).removeAttr('id');
         t.find('#semester_area').html(s).removeAttr('id');
         t.find('#name_area').html(title).removeAttr('id');
@@ -159,11 +159,6 @@
         $('#school_year').val('');
         $('#semester').val(1);
         $('#course_title').val('');
-    }
-
-    function getSemesterName(id)
-    {
-        return $("#semester option[value="+ id +"]").text();
     }
 </script>
 @stop
