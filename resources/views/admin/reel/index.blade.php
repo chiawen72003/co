@@ -8,18 +8,18 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">版本</label>
-                <select id="version">
+                <select id="version" onchange="setUnitList()">
                     <option value="1">全國</option>
                     <option value="2">中區</option>
                     <option value="3">測試</option>
                 </select>
                 <label class="i-label">科目</label>
-                <select id="subject">
+                <select id="subject" onchange="setUnitList()">
                     <option value="1">國語</option>
                     <option value="2">國文</option>
                 </select>
                 <label class="i-label">冊</label>
-                <select id="book">
+                <select id="book" onchange="setUnitList()">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -93,7 +93,7 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_question_bank');
+    var li_item = $('#li_reel');
     var list_item = $('#reel_list');
     var version_item = $('#version');
     var subject_item = $('#subject');
@@ -106,8 +106,7 @@
     var reel_item = [];
     $( document ).ready(function() {
         li_item.addClass( current);
-        getUnitData();
-        getListData();
+        getUnitData();//因ajax有差性，須先取得單元資料才能抓試卷資料。
     });
 
     function getUnitData() {
@@ -135,6 +134,7 @@
                     }
                 }
                 setUnitList();
+                getListData();
             }
         });
     }
@@ -176,7 +176,7 @@
         $("#unit option").remove();
         for(var x=0;x<unit_item.length;x++){
             if(unit_item[x]['version'] == v && unit_item[x]['subject'] == s && unit_item[x]['book'] == b){
-                unit_sw_item_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
+                unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
             }
         }
     }
@@ -234,11 +234,11 @@
                         reel_item.push(
                             {
                                 'id':response['id'],
-                                'version':response['data']['version'],
-                                'subject':response['data']['subject'],
-                                'book':response['data']['book'],
-                                'unit':response['data']['unit'],
-                                'reel_title':response['data']['reel_title'],
+                                'version':response['version'],
+                                'subject':response['subject'],
+                                'book':response['book'],
+                                'unit':response['unit'],
+                                'reel_title':response['reel_title'],
                             }
                         );
                         addList(response['version'],response['subject'],response['book'],response['unit'],response['reel_title']);
