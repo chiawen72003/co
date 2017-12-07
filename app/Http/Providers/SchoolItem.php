@@ -157,7 +157,7 @@ class SchoolItem
             'msg' => '新增成功!',
             'id' => $getID,
             'code' => $this->input_array['code'],
-            'school_title' => $this->input_array['code'],
+            'school_title' => $this->input_array['school_title'],
             'area' => $this->input_array['area'],
         );
 
