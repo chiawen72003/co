@@ -138,7 +138,6 @@ class AdController extends Controller
         echo json_encode($t_obj->addCourse());
     }
 
-
     /**
      * 單元結構
      *
@@ -178,5 +177,47 @@ class AdController extends Controller
         $t_obj = new StructureItem();
         $t_obj ->init($data);
         echo json_encode($t_obj->addUnit());
+    }
+
+    /**
+     * 試卷
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function Reel()
+    {
+        $data = array();
+
+        return view('admin.reel.index', $data);
+    }
+
+    /**
+     * 所有試卷的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function ReelList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getReel());
+    }
+
+    /**
+     * 新增試卷的資料
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function ReelAdd()
+    {
+        $data = array();
+        $data['version'] = app('request')->get('version');
+        $data['subject'] = app('request')->get('subject');
+        $data['book'] = app('request')->get('book');
+        $data['unit'] = app('request')->get('unit');
+        $data['reel_title'] = app('request')->get('reel_title');
+        $t_obj = new StructureItem();
+        $t_obj ->init($data);
+        echo json_encode($t_obj->addReel());
     }
 }
