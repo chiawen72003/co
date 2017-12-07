@@ -42,9 +42,15 @@ class StructureItem
         $update->book = $this->input_array['book'];
         $update->unit_title = $this->input_array['unit_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'version' => $this->input_array['version'],
+            'subject' => $this->input_array['subject'],
+            'book' => $this->input_array['book'],
+            'unit_title' => $this->input_array['unit_title'],
         );
 
         return $this->msg;
@@ -123,9 +129,14 @@ class StructureItem
         $update->semester = $this->input_array['semester'];
         $update->course_title = $this->input_array['course_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'school_year' => $this->input_array['school_year'],
+            'semester' => $this->input_array['semester'],
+            'course_title' => $this->input_array['course_title'],
         );
 
         return $this->msg;
@@ -182,9 +193,16 @@ class StructureItem
         $update->unit = $this->input_array['unit'];
         $update->reel_title = $this->input_array['reel_title'];
         $update->save();
+        $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+            'id' => $getID,
+            'version' => $this->input_array['version'],
+            'subject' => $this->input_array['subject'],
+            'book' => $this->input_array['book'],
+            'unit' => $this->input_array['unit'],
+            'reel_title' => $this->input_array['reel_title'],
         );
 
         return $this->msg;
