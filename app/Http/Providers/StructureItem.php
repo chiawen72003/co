@@ -31,6 +31,32 @@ class StructureItem
     }
 
     /**
+     * 取得 單元結構資料
+     *
+     */
+    public function getUnit()
+    {
+        $return_data = array();
+        $temp_obj = UnitStructure::select('id','version', 'subject', 'book', 'unit_title')
+            ->orderby('version', 'ASC')
+            ->orderby('subject', 'ASC')
+            ->orderby('book', 'ASC')
+            ->orderby('unit_title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 新增 單元結構資料
      *
      */
