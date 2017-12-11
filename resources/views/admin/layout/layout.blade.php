@@ -35,7 +35,7 @@
                             新增學校/科系
                         </a>
                     </li>
-                    <li class="is-opened" >
+                    <li class="hs-sub is-opened" >
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             管理使用者
@@ -64,7 +64,7 @@
                             試題結構控制
                         </a>
                     </li>
-                    <li>
+                    <li class="hs-sub is-opened">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
@@ -73,7 +73,7 @@
                         <ul class="mainnav-sub">
                             <li id="li_unit"><a href="[! route('ma.unit') !]">建立單元結構</a></li>
                             <li id="li_reel"><a href="[! route('ma.reel') !]">新增試卷</a></li>
-                            <li id="li_question"><a href="">新增試題</a></li>
+                            <li id="li_question"><a href="[! route('ma.question') !]">新增試題</a></li>
                         </ul>
                     </li>
                     <li>
