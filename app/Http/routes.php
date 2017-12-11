@@ -45,6 +45,7 @@ Route::post('/Ma/Reel/Add', ['as' => 'ma.reel.add', 'uses' => 'AdController@Reel
 //管理員 試題管理
 Route::get('/Ma/Question', ['as' => 'ma.question', 'uses' => 'AdController@Question']);
 Route::get('/Ma/Question/list', ['as' => 'ma.question.list', 'uses' => 'AdController@QuestionList']);
+Route::get('/Ma/Question/data', ['as' => 'ma.question.data', 'uses' => 'AdController@QuestionData']);
 Route::get('/Ma/Question/pg/add', ['as' => 'ma.question.pg.add', 'uses' => 'AdController@QuestionPgAdd']);
 Route::get('/Ma/Question/pg/edit', ['as' => 'ma.question.pg.edit', 'uses' => 'AdController@QuestionPgEdit']);
 Route::post('/Ma/Question/Add', ['as' => 'ma.question.add', 'uses' => 'AdController@QuestionAdd']);
