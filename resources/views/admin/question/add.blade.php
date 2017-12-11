@@ -144,7 +144,7 @@
                         if(response['status'] == true)
                         {
                             alert(response['msg']);
-                            history.back();
+                            location.replace("[! route('ma.question') !]");
                         }
                         isSend = false;
                     }
