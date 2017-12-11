@@ -82,6 +82,12 @@
                             批改管理
                         </a>
                     </li>
+                    <li id="li_precautions">
+                        <a href="[! route('ma.precautions') !]">
+                            <i class="mainnav-title-icon ion-person"></i>
+                            設定注意事項
+                        </a>
+                    </li>
                     <li>
                         <a href="">
                             <i class="mainnav-title-icon ion-person"></i>
