@@ -10,13 +10,11 @@
                     <i class="ion-information-circled"></i>
                     編輯試題
                 </div>
-                <div class="i-form mt1">
+                <div class="form-group">
                     <div class="form-group">
                         <label class="i-label">區塊標題</label>
                         <input class="i-input" value="" id="question_title">
                     </div>
-                </div>
-                <div class="form-group">
                     <label class="i-label">試題類型</label>
                     <select class="i-select" id="type" onchange="showTypeTitle()">
                         <option value="1">一大區塊</option>
@@ -70,13 +68,13 @@
                     </div>
                 </div>
                 <div class="i-form mt1">
-                    <textarea class="i-textarea i-ckeditor"></textarea>
+                    <textarea class="i-textarea i-ckeditor" name="dsc" id="dsc"></textarea>
                 </div>
                 <div class="form-group form-bottom">
                     <button type="button" class="i-btn" onclick="history.back()">
                         取消
                     </button>
-                    <button type="button" class="i-btn i-btn-primary">
+                    <button type="button" class="i-btn i-btn-primary" onclick="sendData()">
                         新增
                     </button>
                 </div>
@@ -84,13 +82,22 @@
         </div>
     </div>
     [! Html::script('js/jquery-1.11.3.js') !]
+    [! Html::script('js/ckeditor/ckeditor.js') !]
     <script>
+        CKEDITOR.replace('dsc', {
+            filebrowserBrowseUrl : '[! $ck_finder_path !]/ckfinder.html',
+            filebrowserImageBrowseUrl : '[! $ck_finder_path !]/ckfinder.html?type=Images',
+            filebrowserFlashBrowseUrl : '[! $ck_finder_path !]/ckfinder.html?type=Flash',
+            filebrowserUploadUrl : '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Files',
+            filebrowserImageUploadUrl : '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Images',
+            filebrowserFlashUploadUrl : '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+        });
         var li_item = $('#li_question');
         var type_item = $('#type');
         var question_title = $('#question_title');
         var type = $('#type');
-        var dsc = $('#dsc');
         var current = 'current';
+
         $(document).ready(function() {
             li_item.addClass( current);
             showTypeTitle();
@@ -112,17 +119,22 @@
         function sendData()
         {
             if(!isSend){
+                var type_val = type.val();
+                var type_titles = [];
+                $('input[name="type_title_'+type_val+'[]"]').each(function() {
+                    type_titles.push($(this).val());
+                });
+
                 $.ajax({
                     url: "[! route('ma.question.add') !]",
                     type:'POST',
                     dataType: "json",
                     data: {
                         _token: '[! csrf_token() !]',
-                        version:version_item.val(),
-                        subject:subject_item.val(),
-                        book:book_item.val(),
-                        unit:unit_sw_item.val(),
-                        reel_title:title_item.val(),
+                        question_title:question_title.val(),
+                        type:$('#type').val(),
+                        type_title:type_titles,
+                        dsc:CKEDITOR.instances.dsc.getData(),
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
@@ -131,18 +143,8 @@
                     {
                         if(response['status'] == true)
                         {
-                            reel_item.push(
-                                {
-                                    'id':response['id'],
-                                    'version':response['version'],
-                                    'subject':response['subject'],
-                                    'book':response['book'],
-                                    'unit':response['unit'],
-                                    'reel_title':response['reel_title'],
-                                }
-                            );
-                            addList(response['version'],response['subject'],response['book'],response['unit'],response['reel_title']);
                             alert(response['msg']);
+                            history.back();
                         }
                         isSend = false;
                     }
