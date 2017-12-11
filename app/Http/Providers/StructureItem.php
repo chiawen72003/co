@@ -5,12 +5,13 @@ namespace App\Http\Providers;
 use App\Http\Models\UnitStructure;
 use App\Http\Models\Course;
 use App\Http\Models\Reel;
+use App\Http\Models\Precautions;
 use Illuminate\Support\Str;
 use \Input;
 
 /**
  * Class StructureItem
- * 結構物件：處理版本、冊、單元、卷等資料
+ * 結構物件：處理版本、冊、單元、卷、注意事項等資料
  *
  * @package App\Http\Providers處理
  */
@@ -291,6 +292,48 @@ class StructureItem
             $this->msg = array(
                 'status' => true,
                 'msg' => '刪除成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
+    /**
+     * 取得 注意事項資料
+     *
+     */
+    public function getPrecautions($id)
+    {
+        $return_data = array();
+        $temp_obj = Precautions::select('id','dsc')
+            ->where('id', $id)
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 更新 注意事項資料
+     *
+     */
+    public function updatePrecautions()
+    {
+        if (isset($this->input_array['id']) && isset($this->input_array['dsc'])) {
+            $update = Precautions::find($this->input_array['id']);
+            $update->dsc = $this->input_array['dsc'];
+            $update->save();
+            $this->msg = array(
+                'status' => true,
+                'msg' => '更新成功!',
             );
         }
 
