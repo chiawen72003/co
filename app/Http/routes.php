@@ -50,3 +50,8 @@ Route::get('/Ma/Question/pg/add', ['as' => 'ma.question.pg.add', 'uses' => 'AdCo
 Route::get('/Ma/Question/pg/edit', ['as' => 'ma.question.pg.edit', 'uses' => 'AdController@QuestionPgEdit']);
 Route::post('/Ma/Question/Add', ['as' => 'ma.question.add', 'uses' => 'AdController@QuestionAdd']);
 Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdController@QuestionUpdate']);
+
+//管理員 注意事項
+Route::get('/Ma/Precautions', ['as' => 'ma.precautions', 'uses' => 'AdController@Precautions']);
+Route::get('/Ma/Precautions/list', ['as' => 'ma.precautions.list', 'uses' => 'AdController@PrecautionsList']);
+Route::post('/Ma/Precautions/Add', ['as' => 'ma.precautions.update', 'uses' => 'AdController@PrecautionsUpdate']);
