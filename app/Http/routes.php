@@ -53,5 +53,5 @@ Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdC
 
 //管理員 注意事項
 Route::get('/Ma/Precautions', ['as' => 'ma.precautions', 'uses' => 'AdController@Precautions']);
-Route::get('/Ma/Precautions/list', ['as' => 'ma.precautions.list', 'uses' => 'AdController@PrecautionsList']);
-Route::post('/Ma/Precautions/Add', ['as' => 'ma.precautions.update', 'uses' => 'AdController@PrecautionsUpdate']);
+Route::get('/Ma/Precautions/Data', ['as' => 'ma.precautions.data', 'uses' => 'AdController@PrecautionsData']);
+Route::post('/Ma/Precautions/Update', ['as' => 'ma.precautions.update', 'uses' => 'AdController@PrecautionsUpdate']);
