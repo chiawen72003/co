@@ -280,14 +280,13 @@ class AdController extends Controller
     public function QuestionAdd()
     {
         $data = array();
-        $data['version'] = app('request')->get('version');
-        $data['subject'] = app('request')->get('subject');
-        $data['book'] = app('request')->get('book');
-        $data['unit'] = app('request')->get('unit');
-        $data['reel_title'] = app('request')->get('reel_title');
-        $t_obj = new StructureItem();
+        $data['question_title'] = app('request')->get('question_title');
+        $data['type'] = app('request')->get('type');
+        $data['type_title'] = app('request')->get('type_title');
+        $data['dsc'] = app('request')->get('dsc');
+        $t_obj = new QuestionItem();
         $t_obj ->init($data);
-        echo json_encode($t_obj->addReel());
+        echo json_encode($t_obj->addQuestion());
     }
 
     /**
@@ -298,13 +297,13 @@ class AdController extends Controller
     public function QuestionUpdate()
     {
         $data = array();
-        $data['version'] = app('request')->get('version');
-        $data['subject'] = app('request')->get('subject');
-        $data['book'] = app('request')->get('book');
-        $data['unit'] = app('request')->get('unit');
-        $data['reel_title'] = app('request')->get('reel_title');
-        $t_obj = new StructureItem();
+        $data['id'] = app('request')->get('id');
+        $data['question_title'] = app('request')->get('question_title');
+        $data['type'] = app('request')->get('type');
+        $data['type_title'] = app('request')->get('type_title');
+        $data['dsc'] = app('request')->get('dsc');
+        $t_obj = new QuestionItem();
         $t_obj ->init($data);
-        echo json_encode($t_obj->addReel());
+        echo json_encode($t_obj->updateQuestion());
     }
 }
