@@ -334,4 +334,53 @@ class AdController extends Controller
         $t_obj->init($data);
         echo json_encode($t_obj->updateQuestion());
     }
+
+    /**
+     * 注意事項
+     *
+     *
+     */
+    public function Precautions()
+    {
+        $data = array();
+        $data['id'] = '1';
+        //設定ckfinder
+        //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
+        $data['ck_finder_path'] = url('/js/ckfinder');
+        session_start();
+        $_SESSION['ckfiner_key'] = true;
+        $_SESSION['dirroot'] = url('/cc_upload') . '/precautions/';//讀取路徑
+        $_SESSION['upload_path'] = public_path('/cc_upload') . '/question/';//儲存實體路徑
+
+        return view('admin.precautions.index', $data);
+    }
+
+    /**
+     * 注意事項的資料
+     *
+     *
+     */
+    public function PrecautionsData()
+    {
+        $question = new StructureItem();
+        $id = app('request')->get('id');
+
+        echo json_encode($question->getPrecautions($id));
+    }
+
+    /**
+     * 更新注意事項的資料
+     *
+     *
+     */
+    public function PrecautionsUpdate()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $data['dsc'] = app('request')->get('dsc');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->updatePrecautions());
+    }
 }
