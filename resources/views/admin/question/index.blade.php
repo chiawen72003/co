@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="table-wrapper">
-                <table class="table">
+                <table class="table" id="question_list">
                     <tr>
                         <th>
                             <div class="cell">試題名稱</div>
@@ -37,18 +37,6 @@
                                 功能
                             </div>
                         </th>
-                    </tr>
-                    <tr>
-                        <td><div class="cell">試題名稱</div></td>
-                        <td>
-                            <div class="cell center"><a href="unit-problem-edit.html" class="i-link"><i class="ion-android-settings"></i>編輯</a></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><div class="cell">試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長，試題名稱很長</div></td>
-                        <td>
-                            <div class="cell center"><a href="unit-problem-edit.html" class="i-link"><i class="ion-android-settings"></i>編輯</a></div>
-                        </td>
                     </tr>
                 </table>
             </div>
@@ -66,7 +54,7 @@
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
     var li_item = $('#li_question');
-    var list_item = $('#reel_list');
+    var list_item = $('#question_list');
     var tr_item = $('#copy_tr');
     var current = 'current';
     var question_item = [];
@@ -106,7 +94,7 @@
     function setQuestionList() {
         for(var x=0;x<question_item.length;x++){
             var t = tr_item.clone();
-            var a = "[! route('ma.question.pg.edit') !]/"+ question_item[x]['id'];
+            var a = "[! route('ma.question.pg.edit') !]?id="+ question_item[x]['id'];
             var r = question_item[x]['question_title'];
             t.find('#title_area').html(r).removeAttr('id');
             t.find('#a_area').attr('href',a).removeAttr('id');
