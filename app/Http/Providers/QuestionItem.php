@@ -58,13 +58,13 @@ class QuestionItem
     public function getQuestionByID($id)
     {
         $return_data = array();
-        $temp_obj = Questions::select('id', 'question_title', 'type', 'type_title')
+        $temp_obj = Questions::select('id', 'question_title', 'type', 'type_title', 'dsc')
             ->where('id',$id)
             ->get();
         foreach ($temp_obj as $v) {
+            $v['type_title'] = json_decode($v['type_title']);
             $return_data[] = $v;
         }
-
         $this->msg = array(
             'status' => true,
             'msg' => '',
@@ -82,7 +82,7 @@ class QuestionItem
     {
         $update = new Questions();
         $update->type = $this->input_array['type'];
-        $update->type_title = json_encode($this->input_array['type_title']);
+        $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
         $update->question_title = $this->input_array['question_title'];
         $update->dsc = $this->input_array['dsc'];
         $update->save();
@@ -105,8 +105,8 @@ class QuestionItem
             $update = Questions::find($this->input_array['id']);
             $update->question_title = $this->input_array['question_title'];
             $update->type = $this->input_array['type'];
-            $update->type_title = json_encode($this->input_array['type_title']);
-            $update->dsc = json_encode($this->input_array['dsc']);
+            $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
+            $update->dsc = $this->input_array['dsc'];
             $update->save();
             $this->msg = array(
                 'status' => true,
