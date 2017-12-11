@@ -73,7 +73,7 @@
                         <ul class="mainnav-sub">
                             <li id="li_unit"><a href="[! route('ma.unit') !]">建立單元結構</a></li>
                             <li id="li_reel"><a href="[! route('ma.reel') !]">新增試卷</a></li>
-                            <li id="li_member"><a href="">新增試題</a></li>
+                            <li id="li_question"><a href="">新增試題</a></li>
                         </ul>
                     </li>
                     <li>
