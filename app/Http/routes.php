@@ -41,3 +41,9 @@ Route::post('/Ma/Unit/Add', ['as' => 'ma.unit.add', 'uses' => 'AdController@Unit
 Route::get('/Ma/Reel', ['as' => 'ma.reel', 'uses' => 'AdController@Reel']);
 Route::get('/Ma/Reel/list', ['as' => 'ma.reel.list', 'uses' => 'AdController@ReelList']);
 Route::post('/Ma/Reel/Add', ['as' => 'ma.reel.add', 'uses' => 'AdController@ReelAdd']);
+
+//管理員 試題管理
+Route::get('/Ma/Question', ['as' => 'ma.question', 'uses' => 'AdController@Question']);
+Route::get('/Ma/Question/list', ['as' => 'ma.question.list', 'uses' => 'AdController@QuestionList']);
+Route::post('/Ma/Question/Add', ['as' => 'ma.question.add', 'uses' => 'AdController@QuestionAdd']);
+Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdController@QuestionUpdate']);
