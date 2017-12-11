@@ -22,7 +22,7 @@ class AdController extends Controller
     /**
      * 學校-科系
      *
-     * 
+     *
      */
     public function SchoolSubject()
     {
@@ -34,7 +34,7 @@ class AdController extends Controller
     /**
      * 所有學校-科系的資料
      *
-     * 
+     *
      */
     public function SchoolSubjectList()
     {
@@ -46,7 +46,7 @@ class AdController extends Controller
     /**
      * 新增學校-科系的資料
      *
-     * 
+     *
      */
     public function SchoolSubjectAdd()
     {
@@ -54,14 +54,14 @@ class AdController extends Controller
         $data['subject_title'] = app('request')->get('subject_title');
         $data['school_id'] = app('request')->get('school_id');
         $t_obj = new SchoolItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->addSubject());
     }
 
     /**
      * 學校
      *
-     * 
+     *
      */
     public function School()
     {
@@ -73,7 +73,7 @@ class AdController extends Controller
     /**
      * 所有學校的資料
      *
-     * 
+     *
      */
     public function SchoolList()
     {
@@ -85,7 +85,7 @@ class AdController extends Controller
     /**
      * 新增學校的資料
      *
-     * 
+     *
      */
     public function SchoolAdd()
     {
@@ -95,14 +95,14 @@ class AdController extends Controller
         $data['code'] = app('request')->get('code');
         $data['city'] = 0;
         $t_obj = new SchoolItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->addSchool());
     }
 
     /**
      * 課程設定
      *
-     * 
+     *
      */
     public function Course()
     {
@@ -114,7 +114,7 @@ class AdController extends Controller
     /**
      * 所有課程的資料
      *
-     * 
+     *
      */
     public function CourseList()
     {
@@ -126,7 +126,7 @@ class AdController extends Controller
     /**
      * 新增課程的資料
      *
-     * 
+     *
      */
     public function CourseAdd()
     {
@@ -135,14 +135,14 @@ class AdController extends Controller
         $data['semester'] = app('request')->get('semester');
         $data['course_title'] = app('request')->get('course_title');
         $t_obj = new StructureItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->addCourse());
     }
 
     /**
      * 單元結構
      *
-     * 
+     *
      */
     public function Unit()
     {
@@ -154,7 +154,7 @@ class AdController extends Controller
     /**
      * 所有單元結構的資料
      *
-     * 
+     *
      */
     public function UnitList()
     {
@@ -166,7 +166,7 @@ class AdController extends Controller
     /**
      * 新增單元結構的資料
      *
-     * 
+     *
      */
     public function UnitAdd()
     {
@@ -176,14 +176,14 @@ class AdController extends Controller
         $data['book'] = app('request')->get('book');
         $data['unit_title'] = app('request')->get('unit_title');
         $t_obj = new StructureItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->addUnit());
     }
 
     /**
      * 試卷
      *
-     * 
+     *
      */
     public function Reel()
     {
@@ -195,7 +195,7 @@ class AdController extends Controller
     /**
      * 所有試卷的資料
      *
-     * 
+     *
      */
     public function ReelList()
     {
@@ -207,7 +207,7 @@ class AdController extends Controller
     /**
      * 新增試卷的資料
      *
-     * 
+     *
      */
     public function ReelAdd()
     {
@@ -218,7 +218,7 @@ class AdController extends Controller
         $data['unit'] = app('request')->get('unit');
         $data['reel_title'] = app('request')->get('reel_title');
         $t_obj = new StructureItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->addReel());
     }
 
@@ -226,7 +226,7 @@ class AdController extends Controller
     /**
      * 試題
      *
-     * 
+     *
      */
     public function Question()
     {
@@ -238,7 +238,7 @@ class AdController extends Controller
     /**
      * 所有試題的資料
      *
-     * 
+     *
      */
     public function QuestionList()
     {
@@ -249,13 +249,33 @@ class AdController extends Controller
 
 
     /**
+     * 單一試題的資料
+     *
+     *
+     */
+    public function QuestionData()
+    {
+        $question = new QuestionItem();
+        $id = app('request')->get('id');
+
+        echo json_encode($question->getQuestionByID($id));
+    }
+
+    /**
      * 新增試題頁面
      *
-     * 
+     *
      */
     public function QuestionPgAdd()
     {
         $data = array();
+        //設定ckfinder
+        //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
+        $data['ck_finder_path'] = url('/js/ckfinder');
+        session_start();
+        $_SESSION['ckfiner_key'] = true;
+        $_SESSION['dirroot'] = url('/cc_upload') . '/question/';//讀取路徑
+        $_SESSION['upload_path'] = public_path('/cc_upload') . '/question/';//儲存實體路徑
 
         return view('admin.question.add', $data);
     }
@@ -263,11 +283,19 @@ class AdController extends Controller
     /**
      * 編輯現有試題的頁面
      *
-     * 
+     *
      */
     public function QuestionPgEdit()
     {
         $data = array();
+        $data['id'] = app('request')->get('id');
+        //設定ckfinder
+        //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
+        $data['ck_finder_path'] = url('/js/ckfinder');
+        session_start();
+        $_SESSION['ckfiner_key'] = true;
+        $_SESSION['dirroot'] = url('/cc_upload') . '/question/';//讀取路徑
+        $_SESSION['upload_path'] = public_path('/cc_upload') . '/question/';//儲存實體路徑
 
         return view('admin.question.edit', $data);
     }
@@ -275,7 +303,7 @@ class AdController extends Controller
     /**
      * 新增試題的資料
      *
-     * 
+     *
      */
     public function QuestionAdd()
     {
@@ -285,14 +313,14 @@ class AdController extends Controller
         $data['type_title'] = app('request')->get('type_title');
         $data['dsc'] = app('request')->get('dsc');
         $t_obj = new QuestionItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->addQuestion());
     }
 
     /**
      * 更新試題的資料
      *
-     * 
+     *
      */
     public function QuestionUpdate()
     {
@@ -303,7 +331,7 @@ class AdController extends Controller
         $data['type_title'] = app('request')->get('type_title');
         $data['dsc'] = app('request')->get('dsc');
         $t_obj = new QuestionItem();
-        $t_obj ->init($data);
+        $t_obj->init($data);
         echo json_encode($t_obj->updateQuestion());
     }
 }
