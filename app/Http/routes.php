@@ -46,6 +46,6 @@ Route::post('/Ma/Reel/Add', ['as' => 'ma.reel.add', 'uses' => 'AdController@Reel
 Route::get('/Ma/Question', ['as' => 'ma.question', 'uses' => 'AdController@Question']);
 Route::get('/Ma/Question/list', ['as' => 'ma.question.list', 'uses' => 'AdController@QuestionList']);
 Route::get('/Ma/Question/pg/add', ['as' => 'ma.question.pg.add', 'uses' => 'AdController@QuestionPgAdd']);
-Route::get('/Ma/Question/pg/edit/{id}', ['as' => 'ma.question.pg.edit', 'uses' => 'AdController@QuestionPgEdit']);
+Route::get('/Ma/Question/pg/edit', ['as' => 'ma.question.pg.edit', 'uses' => 'AdController@QuestionPgEdit']);
 Route::post('/Ma/Question/Add', ['as' => 'ma.question.add', 'uses' => 'AdController@QuestionAdd']);
 Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdController@QuestionUpdate']);
