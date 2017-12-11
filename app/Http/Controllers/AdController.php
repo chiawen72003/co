@@ -9,6 +9,7 @@ use \DB;
 use \Response;
 use App\Http\Providers\SchoolItem;
 use App\Http\Providers\StructureItem;
+use App\Http\Providers\QuestionItem;
 
 class AdController extends Controller
 {
@@ -21,7 +22,7 @@ class AdController extends Controller
     /**
      * 學校-科系
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function SchoolSubject()
     {
@@ -33,7 +34,7 @@ class AdController extends Controller
     /**
      * 所有學校-科系的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function SchoolSubjectList()
     {
@@ -45,7 +46,7 @@ class AdController extends Controller
     /**
      * 新增學校-科系的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function SchoolSubjectAdd()
     {
@@ -60,7 +61,7 @@ class AdController extends Controller
     /**
      * 學校
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function School()
     {
@@ -72,7 +73,7 @@ class AdController extends Controller
     /**
      * 所有學校的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function SchoolList()
     {
@@ -84,7 +85,7 @@ class AdController extends Controller
     /**
      * 新增學校的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function SchoolAdd()
     {
@@ -101,7 +102,7 @@ class AdController extends Controller
     /**
      * 課程設定
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function Course()
     {
@@ -113,7 +114,7 @@ class AdController extends Controller
     /**
      * 所有課程的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function CourseList()
     {
@@ -125,7 +126,7 @@ class AdController extends Controller
     /**
      * 新增課程的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function CourseAdd()
     {
@@ -141,7 +142,7 @@ class AdController extends Controller
     /**
      * 單元結構
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function Unit()
     {
@@ -153,7 +154,7 @@ class AdController extends Controller
     /**
      * 所有單元結構的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function UnitList()
     {
@@ -165,7 +166,7 @@ class AdController extends Controller
     /**
      * 新增單元結構的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function UnitAdd()
     {
@@ -182,7 +183,7 @@ class AdController extends Controller
     /**
      * 試卷
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function Reel()
     {
@@ -194,7 +195,7 @@ class AdController extends Controller
     /**
      * 所有試卷的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function ReelList()
     {
@@ -206,9 +207,95 @@ class AdController extends Controller
     /**
      * 新增試卷的資料
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 
      */
     public function ReelAdd()
+    {
+        $data = array();
+        $data['version'] = app('request')->get('version');
+        $data['subject'] = app('request')->get('subject');
+        $data['book'] = app('request')->get('book');
+        $data['unit'] = app('request')->get('unit');
+        $data['reel_title'] = app('request')->get('reel_title');
+        $t_obj = new StructureItem();
+        $t_obj ->init($data);
+        echo json_encode($t_obj->addReel());
+    }
+
+
+    /**
+     * 試題
+     *
+     * 
+     */
+    public function Question()
+    {
+        $data = array();
+
+        return view('admin.question.index', $data);
+    }
+
+    /**
+     * 所有試題的資料
+     *
+     * 
+     */
+    public function QuestionList()
+    {
+        $question = new QuestionItem();
+
+        echo json_encode($question->getQuestion());
+    }
+
+
+    /**
+     * 新增試題頁面
+     *
+     * 
+     */
+    public function QuestionPgAdd()
+    {
+        $data = array();
+
+        return view('admin.question.add', $data);
+    }
+
+    /**
+     * 編輯現有試題的頁面
+     *
+     * 
+     */
+    public function QuestionPgEdit()
+    {
+        $data = array();
+
+        return view('admin.question.edit', $data);
+    }
+
+    /**
+     * 新增試題的資料
+     *
+     * 
+     */
+    public function QuestionAdd()
+    {
+        $data = array();
+        $data['version'] = app('request')->get('version');
+        $data['subject'] = app('request')->get('subject');
+        $data['book'] = app('request')->get('book');
+        $data['unit'] = app('request')->get('unit');
+        $data['reel_title'] = app('request')->get('reel_title');
+        $t_obj = new StructureItem();
+        $t_obj ->init($data);
+        echo json_encode($t_obj->addReel());
+    }
+
+    /**
+     * 更新試題的資料
+     *
+     * 
+     */
+    public function QuestionUpdate()
     {
         $data = array();
         $data['version'] = app('request')->get('version');
