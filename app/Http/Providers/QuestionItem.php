@@ -106,6 +106,7 @@ class QuestionItem
             $update->question_title = $this->input_array['question_title'];
             $update->type = $this->input_array['type'];
             $update->type_title = json_encode($this->input_array['type_title']);
+            $update->dsc = json_encode($this->input_array['dsc']);
             $update->save();
             $this->msg = array(
                 'status' => true,
