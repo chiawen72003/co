@@ -35,11 +35,31 @@ class QuestionItem
     public function getQuestion()
     {
         $return_data = array();
-        $temp_obj = UnitStructure::select('id', 'version', 'subject', 'book', 'unit_title')
-            ->orderby('version', 'ASC')
-            ->orderby('subject', 'ASC')
-            ->orderby('book', 'ASC')
-            ->orderby('unit_title', 'ASC')
+        $temp_obj = Questions::select('id', 'question_title', 'type', 'type_title')
+            ->orderby('id', 'DESC')
+            ->get();
+        foreach ($temp_obj as $v) {
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 取得 試題資料
+     *
+     */
+    public function getQuestionByID($id)
+    {
+        $return_data = array();
+        $temp_obj = Questions::select('id', 'question_title', 'type', 'type_title')
+            ->where('id',$id)
             ->get();
         foreach ($temp_obj as $v) {
             $return_data[] = $v;
@@ -83,7 +103,7 @@ class QuestionItem
     {
         if (isset($this->input_array['id'])) {
             $update = Questions::find($this->input_array['id']);
-            $update->unit_title = $this->input_array['unit_title'];
+            $update->question_title = $this->input_array['question_title'];
             $update->type = $this->input_array['type'];
             $update->type_title = json_encode($this->input_array['type_title']);
             $update->save();
