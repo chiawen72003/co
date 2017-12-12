@@ -61,6 +61,14 @@ Route::post('/Ma/Precautions/Update', ['as' => 'ma.precautions.update', 'uses' =
 Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
 
 //受測者 使用者管理
-Route::get('/Ma/User', ['as' => 'ur.user', 'uses' => 'AdController@User']);
-Route::get('/Ma/User/Data', ['as' => 'ur.user.data', 'uses' => 'AdController@UserData']);
-Route::post('/Ma/User/Update', ['as' => 'ur.user.update', 'uses' => 'AdController@UserUpdate']);
+Route::get('/Ma/User', ['as' => 'ur.user', 'uses' => 'UrController@User']);
+Route::get('/Ma/User/Data', ['as' => 'ur.user.data', 'uses' => 'UrController@UserData']);
+Route::post('/Ma/User/Update', ['as' => 'ur.user.update', 'uses' => 'UrController@UserUpdate']);
+
+
+//受測者 試卷管理
+Route::get('/Ma/Reel', ['as' => 'ur.reel', 'uses' => 'UrController@Reel']);
+Route::get('/Ma/Reel/List', ['as' => 'ur.reel.list', 'uses' => 'UrController@ReelList']);
+Route::get('/Ma/Reel/Edit', ['as' => 'ur.reel.edit', 'uses' => 'UrController@ReelEdit']);
+Route::get('/Ma/Reel/Data', ['as' => 'ur.reel.data', 'uses' => 'UrController@ReelData']);
+Route::post('/Ma/Reel/Add', ['as' => 'ur.user.update', 'uses' => 'UrController@ReelAdd']);
