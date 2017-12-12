@@ -31,4 +31,11 @@
         </div>
     </div>
     [! Html::script('js/jquery-1.11.3.js') !]
+    <script>
+        var li_item = $('#li_index');
+        var current = 'current';
+        $( document ).ready(function() {
+            li_item.addClass( current);
+        });
+    </script>
 @stop
