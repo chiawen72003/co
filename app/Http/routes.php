@@ -59,3 +59,8 @@ Route::post('/Ma/Precautions/Update', ['as' => 'ma.precautions.update', 'uses' =
 
 //受測者 首頁
 Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
+
+//受測者 使用者管理
+Route::get('/Ma/User', ['as' => 'ur.user', 'uses' => 'AdController@User']);
+Route::get('/Ma/User/Data', ['as' => 'ur.user.data', 'uses' => 'AdController@UserData']);
+Route::post('/Ma/User/Update', ['as' => 'ur.user.update', 'uses' => 'AdController@UserUpdate']);
