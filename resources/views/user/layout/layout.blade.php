@@ -32,7 +32,7 @@
             <nav class="navigate">
                 <ul class="mainnav">
                     <li id="li_index">
-                        <a href="userIndex.html">
+                        <a href="[! route('ur.index') !]">
                             <i class="mainnav-title-icon ion-android-home"></i>
                             首頁
                         </a>
@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li id="li_user">
-                        <a href="user.html">
+                        <a href="[! route('ur.user') !]">
                             <i class="mainnav-title-icon ion-person"></i>
                             使用者管理
                         </a>
