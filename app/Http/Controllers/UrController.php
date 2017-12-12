@@ -111,8 +111,8 @@ class UrController extends Controller
 
     /**
      * 試卷的試題資料
-     *
-     *
+     * 1. 需檢測使用者是否有權限受測
+     * 2. 回傳項目：試題資料，作文頁面的版面
      */
     public function ReelData()
     {
