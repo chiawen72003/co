@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('user.layout.layout')
 @section('content')
     <div class="article">
         <div class="article">
