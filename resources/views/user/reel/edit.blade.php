@@ -20,6 +20,7 @@
             </div>
         </div>
     </div>
+    [! Html::script('js/jquery-1.11.3.js') !]
     <script>
         //控制只能輸入全形的值
         function onKeyPress_(event)
