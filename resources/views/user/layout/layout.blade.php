@@ -37,8 +37,8 @@
                             首頁
                         </a>
                     </li>
-                    <li>
-                        <a href="papers.html">
+                    <li id="li_reel">
+                        <a href="[! route('ur.reel') !]">
                             <i class="mainnav-title-icon ion-ios-list"></i>
                             試卷管理
                         </a>
