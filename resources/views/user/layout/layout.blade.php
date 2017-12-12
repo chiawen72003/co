@@ -5,7 +5,6 @@
     <title>iview example</title>
     [! Html::style('css/ionicons.min.css') !]
     [! Html::style('css/style.css') !]
-    <script src="../js/jquery-1.11.3.js"></script>
 </head>
 <body>
 <div id="mainbody">
