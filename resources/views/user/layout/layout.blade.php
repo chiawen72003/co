@@ -31,7 +31,7 @@
         <div id="page-body" class="clearfix">
             <nav class="navigate">
                 <ul class="mainnav">
-                    <li class="current">
+                    <li id="li_index">
                         <a href="userIndex.html">
                             <i class="mainnav-title-icon ion-android-home"></i>
                             首頁
@@ -43,7 +43,7 @@
                             試卷管理
                         </a>
                     </li>
-                    <li>
+                    <li id="li_user">
                         <a href="user.html">
                             <i class="mainnav-title-icon ion-person"></i>
                             使用者管理
