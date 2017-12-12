@@ -80,7 +80,7 @@ class UrController extends Controller
     {
         $data = array();
 
-        return view('user.userdata.index', $data);
+        return view('user.reel.index', $data);
     }
 
     /**
@@ -92,6 +92,7 @@ class UrController extends Controller
     {
         $reel = new MeasuredItem();
         $id = app('request')->get('id');
+        $id = 1;
 
         echo json_encode($reel->getMeasured($id));
     }
@@ -102,11 +103,12 @@ class UrController extends Controller
      *
      *
      */
-    public function ReelEdit()
+    public function ReelEdit($id)
     {
         $data = array();
+        $data['id'] = $id;
 
-        return view('user.userdata.index', $data);
+        return view('user.reel.edit', $data);
     }
 
     /**
@@ -116,10 +118,12 @@ class UrController extends Controller
      */
     public function ReelData()
     {
-        $question = new StructureItem();
-        $id = app('request')->get('id');
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
 
-        echo json_encode($question->getPrecautions($id));
+        echo json_encode($t_obj->getReelQuation());
     }
 
     /**
