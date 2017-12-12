@@ -55,3 +55,7 @@ Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdC
 Route::get('/Ma/Precautions', ['as' => 'ma.precautions', 'uses' => 'AdController@Precautions']);
 Route::get('/Ma/Precautions/Data', ['as' => 'ma.precautions.data', 'uses' => 'AdController@PrecautionsData']);
 Route::post('/Ma/Precautions/Update', ['as' => 'ma.precautions.update', 'uses' => 'AdController@PrecautionsUpdate']);
+
+
+//受測者 首頁
+Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
