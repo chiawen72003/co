@@ -1,4 +1,4 @@
-@extends('user.layout.test')
+@extends('revised.layout.test')
 @section('content')
     <div id="page-container">
         <div id="page-body" class="clearfix">
@@ -259,7 +259,7 @@
 
         function getData() {
             $.ajax({
-                url: "[! route('ur.reel.data') !]",
+                url: "[! route('rv.scroll.reel.data') !]",
                 type:'GET',
                 dataType: "json",
                 data: {
@@ -270,6 +270,7 @@
                 },
                 success: function(response) {
                     if(response['status'] == true){
+                        console.log(response['data']);
                         for(var x=0;x<response['data'].length;x++){
                             question_item.push(
                                 {
