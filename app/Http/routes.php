@@ -72,3 +72,23 @@ Route::get('/Ur/Reel/List', ['as' => 'ur.reel.list', 'uses' => 'UrController@Ree
 Route::get('/Ur/Reel/Data', ['as' => 'ur.reel.data', 'uses' => 'UrController@ReelData']);
 Route::get('/Ur/Reel/Edit/{id}', ['as' => 'ur.reel.edit', 'uses' => 'UrController@ReelEdit']);
 Route::post('/Ur/Reel/Add', ['as' => 'ur.reel.add', 'uses' => 'UrController@ReelAdd']);
+
+//批閱者 寫作閱卷標準手冊
+Route::get('/Rv/Manual', ['as' => 'rv.manual', 'uses' => 'RvController@Manual']);
+
+//批閱者 注意事項
+Route::get('/Rv/Precautions', ['as' => 'rv.precautions', 'uses' => 'RvController@Precautions']);
+
+//批閱者 線上閱卷
+Route::get('/Rv/Scroll', ['as' => 'rv.scroll', 'uses' => 'RvController@Scroll']);
+
+//批閱者 批改統計
+Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);
+
+//批閱者 使用者管理
+Route::get('/Rv/User', ['as' => 'rv.user', 'uses' => 'RvController@User']);
+Route::get('/Rv/User/Data', ['as' => 'rv.user.data', 'uses' => 'RvController@UserData']);
+Route::post('/Rv/User/Update', ['as' => 'rv.user.update', 'uses' => 'RvController@UserUpdate']);
+
+//批閱者 檔案下載
+Route::get('/Rv/Files', ['as' => 'rv.files', 'uses' => 'RvController@Files']);
