@@ -39,6 +39,7 @@ class MeasuredItem
         $return_data = array();
         $temp_obj = ListUnderTest::select('reel_id')
             ->where('user_id',$user_id)
+            ->where('has_test',0)
             ->get();
         foreach($temp_obj as $v ){
             $return_data[] = route('ur.reel.edit',array($v['reel_id']));
@@ -97,7 +98,10 @@ class MeasuredItem
         if (isset($this->input_array['reel_id'])) {
             ListUnderTest::where('user_id',$this->input_array['user_id'])
             ->where('reel_id',$this->input_array['reel_id'])
-            ->update(['test_data'=>json_encode($this->input_array['add_data'])]);
+            ->update([
+                'test_data'=>json_encode($this->input_array['add_data'],JSON_UNESCAPED_UNICODE),
+                'has_test'=>1,
+            ]);
             $this->msg = array(
                 'status' => true,
                 'msg' => '新增成功!',
