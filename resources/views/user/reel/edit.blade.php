@@ -277,7 +277,8 @@
                                     'question_title':response['data'][x]['question_title'],
                                     'type':response['data'][x]['type'],
                                     'type_title':response['data'][x]['type_title'],
-                                    'dsc':response['data'][x]['dsc']
+                                    'dsc':response['data'][x]['dsc'],
+                                    'max_score':response['data'][x]['max_score'],
                                 }
                             );
                         }
@@ -419,6 +420,7 @@
                         'type':question_item[x]['type'],
                         'dsc':temp_data,
                         'agree':agree,
+                        'max_score':question_item[x]['max_score'],
                     });
                 }
 
