@@ -89,7 +89,7 @@ Route::get('/Rv/Scroll/Training', ['as' => 'rv.scroll.training', 'uses' => 'RvCo
 Route::get('/Rv/Scroll/Reel/list', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
 //批閱者 開始批改 批改試卷資料
 Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
-Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'UrController@ScrollReelData']);
+Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'RvController@ScrollReelData']);
 
 //批閱者 批改統計
 Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);
