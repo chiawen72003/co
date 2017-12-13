@@ -43,25 +43,25 @@
                         </a>
                     </li>
                     <li id="li_scroll">
-                        <a href="scroll.html">
+                        <a href="[! route('rv.scroll') !]">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             線上閱卷
                         </a>
                     </li>
                     <li id="li_statistics">
-                        <a href="statistics.html">
+                        <a href="[! route('rv.statistics') !]">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             批改統計
                         </a>
                     </li>
                     <li id="li_user">
-                        <a href="user.html">
+                        <a href="[! route('rv.user') !]">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             基本資料
                         </a>
                     </li>
                     <li id="li_files">
-                        <a href="#">
+                        <a href="[! route('rv.files') !]">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             檔案下載
                         </a>
