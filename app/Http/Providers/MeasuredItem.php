@@ -68,6 +68,7 @@ class MeasuredItem
                 'questions.question_title',
                 'questions.dsc',
                 'questions.id'
+                'questions.max_score'
             )
             ->get();
         foreach ($t as $v){
@@ -77,6 +78,7 @@ class MeasuredItem
                 'question_title' => $v['question_title'],
                 'dsc' => $v['dsc'],
                 'id' => $v['id'],
+                'max_score' => $v['max_score'],
             );
         }
 
