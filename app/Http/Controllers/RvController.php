@@ -7,6 +7,8 @@ use \Validator;
 use \Session;
 use \DB;
 use \Response;
+use App\Http\Providers\MeasuredItem;
+
 
 class RvController extends Controller
 {
@@ -84,7 +86,7 @@ class RvController extends Controller
     public function ScrollReelView($id)
     {
         $data = array();
-        $data['id'] = app('request')->get('id');
+        $data['id'] = $id;
 
         return view('revised.reel.view', $data);
     }
@@ -94,11 +96,14 @@ class RvController extends Controller
      *
      *
      */
-    public function ScrollReelData($id)
+    public function ScrollReelData()
     {
         $data = array();
+        $data['reel_id'] = app('request')->get('id');
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
 
-        return view('revised.statistics.index', $data);
+        echo json_encode($t_obj->getReelTestData());
     }
 
     /**
