@@ -87,4 +87,23 @@ class MeasuredItem
 
         return $this->msg;
     }
+
+    /**
+     * 新增 受測者填寫的試題資料
+     *
+     */
+    public function setTestData()
+    {
+        if (isset($this->input_array['reel_id'])) {
+            ListUnderTest::where('user_id',$this->input_array['user_id'])
+            ->where('reel_id',$this->input_array['reel_id'])
+            ->update(['test_data'=>json_encode($this->input_array['add_data'])]);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '新增成功!',
+            );
+        }
+
+        return $this->msg;
+    }
 }
