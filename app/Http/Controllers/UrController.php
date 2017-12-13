@@ -131,14 +131,15 @@ class UrController extends Controller
      *
      *
      */
-    public function ReelUpdate()
+    public function ReelAdd()
     {
         $data = array();
-        $data['id'] = app('request')->get('id');
-        $data['dsc'] = app('request')->get('dsc');
-        $t_obj = new StructureItem();
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['add_data'] = app('request')->get('add_data');
+        $data['user_id'] = 1;
+        $t_obj = new MeasuredItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->updatePrecautions());
+        echo json_encode($t_obj->setTestData());
     }
 }
