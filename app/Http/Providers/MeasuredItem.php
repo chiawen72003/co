@@ -67,7 +67,7 @@ class MeasuredItem
                 'questions.type_title',
                 'questions.question_title',
                 'questions.dsc',
-                'questions.id'
+                'questions.id',
                 'questions.max_score'
             )
             ->get();
