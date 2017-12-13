@@ -81,6 +81,14 @@ Route::get('/Rv/Precautions', ['as' => 'rv.precautions', 'uses' => 'RvController
 
 //批閱者 線上閱卷
 Route::get('/Rv/Scroll', ['as' => 'rv.scroll', 'uses' => 'RvController@Scroll']);
+//批閱者 參考樣卷
+Route::get('/Rv/Scroll/Demo', ['as' => 'rv.scroll.demo', 'uses' => 'RvController@ScrollDemo']);
+//批閱者 閱卷訓練
+Route::get('/Rv/Scroll/Training', ['as' => 'rv.scroll.training', 'uses' => 'RvController@ScrollTraining']);
+//批閱者 開始批改 試卷選擇頁面
+Route::get('/Rv/Scroll/Reel/list', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
+//批閱者 開始批改 批改試卷資料
+Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
 
 //批閱者 批改統計
 Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);
