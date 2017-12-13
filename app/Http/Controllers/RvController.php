@@ -53,11 +53,72 @@ class RvController extends Controller
     }
 
     /**
+     * 參考樣卷
+     *
+     *
+     */
+    public function ScrollDemo()
+    {
+        $data = array();
+
+        return view('revised.scroll.index', $data);
+    }
+
+    /**
+     * 試卷選擇頁面
+     *
+     *
+     */
+    public function ScrollReelList()
+    {
+        $data = array();
+
+        return view('revised.reel.index', $data);
+    }
+
+    /**
+     * 批改試卷資料
+     *
+     *
+     */
+    public function ScrollReelView($id)
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+
+        return view('revised.reel.view', $data);
+    }
+
+    /**
+     * 隨機取得一個指定試卷受測的資料
+     *
+     *
+     */
+    public function ScrollReelData($id)
+    {
+        $data = array();
+
+        return view('revised.statistics.index', $data);
+    }
+
+    /**
      * 批改統計
      *
      *
      */
     public function Statistics()
+    {
+        $data = array();
+
+        return view('revised.statistics.index', $data);
+    }
+
+    /**
+     * 閱卷訓練
+     *
+     *
+     */
+    public function ScrollTraining()
     {
         $data = array();
 
