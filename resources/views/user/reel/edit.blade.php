@@ -90,7 +90,14 @@
             <div class="chapter-content-wrap">
                 <div class="chapter-content-title" >
                     <br id="title">
-                    (請點選<a href="">同意</a>或<a href="">不同意</a>，150字為限，5分)
+                    (請點選
+                    <div class="form-inline checkbox-group">
+                        <input type="radio" id="radio1" name="agree" value="0" checked />
+                        <label for="radio1" name="radio">同意</label>
+                    </div>或<div class="form-inline checkbox-group">
+                        <input type="radio" id="radio2" name="agree" value="1" />
+                        <label for="radio2" name="radio">不同意</label>
+                        </div>，150字為限，5分)
                 </div>
                 <div class="chapter-content" style="border-top: 0;">
                     <div class="chapter-content-article-right">
@@ -105,7 +112,7 @@
                             <ul class="row">
                                 <li>
                                     已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="500" disabled id="count">
+                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
                                     字
                                 </li>
                                 <li class="right pos-right">
@@ -160,7 +167,7 @@
                             <ul class="row">
                                 <li>
                                     已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="500" disabled id="count">
+                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
                                     字
                                 </li>
                                 <li class="right pos-right">
@@ -218,7 +225,7 @@
                             <ul class="row">
                                 <li>
                                     已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="500" disabled id="count">
+                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
                                     字
                                 </li>
                                 <li class="right pos-right">
@@ -307,7 +314,11 @@
                     t = obj_4.clone();
                 }
                 //試題標題
-                t.find('#title').html(question_item[x]['question_title']).removeAttr('id');
+                if(question_item[x]['type'] == 2){
+                    t.find('#title').after(question_item[x]['question_title']).removeAttr('id');
+                }else{
+                    t.find('#title').html(question_item[x]['question_title']).removeAttr('id');
+                }
                 //試題內容
                 t.find('#dsc').html(question_item[x]['dsc']).removeAttr('id');
                 //使用者在每一個試題內打字的總數量
@@ -377,9 +388,9 @@
             for(var x=0;x<question_item.length;x++)
             {
                 if(num == x){
-                    $('write_'+x).show();
+                    $('#write_'+x).show();
                 }else{
-                    $('write_'+x).hide();
+                    $('#write_'+x).hide();
                 }
             }
         }
@@ -395,6 +406,9 @@
                     var t = $('#write_'+x);
                     var temp_data = [];
                     var agree = 0;
+                    if(question_item[x]['type'] == 2){
+                        agree=t.find('input[name="agree"]:checked').val();
+                    }
                     t.find('#textarea').each(function(){
                         temp_data.push({
                             'dsc':$(this).text()
@@ -414,7 +428,7 @@
                     dataType: "json",
                     data: {
                         _token: '[! csrf_token() !]',
-                        'reel_id':'[! $id !]',
+                        reel_id:'[! $id !]',
                         add_data:add_data,
                     },
                     error: function(xhr) {
