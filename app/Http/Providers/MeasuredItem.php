@@ -112,4 +112,31 @@ class MeasuredItem
 
         return $this->msg;
     }
+
+    /**
+     * 隨機取得一個指定試卷的受測資料
+     */
+    public function getReelTestData()
+    {
+        $return_data = array();
+        $temp_obj = ListUnderTest::select('id','test_data')
+            ->where('reel_id',$this->input_array['reel_id'])
+            ->where('has_test',1)
+            ->where('has_review',0)
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = array(
+                'id' => $v['id'],
+                'test_data' => json_decode($v['test_data'], true),
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
 }
