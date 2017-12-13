@@ -49,7 +49,7 @@ class RvController extends Controller
     {
         $data = array();
 
-        return view('revised.precautions.index', $data);
+        return view('revised.scroll.index', $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class RvController extends Controller
     {
         $data = array();
 
-        return view('revised.precautions.index', $data);
+        return view('revised.statistics.index', $data);
     }
 
     /**
@@ -114,6 +114,6 @@ class RvController extends Controller
     {
         $data = array();
 
-        return view('revised.precautions.index', $data);
+        return view('revised.files.index', $data);
     }
 }
