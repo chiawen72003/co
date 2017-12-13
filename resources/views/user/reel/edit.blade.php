@@ -386,7 +386,7 @@
 
         //上傳資料
         var is_send = false;
-        var send_data = [];
+        var add_data = [];
         function send_data()
         {
             if(!is_send){
@@ -400,7 +400,7 @@
                             'dsc':$(this).text()
                         });
                     });
-                    send_data.push({
+                    add_data.push({
                         'id':question_item[x]['id'],
                         'type':question_item[x]['type'],
                         'dsc':temp_data,
@@ -414,7 +414,8 @@
                     dataType: "json",
                     data: {
                         _token: '[! csrf_token() !]',
-                        add_data:send_data,
+                        'reel_id':'[! $id !]',
+                        add_data:add_data,
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
