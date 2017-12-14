@@ -2,10 +2,10 @@
 
 namespace App\Http\Models;
 
-class Precautions extends BaseModel
+class ReelModify extends BaseModel
 {
-    //注意事項資料
-    protected $table = 'precautions';
+    //試卷-評閱者資料
+    protected $table = 'reel_modify';
     protected $primaryKey = 'id';
     public $timestamps = true;
 }

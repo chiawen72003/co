@@ -1,4 +1,4 @@
-@extends('user.layout.test')
+@extends('revised.layout.test')
 @section('content')
     <div id="page-container">
         <div id="page-body" class="clearfix">
@@ -50,15 +50,20 @@
                         <div class="chapter-content-page">
                             <ul class="row">
                                 <li>
-                                    已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
-                                    字
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox1" />
+                                        <label for="checkbox1">空白卷</label>
+                                    </div>
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox2" />
+                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                    </div>
                                 </li>
                                 <li class="right pos-right">
                                     <div class="form-inline" style="display: none">
-                                        返回第
+                                        得分：
                                         <input type="text" class="i-input" style="width: 40px">
-                                        題
+                                        分（上限5分）
                                     </div>
                                     <div class="form-inline">
                                         <button class="i-btn" id="bt_up">上一題</button>
@@ -111,15 +116,20 @@
                         <div class="chapter-content-page">
                             <ul class="row">
                                 <li>
-                                    已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
-                                    字
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox1" />
+                                        <label for="checkbox1">空白卷</label>
+                                    </div>
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox2" />
+                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                    </div>
                                 </li>
                                 <li class="right pos-right">
                                     <div class="form-inline" style="display: none">
-                                        返回第
+                                        得分：
                                         <input type="text" class="i-input" style="width: 40px">
-                                        題
+                                        分（上限5分）
                                     </div>
                                     <div class="form-inline">
                                         <button class="i-btn" id="bt_up">上一題</button>
@@ -166,15 +176,20 @@
                         <div class="chapter-content-page">
                             <ul class="row">
                                 <li>
-                                    已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
-                                    字
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox1" />
+                                        <label for="checkbox1">空白卷</label>
+                                    </div>
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox2" />
+                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                    </div>
                                 </li>
                                 <li class="right pos-right">
                                     <div class="form-inline" style="display: none">
-                                        返回第
+                                        得分：
                                         <input type="text" class="i-input" style="width: 40px">
-                                        題
+                                        分（上限5分）
                                     </div>
                                     <div class="form-inline">
                                         <button class="i-btn" id="bt_up">上一題</button>
@@ -224,15 +239,20 @@
                         <div class="chapter-content-page">
                             <ul class="row">
                                 <li>
-                                    已輸入
-                                    <input type="text" class="i-input" style="width: 40px" value="0" disabled id="count">
-                                    字
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox1" />
+                                        <label for="checkbox1">空白卷</label>
+                                    </div>
+                                    <div class="form-inline checkbox-group">
+                                        <input type="checkbox" id="checkbox2" />
+                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                    </div>
                                 </li>
                                 <li class="right pos-right">
                                     <div class="form-inline" style="display: none">
-                                        返回第
+                                        得分：
                                         <input type="text" class="i-input" style="width: 40px">
-                                        題
+                                        分（上限5分）
                                     </div>
                                     <div class="form-inline">
                                         <button class="i-btn" id="bt_up">上一題</button>
@@ -259,7 +279,7 @@
 
         function getData() {
             $.ajax({
-                url: "[! route('ur.reel.data') !]",
+                url: "[! route('rv.scroll.reel.data') !]",
                 type:'GET',
                 dataType: "json",
                 data: {
@@ -270,6 +290,7 @@
                 },
                 success: function(response) {
                     if(response['status'] == true){
+                        console.log(response['data']);
                         for(var x=0;x<response['data'].length;x++){
                             question_item.push(
                                 {

@@ -39,6 +39,7 @@ class MeasuredItem
         $return_data = array();
         $temp_obj = ListUnderTest::select('reel_id')
             ->where('user_id',$user_id)
+            ->where('has_test',0)
             ->get();
         foreach($temp_obj as $v ){
             $return_data[] = route('ur.reel.edit',array($v['reel_id']));
@@ -66,7 +67,8 @@ class MeasuredItem
                 'questions.type_title',
                 'questions.question_title',
                 'questions.dsc',
-                'questions.id'
+                'questions.id',
+                'questions.max_score'
             )
             ->get();
         foreach ($t as $v){
@@ -76,6 +78,7 @@ class MeasuredItem
                 'question_title' => $v['question_title'],
                 'dsc' => $v['dsc'],
                 'id' => $v['id'],
+                'max_score' => $v['max_score'],
             );
         }
 
@@ -83,6 +86,55 @@ class MeasuredItem
             'status' => true,
             'msg' => '',
             'data' => $data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 新增 受測者填寫的試題資料
+     *
+     */
+    public function setTestData()
+    {
+        if (isset($this->input_array['reel_id'])) {
+            ListUnderTest::where('user_id',$this->input_array['user_id'])
+            ->where('reel_id',$this->input_array['reel_id'])
+            ->update([
+                'test_data'=>json_encode($this->input_array['add_data'],JSON_UNESCAPED_UNICODE),
+                'has_test'=>1,
+            ]);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '新增成功!',
+            );
+        }
+
+        return $this->msg;
+    }
+
+    /**
+     * 隨機取得一個指定試卷的受測資料
+     */
+    public function getReelTestData()
+    {
+        $return_data = array();
+        $temp_obj = ListUnderTest::select('id','test_data')
+            ->where('reel_id',$this->input_array['reel_id'])
+            ->where('has_test',1)
+            ->where('has_review',0)
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = array(
+                'id' => $v['id'],
+                'test_data' => json_decode($v['test_data'], true),
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
         );
 
         return $this->msg;
