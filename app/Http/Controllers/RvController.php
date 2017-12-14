@@ -92,7 +92,7 @@ class RvController extends Controller
     }
 
     /**
-     * 隨機取得一個指定試卷受測的資料
+     * 隨機取得一個試卷受測的資料
      *
      *
      */
@@ -100,6 +100,7 @@ class RvController extends Controller
     {
         $data = array();
         $data['reel_id'] = app('request')->get('id');
+        $data['user_id'] = 3;
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 
