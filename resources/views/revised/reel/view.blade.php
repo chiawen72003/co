@@ -51,7 +51,7 @@
                             <ul class="row">
                                 <li>
                                     <div class="form-inline checkbox-group">
-                                        <input type="checkbox" id="checkbox1" />
+                                        <input type="checkbox" id="checkbox1"/>
                                         <label for="checkbox1">空白卷</label>
                                     </div>
                                     <div class="form-inline checkbox-group">
@@ -60,9 +60,9 @@
                                     </div>
                                 </li>
                                 <li class="right pos-right">
-                                    <div class="form-inline" style="display: none">
+                                    <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px">
+                                        <input type="text" class="i-input" style="width: 40px" id="score">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -126,9 +126,9 @@
                                     </div>
                                 </li>
                                 <li class="right pos-right">
-                                    <div class="form-inline" style="display: none">
+                                    <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px">
+                                        <input type="text" class="i-input" style="width: 40px" id="score">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -186,9 +186,9 @@
                                     </div>
                                 </li>
                                 <li class="right pos-right">
-                                    <div class="form-inline" style="display: none">
+                                    <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px">
+                                        <input type="text" class="i-input" style="width: 40px" id="score">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -249,9 +249,9 @@
                                     </div>
                                 </li>
                                 <li class="right pos-right">
-                                    <div class="form-inline" style="display: none">
+                                    <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px">
+                                        <input type="text" class="i-input" style="width: 40px" id="score">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -273,6 +273,8 @@
         var obj_3 = $('#obj_3');
         var obj_4 = $('#obj_4');
         var test_area = $('#test_area');
+        var order = 'F';
+        var id = 0;
         $( document ).ready(function() {
             getData();
         });
@@ -289,22 +291,28 @@
                     //alert('Ajax request 發生錯誤');
                 },
                 success: function(response) {
-                    if(response['status'] == true){
-                        console.log(response['data']);
-                        for(var x=0;x<response['data'].length;x++){
+                    console.log(response);
+                    if(response['status'] == true && typeof(response['data']['test_data'])  !== "undefined"){
+                        order = response['data']['order'];
+                        id = response['data']['id'];
+                        for(var x=0;x<response['data']['test_data'].length;x++){
+                            var t = response['data']['test_data'][x];
                             question_item.push(
                                 {
-                                    'id':response['data'][x]['id'],
-                                    'question_title':response['data'][x]['question_title'],
-                                    'type':response['data'][x]['type'],
-                                    'type_title':response['data'][x]['type_title'],
-                                    'dsc':response['data'][x]['dsc'],
-                                    'max_score':response['data'][x]['max_score'],
+                                    'question_title':t['question_title'],
+                                    'type':t['type'],
+                                    'type_title':t['type_title'],
+                                    'dsc':t['dsc'],
+                                    'max_score':t['max_score'],
+                                    'ans':t['ans'],
                                 }
                             );
                         }
+                        setList();
+                    }else{
+                        alert('目前沒有試卷可以批閱!!');
+                        location.replace("[! route('rv.scroll.reel.list') !]");
                     }
-                    setList();
                 }
             });
         }
@@ -318,7 +326,6 @@
          * 6. bt_down => 下一頁按鈕
          */
         function setList() {
-            var div_total=0;
             var max_page = question_item.length;
             for(var x=0,y=1;x<question_item.length;x++,y++)
             {
@@ -343,12 +350,11 @@
                 }
                 //試題內容
                 t.find('#dsc').html(question_item[x]['dsc']).removeAttr('id');
-                //使用者在每一個試題內打字的總數量
-                t.find('#count').attr('id', 'write_'+x+'_count');
                 //試題輸入區
+                var temp_num = 0;
                 t.find('#textarea').each(function(){
-                    $(this).attr('name', 'write_'+div_total+'_text');
-                    div_total++;
+                    $(this).html(question_item[x]['ans'][temp_num]);
+                    temp_num++;
                 });
                 //上一試題按鈕
                 if(x == 0){
@@ -369,12 +375,6 @@
                 }
                 test_area.append(t);
             }
-            //文字輸入區綁定計算字數的功能
-            for(var x=0;x<div_total;x++){
-                $("div[name='write_"+x+"_text']").bind("DOMSubtreeModified",function(){
-                    reCount();
-                });
-            }
         }
 
         //控制只能輸入全形的值
@@ -388,20 +388,6 @@
                 return true;
             }
             return false;
-        }
-
-        //重新計算所有DIV的字數
-        function reCount() {
-            for(var x=0;x<question_item.length;x++)
-            {
-                var t = $('#write_'+x).clone();
-                var total =0;
-                t.find('#textarea').each(function(){
-                    total = total + $(this).text().length;
-                });
-
-                $('#write_'+x+'_count').val(total);
-            }
         }
 
         //試題切換
@@ -426,41 +412,42 @@
                 for(var x=0;x<question_item.length;x++)
                 {
                     var t = $('#write_'+x);
-                    var temp_data = [];
-                    var agree = 0;
-                    if(question_item[x]['type'] == 2){
-                        agree=t.find('input[name="agree"]:checked').val();
+                    var score = 0;
+                    var is_blank = false;
+                    var is_abnormal = false;
+                    score = t.find('#score').val();
+                    if(t.find('#checkbox1').is(':checked')){
+                        is_blank = true;
                     }
-                    t.find('#textarea').each(function(){
-                        temp_data.push({
-                            'dsc':$(this).text()
-                        });
-                    });
+                    if(t.find('#checkbox2').is(':checked')){
+                        is_abnormal = true;
+                    }
+
                     add_data.push({
-                        'id':question_item[x]['id'],
-                        'type':question_item[x]['type'],
-                        'dsc':temp_data,
-                        'agree':agree,
-                        'max_score':question_item[x]['max_score'],
+                        'score':score,
+                        'is_blank':is_blank,
+                        'is_abnormal':is_abnormal,
                     });
                 }
 
                 $.ajax({
-                    url: "[! route('ur.reel.add') !]",
+                    url: "[! route('rv.scroll.reel.update') !]",
                     type:'POST',
                     dataType: "json",
                     data: {
                         _token: '[! csrf_token() !]',
+                        id:id,
                         reel_id:'[! $id !]',
                         add_data:add_data,
+                        order:order,
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
                     },
                     success: function(response) {
                         if(response['status'] == true){
-                            alert(response['msg']);
-                            location.replace("[! route('ur.reel') !]");
+                           // alert(response['msg']);
+                           // location.reload();
                         }
                     }
                 });
