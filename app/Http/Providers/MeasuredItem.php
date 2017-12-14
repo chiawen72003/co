@@ -4,7 +4,7 @@ namespace App\Http\Providers;
 
 use App\Http\Models\ListUnderTest;
 use App\Http\Models\ReelQuestion;
-use App\Http\Models\Questions;
+use App\Http\Models\ReelModify;
 use Illuminate\Support\Str;
 use \Input;
 
@@ -94,15 +94,31 @@ class MeasuredItem
     /**
      * 新增 受測者填寫的試題資料
      *
+     * 備註：新增資料時預設先設定給一個評閱者
      */
     public function setTestData()
     {
         if (isset($this->input_array['reel_id'])) {
+            $def_m = 0;
+            $t_array = null;
+            $t = ReelModify::where('reel_id',$this->input_array['reel_id'])
+                ->get();
+            foreach($t as $v){
+                if($v['view_num'] <= ['need_num']){
+                    $t_array[] = $v['user_id'];
+                }
+            }
+            if(!is_null($t_array)){
+                $t_num = array_rand($t_array, 1);
+                $def_m = $t_array[$t_num];
+            }
+
             ListUnderTest::where('user_id',$this->input_array['user_id'])
             ->where('reel_id',$this->input_array['reel_id'])
             ->update([
                 'test_data'=>json_encode($this->input_array['add_data'],JSON_UNESCAPED_UNICODE),
                 'has_test'=>1,
+                'modify_id' => $def_m,
             ]);
             $this->msg = array(
                 'status' => true,
