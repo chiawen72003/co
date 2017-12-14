@@ -142,7 +142,7 @@ class MeasuredItem
             ->where('has_review',0)
             ->get();
         foreach($temp_obj as $v ){
-            $return_data[] = array(
+            $return_data = array(
                 'id' => $v['id'],
                 'test_data' => json_decode($v['test_data'], true),
             );
