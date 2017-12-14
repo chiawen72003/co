@@ -411,14 +411,13 @@
                         agree=t.find('input[name="agree"]:checked').val();
                     }
                     t.find('#textarea').each(function(){
-                        temp_data.push({
-                            'dsc':$(this).text()
-                        });
+                        temp_data.push($(this).text());
                     });
                     add_data.push({
                         'id':question_item[x]['id'],
                         'type':question_item[x]['type'],
-                        'dsc':temp_data,
+                        'ans':temp_data,
+                        'dsc':question_item[x]['dsc'],
                         'agree':agree,
                         'question_title':question_item[x]['question_title'],
                         'type_title':question_item[x]['type_title'],
