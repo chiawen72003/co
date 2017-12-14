@@ -138,12 +138,15 @@ class MeasuredItem
         $temp_obj = ListUnderTest::select('id','test_data')
             ->where('reel_id',$this->input_array['reel_id'])
             ->where('modify_id',$this->input_array['user_id'])
+            ->orWhere('s_modify_id',$this->input_array['user_id'])
             ->where('has_test',1)
             ->where('has_review',0)
             ->get();
         foreach($temp_obj as $v ){
+            $order = ($v['modify_id'] == $this->input_array['user_id'])?'F':'S';
+
             $return_data = array(
-                'id' => $v['id'],
+                'order' => $order,
                 'test_data' => json_decode($v['test_data'], true),
             );
         }
