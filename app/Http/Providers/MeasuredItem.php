@@ -135,17 +135,18 @@ class MeasuredItem
     public function getReelTestData()
     {
         $return_data = array();
-        $temp_obj = ListUnderTest::select('id','test_data')
+        $temp_obj = ListUnderTest::select('id','test_data','modify_id','s_modify_id')
             ->where('reel_id',$this->input_array['reel_id'])
-            ->where('modify_id',$this->input_array['user_id'])
-            ->orWhere('s_modify_id',$this->input_array['user_id'])
             ->where('has_test',1)
             ->where('has_review',0)
-            ->get();
+            ->where(function ($query) {
+                $query->where('modify_id', $this->input_array['user_id'])
+                    ->orWhere('s_modify_id', $this->input_array['user_id']);
+            })->get();
         foreach($temp_obj as $v ){
             $order = ($v['modify_id'] == $this->input_array['user_id'])?'F':'S';
-
             $return_data = array(
+                'id' => $v['id'],
                 'order' => $order,
                 'test_data' => json_decode($v['test_data'], true),
             );
@@ -156,6 +157,51 @@ class MeasuredItem
             'msg' => '',
             'data' => $return_data,
         );
+
+        return $this->msg;
+    }
+
+    /**
+     * 新增一筆評閱資料
+     *
+     */
+    public function setViewData()
+    {
+        if (isset($this->input_array['id'])) {
+            $total_score = 0;
+            $is_blank = false;
+            $is_abnormal = false;
+            foreach($this->input_array['add_data'] as $v){
+                if(is_numeric($v['score'])){
+                    $total_score += $v['score'];
+                }
+                if($v['is_blank'] == true){
+                    $is_blank = true;
+                }
+                if($v['is_abnormal'] == true){
+                    $is_abnormal = true;
+                }
+            }
+           $add_data = array(
+               'total_score' => $total_score,
+               'has_blank' => $is_blank,
+               'has_abnormal' => $is_abnormal,
+               'view_data' => $this->input_array['add_data'],
+           );
+            $m_tab = ($this->input_array['order']=='F')?'modify_id':'s_modify_id';
+            $v_tab = ($this->input_array['order']=='F')?'review_1':'review_2';
+            ListUnderTest::where($m_tab,$this->input_array['user_id'])
+                ->where('id',$this->input_array['id'])
+                ->where('reel_id',$this->input_array['reel_id'])
+                ->update([
+                $v_tab=>json_encode($add_data,JSON_UNESCAPED_UNICODE),
+                'has_review'=>1,
+            ]);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '新增成功!',
+            );
+        }
 
         return $this->msg;
     }
