@@ -100,11 +100,30 @@ class RvController extends Controller
     {
         $data = array();
         $data['reel_id'] = app('request')->get('id');
-        $data['user_id'] = 3;
+        $data['user_id'] = 1;
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 
         echo json_encode($t_obj->getReelTestData());
+    }
+
+    /**
+     * 新增一筆評閱資料
+     *
+     *
+     */
+    public function ScrollReelUpdate()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $data['user_id'] = 1;
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['order'] = app('request')->get('order');
+        $data['add_data'] = app('request')->get('add_data');
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->setViewData());
     }
 
     /**
