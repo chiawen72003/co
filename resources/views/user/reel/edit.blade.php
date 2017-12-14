@@ -420,6 +420,8 @@
                         'type':question_item[x]['type'],
                         'dsc':temp_data,
                         'agree':agree,
+                        'question_title':question_item[x]['question_title'],
+                        'type_title':question_item[x]['type_title'],
                         'max_score':question_item[x]['max_score'],
                     });
                 }
