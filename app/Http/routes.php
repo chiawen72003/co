@@ -78,6 +78,7 @@ Route::get('/Rv/Manual', ['as' => 'rv.manual', 'uses' => 'RvController@Manual'])
 
 //批閱者 注意事項
 Route::get('/Rv/Precautions', ['as' => 'rv.precautions', 'uses' => 'RvController@Precautions']);
+Route::get('/Rv/Precautions/Data', ['as' => 'rv.precautions.data', 'uses' => 'RvController@PrecautionsData']);
 
 //批閱者 線上閱卷
 Route::get('/Rv/Scroll', ['as' => 'rv.scroll', 'uses' => 'RvController@Scroll']);

@@ -8,6 +8,7 @@ use \Session;
 use \DB;
 use \Response;
 use App\Http\Providers\MeasuredItem;
+use App\Http\Providers\StructureItem;
 
 
 class RvController extends Controller
@@ -40,6 +41,20 @@ class RvController extends Controller
         $data = array();
 
         return view('revised.precautions.index', $data);
+    }
+
+
+    /**
+     * 注意事項的資料
+     *
+     *
+     */
+    public function PrecautionsData()
+    {
+        $question = new StructureItem();
+        $id = '1';
+
+        echo json_encode($question->getPrecautions($id));
     }
 
     /**
