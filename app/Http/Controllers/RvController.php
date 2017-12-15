@@ -9,7 +9,7 @@ use \DB;
 use \Response;
 use App\Http\Providers\MeasuredItem;
 use App\Http\Providers\StructureItem;
-
+use App\Http\Providers\UserItem;
 
 class RvController extends Controller
 {
@@ -184,10 +184,10 @@ class RvController extends Controller
      */
     public function UserData()
     {
-        $question = new StructureItem();
+        $user = new UserItem();
         $id = app('request')->get('id');
 
-        echo json_encode($question->getPrecautions($id));
+        echo json_encode($user->getReviewer($id));
     }
 
     /**
@@ -198,12 +198,12 @@ class RvController extends Controller
     public function UserUpdate()
     {
         $data = array();
-        $data['id'] = app('request')->get('id');
-        $data['dsc'] = app('request')->get('dsc');
-        $t_obj = new StructureItem();
+        $data['new_pw'] = app('request')->get('new_pw');
+        $data['id'] = 1;
+        $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->updatePrecautions());
+        echo json_encode($t_obj->setReviewerPw());
     }
 
     /**
