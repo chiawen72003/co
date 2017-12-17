@@ -313,6 +313,7 @@ class AdController extends Controller
         $data['type'] = app('request')->get('type');
         $data['type_title'] = app('request')->get('type_title');
         $data['dsc'] = app('request')->get('dsc');
+        $data['power'] = app('request')->get('power');
         $t_obj = new QuestionItem();
         $t_obj->init($data);
         echo json_encode($t_obj->addQuestion());
@@ -327,6 +328,7 @@ class AdController extends Controller
     {
         $data = array();
         $data['id'] = app('request')->get('id');
+        $data['power'] = app('request')->get('power');
         $data['question_title'] = app('request')->get('question_title');
         $data['type'] = app('request')->get('type');
         $data['type_title'] = app('request')->get('type_title');
