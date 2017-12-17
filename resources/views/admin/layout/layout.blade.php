@@ -29,12 +29,6 @@
         <div id="page-body" class="clearfix">
             <nav class="navigate">
                 <ul class="mainnav">
-                    <li id="li_school_subject">
-                        <a href="[! route('ma.subject') !]">
-                            <i class="mainnav-title-icon ion-android-add-circle"></i>
-                            新增學校/科系
-                        </a>
-                    </li>
                     <li class="hs-sub is-opened" >
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-people"></i>
@@ -42,6 +36,7 @@
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
+                            <li id="li_school_subject"><a href="[! route('ma.subject') !]">新增學校/科系</a></li>
                             <li id="li_school"><a href="[! route('ma.school') !]">匯入學校/代碼</a></li>
                             <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
                         </ul>
