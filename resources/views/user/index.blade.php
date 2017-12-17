@@ -12,10 +12,10 @@
                         使用者資訊
                     </div>
                     <ul>
-                        <li>學校：國立臺中教育大學</li>
+                        <li id="school_title">學校：國立臺中教育大學</li>
                         <li>身份：學生</li>
-                        <li>學號：ASC106102</li>
-                        <li>姓名：王曉明</li>
+                        <li id="school_id">學號：ASC106102</li>
+                        <li id="name">姓名：王曉明</li>
                     </ul>
                     <hr>
                     <div class="title">
@@ -34,8 +34,35 @@
     <script>
         var li_item = $('#li_index');
         var current = 'current';
+        var school_title = $('#school_title');
+        var school_id = $('#school_id');
+        var name_obj = $('#name');
+
         $( document ).ready(function() {
             li_item.addClass( current);
+            getData();
         });
+
+        function getData(){
+            $.ajax({
+                url: "[! route('ur.user.data') !]",
+                type:'GET',
+                dataType: "json",
+                data: {
+                    id:'1'
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    console.log(response);
+                    if(response['status'] == true){
+                        school_title.html('學校：' + response['data']['school_title']);
+                        school_id.html('學號：' + response['data']['student_id']);
+                        name_obj.html('姓名：' + response['data']['name']);
+                    }
+                }
+            });
+        }
     </script>
 @stop
