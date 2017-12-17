@@ -56,6 +56,11 @@ Route::get('/Ma/Precautions', ['as' => 'ma.precautions', 'uses' => 'AdController
 Route::get('/Ma/Precautions/Data', ['as' => 'ma.precautions.data', 'uses' => 'AdController@PrecautionsData']);
 Route::post('/Ma/Precautions/Update', ['as' => 'ma.precautions.update', 'uses' => 'AdController@PrecautionsUpdate']);
 
+//管理員 評閱者資料管理
+Route::get('/Ma/revised', ['as' => 'ma.revised', 'uses' => 'AdController@Revised']);
+Route::get('/Ma/revised/Data', ['as' => 'ma.revised.data', 'uses' => 'AdController@RevisedData']);
+Route::post('/Ma/revised/Add', ['as' => 'ma.revised.add', 'uses' => 'AdController@RevisedAdd']);
+
 
 //受測者 首頁
 Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
