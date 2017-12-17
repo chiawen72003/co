@@ -84,14 +84,22 @@ class UserItem
     public function getStudent()
     {
         $return_data = array();
-        $temp_obj = Student::select('login_name','login_pw','name')
-            ->where('id',1)
+        $temp_obj = Student::where('student.id',1)
+            ->leftJoin('school', 'school.id', '=', 'student.school_id')
+            ->select(
+                'student.login_name',
+                'student.login_pw','name',
+                'student.student_id',
+                'school.school_title'
+            )
             ->get();
         foreach($temp_obj as $v ){
             $return_data = array(
                 'login_name' => $v['login_name'],
                 'login_pw' => $v['login_pw'],
                 'name' => $v['name'],
+                'student_id' => $v['student_id'],
+                'school_title' => $v['school_title'],
             );
         }
 
