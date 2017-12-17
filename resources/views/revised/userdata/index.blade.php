@@ -66,7 +66,7 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    admin.val(response['data']['name']);
+                    admin.val(response['data']['login_name']);
                     pw = response['data']['login_pw'];
                 }
             }
