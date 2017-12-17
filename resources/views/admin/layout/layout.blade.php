@@ -29,7 +29,7 @@
         <div id="page-body" class="clearfix">
             <nav class="navigate">
                 <ul class="mainnav">
-                    <li class="hs-sub is-opened" >
+                    <li class="hs-sub" >
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             管理使用者
@@ -41,11 +41,17 @@
                             <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
-                    <li id="li_course">
-                        <a href="[! route('ma.course') !]">
+                    <li class="hs-sub">
+                        <a href="#">
                             <i class="mainnav-title-icon ion-ios-calculator"></i>
                             課程設定
+                            <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
+                        <ul class="mainnav-sub">
+                            <li id="li_course"><a href="[! route('ma.course') !]">新增課程</a></li>
+                            <li><a href="course-corres.html">課程與學員對應</a></li>
+                            <li><a href="course-control.html">課程與試卷存取控制</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="">
@@ -66,9 +72,9 @@
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
-                            <li id="li_unit"><a href="[! route('ma.unit') !]">建立單元結構</a></li>
-                            <li id="li_reel"><a href="[! route('ma.reel') !]">新增試卷</a></li>
-                            <li id="li_question"><a href="[! route('ma.question') !]">新增試題</a></li>
+                            <li id="li_unit"><a href="[! route('ma.unit') !]">單元結構管理</a></li>
+                            <li id="li_reel"><a href="[! route('ma.reel') !]">試卷管理</a></li>
+                            <li id="li_question"><a href="[! route('ma.question') !]">試題管理</a></li>
                         </ul>
                     </li>
                     <li>
@@ -96,6 +102,19 @@
         </div>
     </div>
     <div id="page-footer"></div>
+    <script>
+        $(document).ready(function(){
+            $('.hs-sub').click(function(event) {
+                var hsSub = $('.hs-sub');
+
+                hsSub.not(this).each(function(index, el) {
+                    $(this).removeClass('is-opened');
+                });
+
+                $(this).toggleClass('is-opened');
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
