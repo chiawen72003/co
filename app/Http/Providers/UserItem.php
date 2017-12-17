@@ -91,6 +91,62 @@ class UserItem
     }
 
     /**
+     * 取得 單一評閱者資料
+     *
+     */
+    public function getRevised()
+    {
+        $return_data = array();
+        $temp_obj = Revised::select(
+            'id',
+            'login_name',
+            'login_pw',
+            'name',
+            'school_id'
+        )
+            ->where('id', $this->input_array['id'])
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data = array(
+                'id' => $v['id'],
+                'login_name' => $v['login_name'],
+                'login_pw' => $v['login_pw'],
+                'name' => $v['name'],
+                'school_id' => $v['school_id']
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 新增 所有評閱者資料
+     *
+     */
+    public function addRevised()
+    {
+        $update = new Revised();
+        $update->login_name = $this->input_array['login_name'];
+        $update->login_pw = $this->input_array['login_pw'];
+        $update->school_id = $this->input_array['school_id'];
+        $update->name = $this->input_array['name'];
+        $update->save();
+        $getID  = $update->id;
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 更新 評閱者密碼資料
      *
      */
