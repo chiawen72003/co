@@ -39,7 +39,7 @@
                 <i class="ion-information-circled"></i>
                 已新增評閱者
                 <div class="title-right">
-                    <a href="[! route('ma.question.pg.add') !]" class="i-add i-btn-primary"><i class="ion-android-add"></i>新增評閱者</a>
+                    <a href="[! route('ma.revised.add.pg') !]" class="i-add i-btn-primary"><i class="ion-android-add"></i>新增評閱者</a>
                 </div>
             </div>
             <div class="table-wrapper">
@@ -120,7 +120,7 @@
 
     function getRevisedData() {
         $.ajax({
-            url: "[! route('ma.revised.data') !]",
+            url: "[! route('ma.revised.list') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -160,7 +160,7 @@
     function setRevisedList() {
         for(var x=0;x<revised_item.length;x++){
             var t = tr_item.clone();
-            var a = "[! route('ma.question.pg.edit') !]?id="+ revised_item[x]['id'];
+            var a = "[! route('ma.revised.edit.pg') !]?id="+ revised_item[x]['id'];
             var r = revised_item[x]['login_name'];
             var n = revised_item[x]['name'];
             var s = '';
