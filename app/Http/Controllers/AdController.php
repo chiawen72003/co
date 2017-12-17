@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Providers\UserItem;
 use \Input;
 use \Validator;
 use \Session;
@@ -383,4 +384,47 @@ class AdController extends Controller
 
         echo json_encode($t_obj->updatePrecautions());
     }
+
+    /**
+     * 評閱者資料管理
+     *
+     *
+     */
+    public function Revised()
+    {
+        $data = array();
+
+        return view('admin.revised.index', $data);
+    }
+
+    /**
+     * 所有評閱者資料的資料
+     *
+     *
+     */
+    public function RevisedData()
+    {
+        $revised = new UserItem();
+
+        echo json_encode($revised->getAllRevised());
+    }
+
+    /**
+     * 新增評閱者資料
+     *
+     *
+     */
+    public function RevisedAdd()
+    {
+        $data = array();
+        $data['version'] = app('request')->get('version');
+        $data['subject'] = app('request')->get('subject');
+        $data['book'] = app('request')->get('book');
+        $data['unit'] = app('request')->get('unit');
+        $data['reel_title'] = app('request')->get('reel_title');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+        echo json_encode($t_obj->addReel());
+    }
+
 }
