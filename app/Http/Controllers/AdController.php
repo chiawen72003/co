@@ -404,11 +404,37 @@ class AdController extends Controller
      *
      *
      */
-    public function RevisedData()
+    public function RevisedList()
     {
         $revised = new UserItem();
 
         echo json_encode($revised->getAllRevised());
+    }
+
+    /**
+     * 單一評閱者資料的資料
+     *
+     *
+     */
+    public function RevisedData()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->getRevised());
+    }
+    /**
+     * 新增評閱者資料的編輯頁面
+     *
+     *
+     */
+    public function RevisedAddPg()
+    {
+        $data = array();
+
+        return view('admin.revised.add', $data);
     }
 
     /**
@@ -419,14 +445,46 @@ class AdController extends Controller
     public function RevisedAdd()
     {
         $data = array();
-        $data['version'] = app('request')->get('version');
-        $data['subject'] = app('request')->get('subject');
-        $data['book'] = app('request')->get('book');
-        $data['unit'] = app('request')->get('unit');
-        $data['reel_title'] = app('request')->get('reel_title');
-        $t_obj = new StructureItem();
+        $data['login_name'] = app('request')->get('login_name');
+        $data['login_pw'] = app('request')->get('login_pw');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['name'] = app('request')->get('name');
+        $t_obj = new UserItem();
         $t_obj->init($data);
-        echo json_encode($t_obj->addReel());
+
+        echo json_encode($t_obj->addRevised());
     }
 
+    /**
+     * 編輯評閱者資料的編輯頁面
+     *
+     *
+     */
+    public function RevisedEditPg()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+
+        return view('admin.revised.edit', $data);
+    }
+
+
+    /**
+     * 更新評閱者資料
+     *
+     *
+     */
+    public function RevisedUpdate()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $data['login_name'] = app('request')->get('login_name');
+        $data['login_pw'] = app('request')->get('login_pw');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['name'] = app('request')->get('name');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->updateRevised());
+    }
 }
