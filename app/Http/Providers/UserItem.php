@@ -59,6 +59,38 @@ class UserItem
     }
 
     /**
+     * 取得 所有評閱者資料
+     *
+     */
+    public function getAllRevised()
+    {
+        $return_data = array();
+        $temp_obj = Revised::select(
+                'id',
+                'login_name',
+                'name',
+                'school_id'
+            )
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = array(
+                'id' => $v['id'],
+                'login_name' => $v['login_name'],
+                'name' => $v['name'],
+                'school_id' => $v['school_id']
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 更新 評閱者密碼資料
      *
      */
@@ -130,4 +162,6 @@ class UserItem
 
         return $this->msg;
     }
+
+
 }
