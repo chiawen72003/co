@@ -17,6 +17,17 @@ Route::pattern('uid', '[0-9]+');
 |
 */
 
+//管理員 登入-登出
+Route::get('/Ma/Login', ['as' => 'ma.login', 'uses' => 'AdController@Login']);
+Route::post('/Ma/Login/Chk', ['as' => 'ma.login.chk', 'uses' => 'AdController@LoginChk']);
+Route::get('/Ma/Logout', ['as' => 'ma.logout', 'uses' => 'AdController@Logout']);
+
+//管理員 最新消息
+Route::get('/Ma/News', ['as' => 'ma.news', 'uses' => 'AdController@News']);
+Route::get('/Ma/News/list', ['as' => 'ma.news.list', 'uses' => 'AdController@NewsList']);
+Route::post('/Ma/News/Add', ['as' => 'ma.news.add', 'uses' => 'AdController@NewsAdd']);
+Route::post('/Ma/News/Update', ['as' => 'ma.news.update', 'uses' => 'AdController@NewsUpdate']);
+
 //管理員 學校-科系
 Route::get('/Ma/Subject', ['as' => 'ma.subject', 'uses' => 'AdController@SchoolSubject']);
 Route::get('/Ma/Subject/list', ['as' => 'ma.subject.list', 'uses' => 'AdController@SchoolSubjectList']);
