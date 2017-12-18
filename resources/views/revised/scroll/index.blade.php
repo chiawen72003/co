@@ -11,9 +11,9 @@
                     每天首次登入批改，請先進行閱卷訓練。
                 </div>
                 <ul class="bigLink-list mt1 clearfix">
-                    <li><a href="">參考樣卷</a></li>
-                    <li><a href="quiz.html">閱卷訓練</a></li>
-                    <li><a href="quiz.html">開始批改</a></li>
+                    <li><a href="#">參考樣卷</a></li>
+                    <li><a href="#">閱卷訓練</a></li>
+                    <li><a href="[! route('rv.scroll.reel.pg') !]">開始批改</a></li>
                 </ul>
             </div>
         </div>
