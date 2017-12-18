@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Providers\ModifyItem;
 use \Input;
 use \Validator;
 use \Session;
@@ -86,12 +87,29 @@ class RvController extends Controller
      *
      *
      */
-    public function ScrollReelList()
+    public function ScrollReelPg()
     {
         $data = array();
 
-        return view('revised.reel.index', $data);
+        return view('revised.scroll.list', $data);
     }
+
+
+    /**
+     * 試卷選擇頁面的資料
+     *
+     *
+     */
+    public function ScrollReelList()
+    {
+        $question = new ModifyItem();
+        $question->init(array(
+            'id' => 1,
+        ));
+
+        echo json_encode($question->getReelList());
+    }
+
 
     /**
      * 批改試卷資料
