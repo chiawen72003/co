@@ -7,20 +7,19 @@
     <div class="article-content">
         <div class="article-content-header">
             <form>
+                <label class="i-label">區域</label>
+                <select id="area">
+                    <option value="1">北區</option>
+                    <option value="2">桃竹苗區</option>
+                    <option value="3">中區</option>
+                    <option value="4">雲嘉南區</option>
+                    <option value="5">高屏東區</option>
+                    <option value="6">外島</option>
+                </select>
                 <label class="i-label">學校名稱</label>
                 <input type="text" class="i-input" id="school_title">
                 <label class="i-label">代碼</label>
                 <input type="text" class="i-input" id="code">
-                <label class="i-label">區域</label>
-                <select id="area">
-                    <option value="1">北一區</option>
-                    <option value="2">北二區</option>
-                    <option value="3">桃竹苗區</option>
-                    <option value="4">中區</option>
-                    <option value="5">雲嘉南區</option>
-                    <option value="6">高屏區</option>
-                    <option value="7">東區</option>
-                </select>
                 <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="addSchool()">
                     <i class="ion-android-add"></i>
                     新增
@@ -36,6 +35,9 @@
                 <table class="table" id="school_list">
                     <tr>
                         <th width="120">
+                            <div class="cell center">區域</div>
+                        </th>
+                        <th width="120">
                             <div class="cell center">學校代碼</div>
                         </th>
                         <th>
@@ -50,6 +52,7 @@
 </div>
 <table style="display: none">
     <tr id="copy_tr" >
+        <td><div class="cell center" id="side_area"></div></td>
         <td><div class="cell center" id="code_area"></div></td>
         <td><div class="cell"  id="name_area"></div></td>
     </tr>
@@ -61,6 +64,7 @@
     var tr_item = $('#copy_tr');
     var current = 'current';
     var school_item = [];
+    var area = $('#area');
     $( document ).ready(function() {
         li_item.addClass( current);
         getListData();
@@ -97,8 +101,10 @@
     function setList() {
         for(var x=0;x<school_item.length;x++){
             var t = tr_item.clone();
+            var area_dsc = $("#area option[value='"+school_item[x]['area']+"']").text();
             t.find('#code_area').html(school_item[x]['code']).removeAttr('id');
             t.find('#name_area').html(school_item[x]['school_title']).removeAttr('id');
+            t.find('#side_area').html(area_dsc).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -131,8 +137,9 @@
                                 'school_title':response['school_title']
                             }
                         );
-                        addList(response['school_title'],response['code']);
+                        //addList(response['school_title'],response['code']);
                         alert(response['msg']);
+                        location.reload();
                     }
                     isSend = false;
                 }

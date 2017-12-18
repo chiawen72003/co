@@ -56,6 +56,15 @@ Route::get('/Ma/Precautions', ['as' => 'ma.precautions', 'uses' => 'AdController
 Route::get('/Ma/Precautions/Data', ['as' => 'ma.precautions.data', 'uses' => 'AdController@PrecautionsData']);
 Route::post('/Ma/Precautions/Update', ['as' => 'ma.precautions.update', 'uses' => 'AdController@PrecautionsUpdate']);
 
+//管理員 評閱者資料管理
+Route::get('/Ma/revised', ['as' => 'ma.revised', 'uses' => 'AdController@Revised']);
+Route::get('/Ma/revised/List', ['as' => 'ma.revised.list', 'uses' => 'AdController@RevisedList']);
+Route::get('/Ma/revised/Data', ['as' => 'ma.revised.data', 'uses' => 'AdController@RevisedData']);
+Route::get('/Ma/revised/Add/Pg', ['as' => 'ma.revised.add.pg', 'uses' => 'AdController@RevisedAddPg']);
+Route::get('/Ma/revised/Edit/Pg', ['as' => 'ma.revised.edit.pg', 'uses' => 'AdController@RevisedEditPg']);
+Route::post('/Ma/revised/Add', ['as' => 'ma.revised.add', 'uses' => 'AdController@RevisedAdd']);
+Route::post('/Ma/revised/Update', ['as' => 'ma.revised.update', 'uses' => 'AdController@RevisedUpdate']);
+
 
 //受測者 首頁
 Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
@@ -78,6 +87,7 @@ Route::get('/Rv/Manual', ['as' => 'rv.manual', 'uses' => 'RvController@Manual'])
 
 //批閱者 注意事項
 Route::get('/Rv/Precautions', ['as' => 'rv.precautions', 'uses' => 'RvController@Precautions']);
+Route::get('/Rv/Precautions/Data', ['as' => 'rv.precautions.data', 'uses' => 'RvController@PrecautionsData']);
 
 //批閱者 線上閱卷
 Route::get('/Rv/Scroll', ['as' => 'rv.scroll', 'uses' => 'RvController@Scroll']);
@@ -90,6 +100,7 @@ Route::get('/Rv/Scroll/Reel/list', ['as' => 'rv.scroll.reel.list', 'uses' => 'Rv
 //批閱者 開始批改 批改試卷資料
 Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
 Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'RvController@ScrollReelData']);
+Route::post('/Rv/Scroll/Reel/Update', ['as' => 'rv.scroll.reel.update', 'uses' => 'RvController@ScrollReelUpdate']);
 
 //批閱者 批改統計
 Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);

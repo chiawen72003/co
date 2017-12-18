@@ -29,28 +29,29 @@
         <div id="page-body" class="clearfix">
             <nav class="navigate">
                 <ul class="mainnav">
-                    <li id="li_school_subject">
-                        <a href="[! route('ma.subject') !]">
-                            <i class="mainnav-title-icon ion-android-add-circle"></i>
-                            新增學校/科系
-                        </a>
-                    </li>
-                    <li class="hs-sub is-opened" >
+                    <li class="hs-sub" >
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             管理使用者
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
+                            <li id="li_school_subject"><a href="[! route('ma.subject') !]">新增學校/科系</a></li>
                             <li id="li_school"><a href="[! route('ma.school') !]">匯入學校/代碼</a></li>
                             <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
-                    <li id="li_course">
-                        <a href="[! route('ma.course') !]">
+                    <li class="hs-sub">
+                        <a href="#">
                             <i class="mainnav-title-icon ion-ios-calculator"></i>
                             課程設定
+                            <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
+                        <ul class="mainnav-sub">
+                            <li id="li_course"><a href="[! route('ma.course') !]">新增課程</a></li>
+                            <li><a href="course-corres.html">課程與學員對應</a></li>
+                            <li><a href="course-control.html">課程與試卷存取控制</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="">
@@ -71,16 +72,20 @@
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
-                            <li id="li_unit"><a href="[! route('ma.unit') !]">建立單元結構</a></li>
-                            <li id="li_reel"><a href="[! route('ma.reel') !]">新增試卷</a></li>
-                            <li id="li_question"><a href="[! route('ma.question') !]">新增試題</a></li>
+                            <li id="li_unit"><a href="[! route('ma.unit') !]">單元結構管理</a></li>
+                            <li id="li_reel"><a href="[! route('ma.reel') !]">試卷管理</a></li>
+                            <li id="li_question"><a href="[! route('ma.question') !]">試題管理</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="hs-sub is-opened">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-book-outline"></i>
                             批改管理
                         </a>
+                        <ul class="mainnav-sub">
+                            <li id="li_revised"><a href="[! route('ma.revised') !]">評閱者資料管理</a></li>
+                            <li id="li_reel_modify"><a href="[! route('ma.reel') !]">派卷管理</a></li>
+                        </ul>
                     </li>
                     <li id="li_precautions">
                         <a href="[! route('ma.precautions') !]">
@@ -101,6 +106,19 @@
         </div>
     </div>
     <div id="page-footer"></div>
+    <script>
+        $(document).ready(function(){
+            $('.hs-sub').click(function(event) {
+                var hsSub = $('.hs-sub');
+
+                hsSub.not(this).each(function(index, el) {
+                    $(this).removeClass('is-opened');
+                });
+
+                $(this).toggleClass('is-opened');
+            });
+        });
+    </script>
 </div>
 </body>
 </html>

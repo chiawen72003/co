@@ -14,26 +14,23 @@
                     <div class="i-form mt1">
                         <div class="form-group">
                             <label class="i-label">帳號</label>
-                            <input type="text" class="i-input" value="admin" disabled>
+                            <input type="text" class="i-input" id="admin" disabled>
                         </div>
                         <div class="form-group">
                             <label class="i-label">輸入舊密碼</label>
-                            <input type="password" class="i-input">
+                            <input type="password" class="i-input" id="old_pw">
                         </div>
                         <div class="form-group">
                             <label class="i-label">輸入新密碼</label>
-                            <input type="password" class="i-input">
+                            <input type="password" class="i-input" id="new_pw">
                         </div>
                         <div class="form-group">
                             <label class="i-label">驗證新密碼</label>
-                            <input type="password" class="i-input">
+                            <input type="password" class="i-input" id="new_pw_r">
                         </div>
                         <div class="form-group form-bottom">
-                            <button type="button" class="i-btn">
-                                取消
-                            </button>
-                            <button type="button" class="i-btn i-btn-primary">
-                                新增
+                            <button type="button" class="i-btn i-btn-primary" onclick="send_data()">
+                                更新
                             </button>
                         </div>
                     </div>
@@ -45,8 +42,102 @@
 <script>
     var li_item = $('#li_user');
     var current = 'current';
+    var admin =$('#admin');
+    var pw = '';
+    var o_pw = $('#old_pw');
+    var n_pw = $('#new_pw');
+    var n_pw_r = $('#new_pw_r');
+
     $( document ).ready(function() {
         li_item.addClass( current);
+        getData();
     });
+
+    function getData(){
+        $.ajax({
+            url: "[! route('rv.user.data') !]",
+            type:'GET',
+            dataType: "json",
+            data: {
+                id:'1'
+            },
+            error: function(xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function(response) {
+                if(response['status'] == true){
+                    admin.val(response['data']['login_name']);
+                    pw = response['data']['login_pw'];
+                }
+            }
+        });
+    }
+
+    //上傳資料
+    var is_send = false;
+    function send_data()
+    {
+        console.log('in');
+        if(!is_send && chkInput()){
+            is_send = true;
+            $.ajax({
+                url: "[! route('rv.user.update') !]",
+                type:'POST',
+                dataType: "json",
+                data: {
+                    _token: '[! csrf_token() !]',
+                    new_pw:$('#new_pw').val(),
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    if(response['status'] == true){
+                         alert(response['msg']);
+                    }
+                    clearData();
+                    is_send = false;
+                }
+            });
+        }
+    }
+
+    function chkInput(){
+        var msg = '';
+        if(o_pw.val() == ''){
+            msg = msg + '請輸入舊密碼!!\r\n';
+        }else{
+            if(o_pw.val() != pw){
+                msg = msg + '舊密碼不一致!!\r\n';
+            }
+        }
+        if(n_pw.val() == ''){
+            msg = msg + '請輸入新密碼!!\r\n';
+        }else{
+            if(n_pw.val() != n_pw_r.val()){
+                msg = msg + '新密碼不一致!!\r\n';
+            }
+        }
+        if(msg == '' && n_pw.val() == o_pw.val()){
+            msg = msg + '新舊密碼不能一樣!!\r\n';
+        }
+
+        if(msg == ''){
+            pw = n_pw.val();
+            return true;
+        }
+        alert(msg);
+
+        return false;
+    }
+
+    /**
+     * 重製輸入區
+     */
+    function clearData() {
+        o_pw.val('');
+        n_pw.val('');
+        n_pw_r.val('');
+    }
 </script>
 @stop

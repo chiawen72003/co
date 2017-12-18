@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Providers\UserItem;
 use \Input;
 use \Validator;
 use \Session;
@@ -312,6 +313,7 @@ class AdController extends Controller
         $data['type'] = app('request')->get('type');
         $data['type_title'] = app('request')->get('type_title');
         $data['dsc'] = app('request')->get('dsc');
+        $data['power'] = app('request')->get('power');
         $t_obj = new QuestionItem();
         $t_obj->init($data);
         echo json_encode($t_obj->addQuestion());
@@ -326,6 +328,7 @@ class AdController extends Controller
     {
         $data = array();
         $data['id'] = app('request')->get('id');
+        $data['power'] = app('request')->get('power');
         $data['question_title'] = app('request')->get('question_title');
         $data['type'] = app('request')->get('type');
         $data['type_title'] = app('request')->get('type_title');
@@ -382,5 +385,106 @@ class AdController extends Controller
         $t_obj->init($data);
 
         echo json_encode($t_obj->updatePrecautions());
+    }
+
+    /**
+     * 評閱者資料管理
+     *
+     *
+     */
+    public function Revised()
+    {
+        $data = array();
+
+        return view('admin.revised.index', $data);
+    }
+
+    /**
+     * 所有評閱者資料的資料
+     *
+     *
+     */
+    public function RevisedList()
+    {
+        $revised = new UserItem();
+
+        echo json_encode($revised->getAllRevised());
+    }
+
+    /**
+     * 單一評閱者資料的資料
+     *
+     *
+     */
+    public function RevisedData()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->getRevised());
+    }
+    /**
+     * 新增評閱者資料的編輯頁面
+     *
+     *
+     */
+    public function RevisedAddPg()
+    {
+        $data = array();
+
+        return view('admin.revised.add', $data);
+    }
+
+    /**
+     * 新增評閱者資料
+     *
+     *
+     */
+    public function RevisedAdd()
+    {
+        $data = array();
+        $data['login_name'] = app('request')->get('login_name');
+        $data['login_pw'] = app('request')->get('login_pw');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['name'] = app('request')->get('name');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->addRevised());
+    }
+
+    /**
+     * 編輯評閱者資料的編輯頁面
+     *
+     *
+     */
+    public function RevisedEditPg()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+
+        return view('admin.revised.edit', $data);
+    }
+
+
+    /**
+     * 更新評閱者資料
+     *
+     *
+     */
+    public function RevisedUpdate()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $data['login_name'] = app('request')->get('login_name');
+        $data['login_pw'] = app('request')->get('login_pw');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['name'] = app('request')->get('name');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->updateRevised());
     }
 }

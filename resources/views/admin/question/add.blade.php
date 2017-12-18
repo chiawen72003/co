@@ -15,13 +15,27 @@
                         <label class="i-label">區塊標題</label>
                         <input class="i-input" value="" id="question_title">
                     </div>
-                    <label class="i-label">試題類型</label>
-                    <select class="i-select" id="type" onchange="showTypeTitle()">
-                        <option value="1">一大區塊</option>
-                        <option value="2">一大區塊，包含同意選項</option>
-                        <option value="3">三大區塊</option>
-                        <option value="4">四大區塊</option>
-                    </select>
+                    <div class="form-group">
+                        <label class="i-label">能力指標</label>
+                        <select class="i-select" id="power" >
+                            <option value="1">3-1能書寫切合功能性寫作文本目的的內容</option>
+                            <option value="2">3-2能寫出切合功能性寫作文本語意清楚、語用正確、組織有條理的內容</option>
+                            <option value="3">3-3能書寫切合批判性寫作文本目的的內容</option>
+                            <option value="4">3-4能寫出切合批判性寫作文本語意清楚、語用正確、組織有條理的內容</option>
+                            <option value="5">3-5能針對批判性寫作文本之特定議題寫出個人立場或想法</option>
+                            <option value="6">3-6能整合與評估批判性寫作文本特定議題的兩方觀點並寫出來</option>
+                            <option value="7">3-7能針對命題寫出個人之經歷與感受</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="i-label">試題類型</label>
+                        <select class="i-select" id="type" onchange="showTypeTitle()">
+                            <option value="1">一大區塊</option>
+                            <option value="2">一大區塊，包含同意選項</option>
+                            <option value="3">三大區塊</option>
+                            <option value="4">四大區塊</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group" id="type_title_1">
                     <div class="form-group">
@@ -135,6 +149,7 @@
                         type:$('#type').val(),
                         type_title:type_titles,
                         dsc:CKEDITOR.instances.dsc.getData(),
+                        power:$('#power').val(),
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');

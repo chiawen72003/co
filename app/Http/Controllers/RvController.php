@@ -8,7 +8,8 @@ use \Session;
 use \DB;
 use \Response;
 use App\Http\Providers\MeasuredItem;
-
+use App\Http\Providers\StructureItem;
+use App\Http\Providers\UserItem;
 
 class RvController extends Controller
 {
@@ -40,6 +41,20 @@ class RvController extends Controller
         $data = array();
 
         return view('revised.precautions.index', $data);
+    }
+
+
+    /**
+     * 注意事項的資料
+     *
+     *
+     */
+    public function PrecautionsData()
+    {
+        $question = new StructureItem();
+        $id = '1';
+
+        echo json_encode($question->getPrecautions($id));
     }
 
     /**
@@ -92,7 +107,7 @@ class RvController extends Controller
     }
 
     /**
-     * 隨機取得一個指定試卷受測的資料
+     * 隨機取得一個試卷受測的資料
      *
      *
      */
@@ -100,10 +115,30 @@ class RvController extends Controller
     {
         $data = array();
         $data['reel_id'] = app('request')->get('id');
+        $data['user_id'] = 1;
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 
         echo json_encode($t_obj->getReelTestData());
+    }
+
+    /**
+     * 新增一筆評閱資料
+     *
+     *
+     */
+    public function ScrollReelUpdate()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $data['user_id'] = 1;
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['order'] = app('request')->get('order');
+        $data['add_data'] = app('request')->get('add_data');
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->setViewData());
     }
 
     /**
@@ -149,10 +184,10 @@ class RvController extends Controller
      */
     public function UserData()
     {
-        $question = new StructureItem();
+        $user = new UserItem();
         $id = app('request')->get('id');
 
-        echo json_encode($question->getPrecautions($id));
+        echo json_encode($user->getReviewer($id));
     }
 
     /**
@@ -163,12 +198,12 @@ class RvController extends Controller
     public function UserUpdate()
     {
         $data = array();
-        $data['id'] = app('request')->get('id');
-        $data['dsc'] = app('request')->get('dsc');
-        $t_obj = new StructureItem();
+        $data['new_pw'] = app('request')->get('new_pw');
+        $data['id'] = 1;
+        $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->updatePrecautions());
+        echo json_encode($t_obj->setReviewerPw());
     }
 
     /**

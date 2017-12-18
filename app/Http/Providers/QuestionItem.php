@@ -58,7 +58,7 @@ class QuestionItem
     public function getQuestionByID($id)
     {
         $return_data = array();
-        $temp_obj = Questions::select('id', 'question_title', 'type', 'type_title', 'dsc')
+        $temp_obj = Questions::select('id', 'power', 'question_title', 'type', 'type_title', 'dsc')
             ->where('id',$id)
             ->get();
         foreach ($temp_obj as $v) {
@@ -84,6 +84,7 @@ class QuestionItem
         $update->type = $this->input_array['type'];
         $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
         $update->question_title = $this->input_array['question_title'];
+        $update->power = $this->input_array['power'];
         $update->dsc = $this->input_array['dsc'];
         $update->save();
         $this->msg = array(
@@ -106,6 +107,7 @@ class QuestionItem
             $update->question_title = $this->input_array['question_title'];
             $update->type = $this->input_array['type'];
             $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
+            $update->power = $this->input_array['power'];
             $update->dsc = $this->input_array['dsc'];
             $update->save();
             $this->msg = array(
