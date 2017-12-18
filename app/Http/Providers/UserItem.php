@@ -30,7 +30,6 @@ class UserItem
         }
     }
 
-
     /**
      * 管理員登入檢查
      *
@@ -54,6 +53,24 @@ class UserItem
                 'redir' => route('ma.subject'),
             );
         }
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 管理員登出
+     *
+     */
+    public function adminLogout()
+    {
+        app('request')->session()->flush();
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '已經登出!!',
+            'redir' => route('ma.login'),
+        );
 
         return $this->msg;
     }
