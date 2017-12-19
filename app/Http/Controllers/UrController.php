@@ -13,10 +13,12 @@ use App\Http\Providers\UserItem;
 
 class UrController extends Controller
 {
+    private $data =array();
 
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->data['user_name'] = app('request')->session()->get('name');
+        $this->data['user_id'] = app('request')->session()->get('user_id');
     }
 
     /**
@@ -26,9 +28,8 @@ class UrController extends Controller
      */
     public function Index()
     {
-        $data = array();
 
-        return view('user.index', $data);
+        return view('user.index', $this->data);
     }
 
     /**
@@ -38,9 +39,8 @@ class UrController extends Controller
      */
     public function User()
     {
-        $data = array();
 
-        return view('user.userdata.index', $data);
+        return view('user.userdata.index', $this->data);
     }
 
     /**
@@ -51,7 +51,7 @@ class UrController extends Controller
     public function UserData()
     {
         $user = new UserItem();
-        $id = app('request')->get('id');
+        $id = $this->data['user_id'];
 
         echo json_encode($user->getStudent($id));
     }
@@ -65,7 +65,7 @@ class UrController extends Controller
     {
         $data = array();
         $data['new_pw'] = app('request')->get('new_pw');
-        $data['id'] = 1;
+        $data['id'] = $this->data['user_id'];
         $t_obj = new UserItem();
         $t_obj->init($data);
 
@@ -79,9 +79,8 @@ class UrController extends Controller
      */
     public function Reel()
     {
-        $data = array();
 
-        return view('user.reel.index', $data);
+        return view('user.reel.index', $this->data);
     }
 
     /**
@@ -92,8 +91,7 @@ class UrController extends Controller
     public function ReelList()
     {
         $reel = new MeasuredItem();
-        $id = app('request')->get('id');
-        $id = 1;
+        $id = $this->data['user_id'];
 
         echo json_encode($reel->getMeasured($id));
     }
@@ -135,7 +133,7 @@ class UrController extends Controller
     public function ReelAdd()
     {
         $data = array();
-        $data['user_id'] = 1;
+        $data['user_id'] = $this->data['user_id'];
         $data['reel_id'] = app('request')->get('reel_id');
         $data['add_data'] = app('request')->get('add_data');
         $t_obj = new MeasuredItem();
