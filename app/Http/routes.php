@@ -17,10 +17,10 @@ Route::pattern('uid', '[0-9]+');
 |
 */
 
-//管理員 登入-登出
-Route::get('/Ma/Login', ['as' => 'ma.login', 'uses' => 'AdController@Login']);
-Route::post('/Ma/Login/Chk', ['as' => 'ma.login.chk', 'uses' => 'AdController@LoginChk']);
-Route::get('/Ma/Logout', ['as' => 'ma.logout', 'uses' => 'AdController@Logout']);
+//首頁 登入頁面
+Route::get('/', ['as' => 'member.login', 'uses' => 'MemController@Login']);
+Route::get('/Logout', ['as' => 'member.logout', 'uses' => 'MemController@Logout']);
+Route::post('/Login/Chk', ['as' => 'member.login.chk', 'uses' => 'MemController@LoginChk']);
 
 //管理員 最新消息
 Route::get('/Ma/News', ['as' => 'ma.news', 'uses' => 'AdController@News']);
