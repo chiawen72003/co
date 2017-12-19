@@ -14,10 +14,12 @@ use App\Http\Providers\UserItem;
 
 class RvController extends Controller
 {
+    private $data =array();
 
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->data['user_name'] = app('request')->session()->get('name');
+        $this->data['user_id'] = app('request')->session()->get('user_id');
     }
 
     /**
@@ -27,9 +29,8 @@ class RvController extends Controller
      */
     public function Manual()
     {
-        $data = array();
 
-        return view('revised.manual.index', $data);
+        return view('revised.manual.index', $this->data);
     }
 
     /**
@@ -39,9 +40,8 @@ class RvController extends Controller
      */
     public function Precautions()
     {
-        $data = array();
 
-        return view('revised.precautions.index', $data);
+        return view('revised.precautions.index', $this->data);
     }
 
 
@@ -65,9 +65,8 @@ class RvController extends Controller
      */
     public function Scroll()
     {
-        $data = array();
 
-        return view('revised.scroll.index', $data);
+        return view('revised.scroll.index', $this->data);
     }
 
     /**
@@ -77,9 +76,8 @@ class RvController extends Controller
      */
     public function ScrollDemo()
     {
-        $data = array();
 
-        return view('revised.scroll.index', $data);
+        return view('revised.scroll.index', $this->data);
     }
 
     /**
@@ -89,9 +87,8 @@ class RvController extends Controller
      */
     public function ScrollReelPg()
     {
-        $data = array();
 
-        return view('revised.scroll.list', $data);
+        return view('revised.scroll.list', $this->data);
     }
 
 
@@ -104,7 +101,7 @@ class RvController extends Controller
     {
         $question = new ModifyItem();
         $question->init(array(
-            'id' => 1,
+            'id' => $this->data['user_id'],
         ));
 
         echo json_encode($question->getReelList());
@@ -118,10 +115,9 @@ class RvController extends Controller
      */
     public function ScrollReelView($id)
     {
-        $data = array();
-        $data['id'] = $id;
+        $this->data['id'] = $id;
 
-        return view('revised.reel.view', $data);
+        return view('revised.reel.view', $this->data);
     }
 
     /**
@@ -133,7 +129,7 @@ class RvController extends Controller
     {
         $data = array();
         $data['reel_id'] = app('request')->get('id');
-        $data['user_id'] = 1;
+        $data['user_id'] = $this->data['user_id'];
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 
@@ -149,7 +145,7 @@ class RvController extends Controller
     {
         $data = array();
         $data['id'] = app('request')->get('id');
-        $data['user_id'] = 1;
+        $data['user_id'] = $this->data['user_id'];
         $data['reel_id'] = app('request')->get('reel_id');
         $data['order'] = app('request')->get('order');
         $data['add_data'] = app('request')->get('add_data');
@@ -166,9 +162,8 @@ class RvController extends Controller
      */
     public function Statistics()
     {
-        $data = array();
 
-        return view('revised.statistics.index', $data);
+        return view('revised.statistics.index', $this->data);
     }
 
     /**
@@ -178,9 +173,8 @@ class RvController extends Controller
      */
     public function ScrollTraining()
     {
-        $data = array();
 
-        return view('revised.statistics.index', $data);
+        return view('revised.statistics.index', $this->data);
     }
 
     /**
@@ -190,9 +184,8 @@ class RvController extends Controller
      */
     public function User()
     {
-        $data = array();
 
-        return view('revised.userdata.index', $data);
+        return view('revised.userdata.index', $this->data);
     }
 
     /**
@@ -203,7 +196,7 @@ class RvController extends Controller
     public function UserData()
     {
         $user = new UserItem();
-        $id = app('request')->get('id');
+        $id = $this->data['user_id'];
 
         echo json_encode($user->getReviewer($id));
     }
@@ -217,7 +210,7 @@ class RvController extends Controller
     {
         $data = array();
         $data['new_pw'] = app('request')->get('new_pw');
-        $data['id'] = 1;
+        $data['id'] = $this->data['user_id'];
         $t_obj = new UserItem();
         $t_obj->init($data);
 
@@ -231,8 +224,7 @@ class RvController extends Controller
      */
     public function Files()
     {
-        $data = array();
 
-        return view('revised.files.index', $data);
+        return view('revised.files.index', $this->data);
     }
 }
