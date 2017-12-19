@@ -18,7 +18,7 @@
                 <span>姓名：王曉明</span>
             </div>
             <div class="setting-logout">
-                <a href="">
+                <a onclick="logout()">
                     <i class="ion-log-out"></i>
                     登出
                 </a>
@@ -54,5 +54,27 @@
         </div>
     </div>
 </div>
+<script>
+    function logout() {
+        $.ajax({
+            url: "[! route('member.logout') !]",
+            type:'GET',
+            dataType: "json",
+            data: {
+            },
+            error: function(xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function(response)
+            {
+                if(response['status'] == true)
+                {
+                    alert(response['msg']);
+                    location.replace(response['redir']);
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

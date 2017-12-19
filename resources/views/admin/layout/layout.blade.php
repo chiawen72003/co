@@ -121,7 +121,7 @@
 
         function logout() {
             $.ajax({
-                url: "[! route('ma.logout') !]",
+                url: "[! route('member.logout') !]",
                 type:'GET',
                 dataType: "json",
                 data: {
