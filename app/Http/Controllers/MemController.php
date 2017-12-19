@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Providers\UserItem;
+use App\Http\Providers\SchoolItem;
 use \Input;
 use \Validator;
 use \Session;
@@ -26,7 +27,7 @@ class MemController extends Controller
     {
         $data = array();
 
-        return view('admin.login.index', $data);
+        return view('login.index', $data);
     }
 
     /**
@@ -56,5 +57,18 @@ class MemController extends Controller
         $t_obj = new UserItem();
 
         echo json_encode($t_obj->logout());
+    }
+
+
+    /**
+     * 所有學校的資料
+     *
+     *
+     */
+    public function SchoolList()
+    {
+        $school = new SchoolItem();
+
+        echo json_encode($school->getSchool());
     }
 }
