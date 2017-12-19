@@ -15,10 +15,12 @@ use App\Http\Providers\ModifyItem;
 
 class AdController extends Controller
 {
+    private $data =array();
 
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->data['user_name'] = app('request')->session()->get('name');
+        $this->data['user_id'] = app('request')->session()->get('user_id');
     }
 
     /**
@@ -28,9 +30,8 @@ class AdController extends Controller
      */
     public function SchoolSubject()
     {
-        $data = array();
 
-        return view('admin.school_subject.index', $data);
+        return view('admin.school_subject.index', $this->data);
     }
 
     /**
@@ -67,9 +68,8 @@ class AdController extends Controller
      */
     public function School()
     {
-        $data = array();
 
-        return view('admin.school.index', $data);
+        return view('admin.school.index', $this->data);
     }
 
     /**
@@ -108,9 +108,8 @@ class AdController extends Controller
      */
     public function Course()
     {
-        $data = array();
 
-        return view('admin.course.index', $data);
+        return view('admin.course.index', $this->data);
     }
 
     /**
@@ -148,9 +147,8 @@ class AdController extends Controller
      */
     public function Unit()
     {
-        $data = array();
 
-        return view('admin.unit_structure.index', $data);
+        return view('admin.unit_structure.index', $this->data);
     }
 
     /**
@@ -189,9 +187,8 @@ class AdController extends Controller
      */
     public function Reel()
     {
-        $data = array();
 
-        return view('admin.reel.index', $data);
+        return view('admin.reel.index', $this->data);
     }
 
     /**
@@ -232,9 +229,8 @@ class AdController extends Controller
      */
     public function Question()
     {
-        $data = array();
 
-        return view('admin.question.index', $data);
+        return view('admin.question.index', $this->data);
     }
 
     /**
@@ -270,16 +266,15 @@ class AdController extends Controller
      */
     public function QuestionPgAdd()
     {
-        $data = array();
         //設定ckfinder
         //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
-        $data['ck_finder_path'] = url('/js/ckfinder');
+        $this->data['ck_finder_path'] = url('/js/ckfinder');
         session_start();
         $_SESSION['ckfiner_key'] = true;
         $_SESSION['dirroot'] = url('/cc_upload') . '/question/';//讀取路徑
         $_SESSION['upload_path'] = public_path('/cc_upload') . '/question/';//儲存實體路徑
 
-        return view('admin.question.add', $data);
+        return view('admin.question.add', $this->data);
     }
 
     /**
@@ -289,17 +284,16 @@ class AdController extends Controller
      */
     public function QuestionPgEdit()
     {
-        $data = array();
-        $data['id'] = app('request')->get('id');
+        $this->data['id'] = app('request')->get('id');
         //設定ckfinder
         //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
-        $data['ck_finder_path'] = url('/js/ckfinder');
+        $this->data['ck_finder_path'] = url('/js/ckfinder');
         session_start();
         $_SESSION['ckfiner_key'] = true;
         $_SESSION['dirroot'] = url('/cc_upload') . '/question/';//讀取路徑
         $_SESSION['upload_path'] = public_path('/cc_upload') . '/question/';//儲存實體路徑
 
-        return view('admin.question.edit', $data);
+        return view('admin.question.edit', $this->data);
     }
 
     /**
@@ -346,17 +340,16 @@ class AdController extends Controller
      */
     public function Precautions()
     {
-        $data = array();
-        $data['id'] = '1';
+        $this->data['id'] = '1';
         //設定ckfinder
         //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
-        $data['ck_finder_path'] = url('/js/ckfinder');
+        $this->data['ck_finder_path'] = url('/js/ckfinder');
         session_start();
         $_SESSION['ckfiner_key'] = true;
         $_SESSION['dirroot'] = url('/cc_upload') . '/precautions/';//讀取路徑
         $_SESSION['upload_path'] = public_path('/cc_upload') . '/question/';//儲存實體路徑
 
-        return view('admin.precautions.index', $data);
+        return view('admin.precautions.index', $this->data);
     }
 
     /**
@@ -395,9 +388,8 @@ class AdController extends Controller
      */
     public function Revised()
     {
-        $data = array();
 
-        return view('admin.revised.index', $data);
+        return view('admin.revised.index', $this->data);
     }
 
     /**
@@ -433,9 +425,8 @@ class AdController extends Controller
      */
     public function RevisedAddPg()
     {
-        $data = array();
 
-        return view('admin.revised.add', $data);
+        return view('admin.revised.add', $this->data);
     }
 
     /**
@@ -463,10 +454,9 @@ class AdController extends Controller
      */
     public function RevisedEditPg()
     {
-        $data = array();
-        $data['id'] = app('request')->get('id');
+        $this->data['id'] = app('request')->get('id');
 
-        return view('admin.revised.edit', $data);
+        return view('admin.revised.edit', $this->data);
     }
 
 
@@ -497,10 +487,9 @@ class AdController extends Controller
      */
     public function RevisedReel()
     {
-        $data = array();
-        $data['id'] = app('request')->get('id');
+        $this->data['id'] = app('request')->get('id');
 
-        return view('admin.revised.reel.index', $data);
+        return view('admin.revised.reel.index', $this->data);
     }
 
     /**
