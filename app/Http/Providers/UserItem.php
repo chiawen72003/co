@@ -2,12 +2,11 @@
 
 namespace App\Http\Providers;
 
+use App\Http\Models\Admin;
 use App\Http\Models\Revised;
 use App\Http\Models\Student;
-use App\Http\Models\ReelModify;
-use Illuminate\Support\Str;
 use \Input;
-use Prophecy\Prophecy\Revealer;
+use \Session;
 
 /**
  * Class UserItem
@@ -29,6 +28,51 @@ class UserItem
         foreach ($input_data as $k => $v) {
             $this->input_array[$k] = $v;
         }
+    }
+
+    /**
+     * 管理員登入檢查
+     *
+     */
+    public function adminLoginChk()
+    {
+        $this->msg['msg'] = '帳號或密碼錯誤!!';
+        $temp_obj = Admin::select('id','name')
+            ->where('login_name',$this->input_array['login_name'])
+            ->where('login_pw',$this->input_array['login_pw'])
+            ->get();
+        foreach($temp_obj as $v ){
+            session([
+                'user_type' => 'Admin',
+                'name' => $v['name'],
+                'login_name' => $v['login_name'],
+            ]);
+            $this->msg = array(
+                'status' => true,
+                'msg' => '',
+                'redir' => route('ma.subject'),
+            );
+        }
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 管理員登出
+     *
+     */
+    public function adminLogout()
+    {
+        app('request')->session()->flush();
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '已經登出!!',
+            'redir' => route('ma.login'),
+        );
+
+        return $this->msg;
     }
 
     /**

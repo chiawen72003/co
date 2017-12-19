@@ -18,7 +18,7 @@
                 身分：總管理者
             </div>
             <div class="setting-logout">
-                <a href="">
+                <a onclick="logout()">
                     <i class="ion-log-out"></i>
                     登出
                 </a>
@@ -30,7 +30,7 @@
             <nav class="navigate">
                 <ul class="mainnav">
                     <li class="hs-sub" >
-                        <a href="">
+                        <a href="#">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             管理使用者
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
@@ -118,6 +118,27 @@
                 $(this).toggleClass('is-opened');
             });
         });
+
+        function logout() {
+            $.ajax({
+                url: "[! route('ma.logout') !]",
+                type:'GET',
+                dataType: "json",
+                data: {
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response)
+                {
+                    if(response['status'] == true)
+                    {
+                        alert(response['msg']);
+                        location.replace(response['redir']);
+                    }
+                }
+            });
+        }
     </script>
 </div>
 </body>

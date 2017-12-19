@@ -311,7 +311,7 @@
                         setList();
                     }else{
                         alert('目前沒有試卷可以批閱!!');
-                        location.replace("[! route('rv.scroll.reel.list') !]");
+                        location.replace("[! route('rv.scroll.reel.pg') !]");
                     }
                 }
             });

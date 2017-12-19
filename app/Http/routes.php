@@ -17,6 +17,17 @@ Route::pattern('uid', '[0-9]+');
 |
 */
 
+//管理員 登入-登出
+Route::get('/Ma/Login', ['as' => 'ma.login', 'uses' => 'AdController@Login']);
+Route::post('/Ma/Login/Chk', ['as' => 'ma.login.chk', 'uses' => 'AdController@LoginChk']);
+Route::get('/Ma/Logout', ['as' => 'ma.logout', 'uses' => 'AdController@Logout']);
+
+//管理員 最新消息
+Route::get('/Ma/News', ['as' => 'ma.news', 'uses' => 'AdController@News']);
+Route::get('/Ma/News/list', ['as' => 'ma.news.list', 'uses' => 'AdController@NewsList']);
+Route::post('/Ma/News/Add', ['as' => 'ma.news.add', 'uses' => 'AdController@NewsAdd']);
+Route::post('/Ma/News/Update', ['as' => 'ma.news.update', 'uses' => 'AdController@NewsUpdate']);
+
 //管理員 學校-科系
 Route::get('/Ma/Subject', ['as' => 'ma.subject', 'uses' => 'AdController@SchoolSubject']);
 Route::get('/Ma/Subject/list', ['as' => 'ma.subject.list', 'uses' => 'AdController@SchoolSubjectList']);
@@ -96,7 +107,8 @@ Route::get('/Rv/Scroll/Demo', ['as' => 'rv.scroll.demo', 'uses' => 'RvController
 //批閱者 閱卷訓練
 Route::get('/Rv/Scroll/Training', ['as' => 'rv.scroll.training', 'uses' => 'RvController@ScrollTraining']);
 //批閱者 開始批改 試卷選擇頁面
-Route::get('/Rv/Scroll/Reel/list', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
+Route::get('/Rv/Scroll/Reel/Pg', ['as' => 'rv.scroll.reel.pg', 'uses' => 'RvController@ScrollReelPg']);
+Route::get('/Rv/Scroll/Reel/List', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
 //批閱者 開始批改 批改試卷資料
 Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
 Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'RvController@ScrollReelData']);
