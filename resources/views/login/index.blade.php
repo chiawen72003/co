@@ -1,4 +1,4 @@
-@extends('admin.layout.login')
+@extends('login.layout.layout')
 @section('content')
     <div class="mem-wrap">
         <div class="mem-form">
@@ -104,7 +104,7 @@
     function sendData(){
         if(!isSend){
             $.ajax({
-                url: "[! route('ma.login.chk') !]",
+                url: "[! route('member.login.chk') !]",
                 type:'POST',
                 dataType: "json",
                 data: {
