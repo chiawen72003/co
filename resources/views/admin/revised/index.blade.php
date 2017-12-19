@@ -71,6 +71,7 @@
         <td><div class="cell" id="login_name"></div></td>
         <td><div class="cell" id="name"></div></td>
         <td>
+            <div class="cell center"><a href="#" class="i-link" id="reel_area"><i class="ion-android-settings"></i>試卷管理</a></div>
             <div class="cell center"><a href="#" class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a></div>
         </td>
     </tr>
@@ -161,6 +162,7 @@
         for(var x=0;x<revised_item.length;x++){
             var t = tr_item.clone();
             var a = "[! route('ma.revised.edit.pg') !]?id="+ revised_item[x]['id'];
+            var reel = "[! route('ma.revised.reel') !]?id="+ revised_item[x]['id'];
             var r = revised_item[x]['login_name'];
             var n = revised_item[x]['name'];
             var s = '';
@@ -169,11 +171,11 @@
                     s = school_item[y]['school_title'];
                 }
             }
-
             t.find('#school_name').html(s).removeAttr('id');
             t.find('#login_name').html(r).removeAttr('id');
             t.find('#name').html(n).removeAttr('id');
             t.find('#a_area').attr('href',a).removeAttr('id');
+            t.find('#reel_area').attr('href',reel).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
