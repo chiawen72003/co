@@ -76,6 +76,10 @@ Route::get('/Ma/revised/Edit/Pg', ['as' => 'ma.revised.edit.pg', 'uses' => 'AdCo
 Route::post('/Ma/revised/Add', ['as' => 'ma.revised.add', 'uses' => 'AdController@RevisedAdd']);
 Route::post('/Ma/revised/Update', ['as' => 'ma.revised.update', 'uses' => 'AdController@RevisedUpdate']);
 
+//管理員 評閱者-試卷資料管理
+Route::get('/Ma/revised/Reel', ['as' => 'ma.revised.reel', 'uses' => 'AdController@RevisedReel']);
+Route::get('/Ma/revised/Reel/List', ['as' => 'ma.revised.reel.list', 'uses' => 'AdController@RevisedReelList']);
+Route::post('/Ma/revised/Reel/Add', ['as' => 'ma.revised.reel.add', 'uses' => 'AdController@RevisedReelAdd']);
 
 //受測者 首頁
 Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
