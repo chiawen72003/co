@@ -85,50 +85,57 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::post('/Ma/revised/Reel/Add', ['as' => 'ma.revised.reel.add', 'uses' => 'AdController@RevisedReelAdd']);
 });
 
-//受測者 首頁
-Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
+//受測者
+Route::group(['middleware' => 'StudentCheck'], function () {
+    //受測者 首頁
+    Route::get('/Ur', ['as' => 'ur.index', 'uses' => 'UrController@Index']);
 
-//受測者 使用者管理
-Route::get('/Ur/User', ['as' => 'ur.user', 'uses' => 'UrController@User']);
-Route::get('/Ur/User/Data', ['as' => 'ur.user.data', 'uses' => 'UrController@UserData']);
-Route::post('/Ur/User/Update', ['as' => 'ur.user.update', 'uses' => 'UrController@UserUpdate']);
+    //受測者 使用者管理
+    Route::get('/Ur/User', ['as' => 'ur.user', 'uses' => 'UrController@User']);
+    Route::get('/Ur/User/Data', ['as' => 'ur.user.data', 'uses' => 'UrController@UserData']);
+    Route::post('/Ur/User/Update', ['as' => 'ur.user.update', 'uses' => 'UrController@UserUpdate']);
 
 
-//受測者 試卷管理
-Route::get('/Ur/Reel', ['as' => 'ur.reel', 'uses' => 'UrController@Reel']);
-Route::get('/Ur/Reel/List', ['as' => 'ur.reel.list', 'uses' => 'UrController@ReelList']);
-Route::get('/Ur/Reel/Data', ['as' => 'ur.reel.data', 'uses' => 'UrController@ReelData']);
-Route::get('/Ur/Reel/Edit/{id}', ['as' => 'ur.reel.edit', 'uses' => 'UrController@ReelEdit']);
-Route::post('/Ur/Reel/Add', ['as' => 'ur.reel.add', 'uses' => 'UrController@ReelAdd']);
+    //受測者 試卷管理
+    Route::get('/Ur/Reel', ['as' => 'ur.reel', 'uses' => 'UrController@Reel']);
+    Route::get('/Ur/Reel/List', ['as' => 'ur.reel.list', 'uses' => 'UrController@ReelList']);
+    Route::get('/Ur/Reel/Data', ['as' => 'ur.reel.data', 'uses' => 'UrController@ReelData']);
+    Route::get('/Ur/Reel/Edit/{id}', ['as' => 'ur.reel.edit', 'uses' => 'UrController@ReelEdit']);
+    Route::post('/Ur/Reel/Add', ['as' => 'ur.reel.add', 'uses' => 'UrController@ReelAdd']);
+});
 
-//批閱者 寫作閱卷標準手冊
-Route::get('/Rv/Manual', ['as' => 'rv.manual', 'uses' => 'RvController@Manual']);
+//批閱者
+Route::group(['middleware' => 'RevisedCheck'], function () {
+    //批閱者 寫作閱卷標準手冊
+    Route::get('/Rv/Manual', ['as' => 'rv.manual', 'uses' => 'RvController@Manual']);
 
-//批閱者 注意事項
-Route::get('/Rv/Precautions', ['as' => 'rv.precautions', 'uses' => 'RvController@Precautions']);
-Route::get('/Rv/Precautions/Data', ['as' => 'rv.precautions.data', 'uses' => 'RvController@PrecautionsData']);
+    //批閱者 注意事項
+    Route::get('/Rv/Precautions', ['as' => 'rv.precautions', 'uses' => 'RvController@Precautions']);
+    Route::get('/Rv/Precautions/Data', ['as' => 'rv.precautions.data', 'uses' => 'RvController@PrecautionsData']);
 
-//批閱者 線上閱卷
-Route::get('/Rv/Scroll', ['as' => 'rv.scroll', 'uses' => 'RvController@Scroll']);
-//批閱者 參考樣卷
-Route::get('/Rv/Scroll/Demo', ['as' => 'rv.scroll.demo', 'uses' => 'RvController@ScrollDemo']);
-//批閱者 閱卷訓練
-Route::get('/Rv/Scroll/Training', ['as' => 'rv.scroll.training', 'uses' => 'RvController@ScrollTraining']);
-//批閱者 開始批改 試卷選擇頁面
-Route::get('/Rv/Scroll/Reel/Pg', ['as' => 'rv.scroll.reel.pg', 'uses' => 'RvController@ScrollReelPg']);
-Route::get('/Rv/Scroll/Reel/List', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
-//批閱者 開始批改 批改試卷資料
-Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
-Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'RvController@ScrollReelData']);
-Route::post('/Rv/Scroll/Reel/Update', ['as' => 'rv.scroll.reel.update', 'uses' => 'RvController@ScrollReelUpdate']);
+    //批閱者 線上閱卷
+    Route::get('/Rv/Scroll', ['as' => 'rv.scroll', 'uses' => 'RvController@Scroll']);
+    //批閱者 參考樣卷
+    Route::get('/Rv/Scroll/Demo', ['as' => 'rv.scroll.demo', 'uses' => 'RvController@ScrollDemo']);
+    //批閱者 閱卷訓練
+    Route::get('/Rv/Scroll/Training', ['as' => 'rv.scroll.training', 'uses' => 'RvController@ScrollTraining']);
+    //批閱者 開始批改 試卷選擇頁面
+    Route::get('/Rv/Scroll/Reel/Pg', ['as' => 'rv.scroll.reel.pg', 'uses' => 'RvController@ScrollReelPg']);
+    Route::get('/Rv/Scroll/Reel/List', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
+    //批閱者 開始批改 批改試卷資料
+    Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
+    Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'RvController@ScrollReelData']);
+    Route::post('/Rv/Scroll/Reel/Update', ['as' => 'rv.scroll.reel.update', 'uses' => 'RvController@ScrollReelUpdate']);
 
-//批閱者 批改統計
-Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);
+    //批閱者 批改統計
+    Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);
 
-//批閱者 使用者管理
-Route::get('/Rv/User', ['as' => 'rv.user', 'uses' => 'RvController@User']);
-Route::get('/Rv/User/Data', ['as' => 'rv.user.data', 'uses' => 'RvController@UserData']);
-Route::post('/Rv/User/Update', ['as' => 'rv.user.update', 'uses' => 'RvController@UserUpdate']);
+    //批閱者 使用者管理
+    Route::get('/Rv/User', ['as' => 'rv.user', 'uses' => 'RvController@User']);
+    Route::get('/Rv/User/Data', ['as' => 'rv.user.data', 'uses' => 'RvController@UserData']);
+    Route::post('/Rv/User/Update', ['as' => 'rv.user.update', 'uses' => 'RvController@UserUpdate']);
 
-//批閱者 檔案下載
-Route::get('/Rv/Files', ['as' => 'rv.files', 'uses' => 'RvController@Files']);
+    //批閱者 檔案下載
+    Route::get('/Rv/Files', ['as' => 'rv.files', 'uses' => 'RvController@Files']);
+});
+
