@@ -15,7 +15,7 @@
         <div class="page-header-right">
             <div class="setting-user">
                 <i class="ion-ios-contact-outline"></i>
-                <span>姓名：王曉明</span>
+                <span>姓名：[! $user_name !]</span>
             </div>
             <div class="setting-logout">
                 <a onclick="logout()">
