@@ -45,6 +45,7 @@ class UserItem
         foreach($temp_obj as $v ){
             session([
                 'user_type' => 'Admin',
+                'user_id' => $v['id'],
                 'name' => $v['name'],
                 'login_name' => $v['login_name'],
             ]);
@@ -65,6 +66,7 @@ class UserItem
             foreach($temp_obj as $v ){
                 session([
                     'user_type' => 'Revised',
+                    'user_id' => $v['id'],
                     'name' => $v['name'],
                     'login_name' => $v['login_name'],
                 ]);
@@ -86,6 +88,7 @@ class UserItem
             foreach($temp_obj as $v ){
                 session([
                     'user_type' => 'Student',
+                    'user_id' => $v['id'],
                     'name' => $v['name'],
                     'login_name' => $v['login_name'],
                 ]);
