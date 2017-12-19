@@ -43,7 +43,7 @@ class MemController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->adminLoginChk());
+        echo json_encode($t_obj->loginChk());
     }
 
     /**
@@ -55,6 +55,6 @@ class MemController extends Controller
     {
         $t_obj = new UserItem();
 
-        echo json_encode($t_obj->adminLogout());
+        echo json_encode($t_obj->logout());
     }
 }
