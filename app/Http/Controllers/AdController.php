@@ -11,6 +11,7 @@ use \Response;
 use App\Http\Providers\SchoolItem;
 use App\Http\Providers\StructureItem;
 use App\Http\Providers\QuestionItem;
+use App\Http\Providers\ModifyItem;
 
 class AdController extends Controller
 {
@@ -527,5 +528,51 @@ class AdController extends Controller
         $t_obj->init($data);
 
         echo json_encode($t_obj->updateRevised());
+    }
+
+
+    /**
+     * 評閱者-試卷資料管理
+     *
+     *
+     */
+    public function RevisedReel()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+
+        return view('admin.revised.reel.index', $data);
+    }
+
+    /**
+     * 評閱者-試卷的資料
+     *
+     *
+     */
+    public function RevisedReelList()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('id');
+        $t_obj = new ModifyItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->getReelList());
+    }
+
+    /**
+     * 新增評閱者資料
+     *
+     *
+     */
+    public function RevisedReelAdd()
+    {
+        $data = array();
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['user_id'] = app('request')->get('user_id');
+        $data['need_num'] = app('request')->get('need_num');
+        $t_obj = new ModifyItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->addReel());
     }
 }
