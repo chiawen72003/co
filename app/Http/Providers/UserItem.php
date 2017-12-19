@@ -31,12 +31,13 @@ class UserItem
     }
 
     /**
-     * 管理員登入檢查
+     * 登入檢查
      *
      */
-    public function adminLoginChk()
+    public function loginChk()
     {
         $this->msg['msg'] = '帳號或密碼錯誤!!';
+        $has_data = false;
         $temp_obj = Admin::select('id','name')
             ->where('login_name',$this->input_array['login_name'])
             ->where('login_pw',$this->input_array['login_pw'])
@@ -52,6 +53,48 @@ class UserItem
                 'msg' => '',
                 'redir' => route('ma.subject'),
             );
+            $has_data = true;
+        }
+
+        if(!$has_data){
+            $temp_obj = Revised::select('id','name')
+                ->where('login_name',$this->input_array['login_name'])
+                ->where('login_pw',$this->input_array['login_pw'])
+                ->where('school_id',$this->input_array['school_id'])
+                ->get();
+            foreach($temp_obj as $v ){
+                session([
+                    'user_type' => 'Revised',
+                    'name' => $v['name'],
+                    'login_name' => $v['login_name'],
+                ]);
+                $this->msg = array(
+                    'status' => true,
+                    'msg' => '',
+                    'redir' => route('rv.manual'),
+                );
+                $has_data = true;
+            }
+        }
+
+        if(!$has_data){
+            $temp_obj = Student::select('id','name')
+                ->where('login_name',$this->input_array['login_name'])
+                ->where('login_pw',$this->input_array['login_pw'])
+                ->where('school_id',$this->input_array['school_id'])
+                ->get();
+            foreach($temp_obj as $v ){
+                session([
+                    'user_type' => 'Student',
+                    'name' => $v['name'],
+                    'login_name' => $v['login_name'],
+                ]);
+                $this->msg = array(
+                    'status' => true,
+                    'msg' => '',
+                    'redir' => route('ur.index'),
+                );
+            }
         }
 
         return $this->msg;
@@ -59,17 +102,17 @@ class UserItem
 
 
     /**
-     * 管理員登出
+     * 登出
      *
      */
-    public function adminLogout()
+    public function logout()
     {
         app('request')->session()->flush();
 
         $this->msg = array(
             'status' => true,
             'msg' => '已經登出!!',
-            'redir' => route('ma.login'),
+            'redir' => route('member.login'),
         );
 
         return $this->msg;
