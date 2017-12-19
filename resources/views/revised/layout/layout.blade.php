@@ -16,7 +16,7 @@
             <div class="setting-user">
                 <i class="ion-ios-contact-outline"></i>
                 <span>身分：評閱委員</span>
-                <span>姓名：王名譽</span>
+                <span>姓名：[! $user_name !]</span>
             </div>
             <div class="setting-logout">
                 <a onclick="logout()">
