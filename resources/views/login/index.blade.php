@@ -69,7 +69,7 @@
     
     function getSchoolData() {
         $.ajax({
-            url: "[! route('ma.school.list') !]",
+            url: "[! route('member.school.list') !]",
             type:'GET',
             dataType: "json",
             data: {
