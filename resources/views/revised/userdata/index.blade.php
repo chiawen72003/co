@@ -58,9 +58,7 @@
             url: "[! route('rv.user.data') !]",
             type:'GET',
             dataType: "json",
-            data: {
-                id:'1'
-            },
+            data: {},
             error: function(xhr) {
                 //alert('Ajax request 發生錯誤');
             },
