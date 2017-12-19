@@ -44,16 +44,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'LoginDataCheck' => \App\Http\Middleware\LoginDataCheck::class,
-        'MemSessionCheck' => \App\Http\Middleware\MemSessionCheck::class,
+        'StudentCheck' => \App\Http\Middleware\StudentCheck::class,
         'AdSessionCheck' => \App\Http\Middleware\AdSessionCheck::class,
-        'TeacherCheck' => \App\Http\Middleware\TeacherCheck::class,
-        'IsLoginCheck' => \App\Http\Middleware\IsLoginCheck::class,
-        'IsAdLoginCheck' => \App\Http\Middleware\IsAdLoginCheck::class,
+        'RevisedCheck' => \App\Http\Middleware\RevisedCheck::class,
     ];
 }
