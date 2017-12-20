@@ -47,9 +47,9 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::post('/Ma/Course/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseAdd']);
 
     //管理員 課程設定 課程與學員對應
-    Route::get('/Ma/Course/Student', ['as' => 'ma.course', 'uses' => 'AdController@CourseStudent']);
-    Route::get('/Ma/Course/Student/list', ['as' => 'ma.course.list', 'uses' => 'AdController@CourseStudentList']);
-    Route::post('/Ma/Course/Student/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseStudentAdd']);
+    Route::get('/Ma/Course/Student', ['as' => 'ma.course.student', 'uses' => 'AdController@CourseStudent']);
+    Route::get('/Ma/Course/Student/list', ['as' => 'ma.course.student.list', 'uses' => 'AdController@CourseStudentList']);
+    Route::post('/Ma/Course/Student/Add', ['as' => 'ma.course.student.add', 'uses' => 'AdController@CourseStudentAdd']);
 
     //管理員 課程設定 課程-試卷對應
     Route::get('/Ma/Course/Reel', ['as' => 'ma.course.reel', 'uses' => 'AdController@CourseReel']);
