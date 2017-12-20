@@ -140,6 +140,45 @@ class AdController extends Controller
         echo json_encode($t_obj->addCourse());
     }
 
+
+    /**
+     * 課程-試卷對應設定
+     *
+     *
+     */
+    public function CourseReel()
+    {
+
+        return view('admin.course.reel.index', $this->data);
+    }
+
+    /**
+     * 所有課程-試卷對應的資料
+     *
+     *
+     */
+    public function CourseReelList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getCourseReel());
+    }
+
+    /**
+     * 新增課程-試卷對應的資料
+     *
+     *
+     */
+    public function CourseReelAdd()
+    {
+        $data = array();
+        $data['course_id'] = app('request')->get('course_id');
+        $data['reel_id'] = app('request')->get('reel_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+        echo json_encode($t_obj->addCourseReel());
+    }
+
     /**
      * 單元結構
      *
