@@ -2,6 +2,7 @@
 
 namespace App\Http\Providers;
 
+use App\Http\Models\CourseReel;
 use App\Http\Models\UnitStructure;
 use App\Http\Models\Course;
 use App\Http\Models\Reel;
@@ -339,4 +340,49 @@ class StructureItem
 
         return $this->msg;
     }
+
+
+    /**
+     * 取得 課程-試卷資料
+     *
+     */
+    public function getCourseReel()
+    {
+        $return_data = array();
+        $temp_obj = CourseReel::select('id','course_id', 'reel_id')
+            ->groupBy('course_id')
+            ->groupBy('reel_id')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 新增 課程-試卷資料
+     *
+     */
+    public function addCourseReel()
+    {
+        $update = new CourseReel();
+        $update->course_id = $this->input_array['course_id'];
+        $update->reel_id = $this->input_array['reel_id'];
+        $update->save();
+        $getID  = $update->id;
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
 }
