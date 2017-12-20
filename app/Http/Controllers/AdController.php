@@ -180,6 +180,44 @@ class AdController extends Controller
     }
 
     /**
+     * 課程-學員對應設定
+     *
+     *
+     */
+    public function CourseStudent()
+    {
+
+        return view('admin.course.student.index', $this->data);
+    }
+
+    /**
+     * 所有課程-學員對應的資料
+     *
+     *
+     */
+    public function CourseStudentList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getCourseStudent());
+    }
+
+    /**
+     * 新增課程-學員對應的資料
+     *
+     *
+     */
+    public function CourseStudentAdd()
+    {
+        $data = array();
+        $data['course_id'] = app('request')->get('course_id');
+        $data['school_id'] = app('request')->get('school_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+        echo json_encode($t_obj->addCourseStudent());
+    }
+
+    /**
      * 單元結構
      *
      *
