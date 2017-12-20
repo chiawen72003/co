@@ -50,10 +50,12 @@ class UrController extends Controller
      */
     public function UserData()
     {
+        $data = array();
+        $data['id'] = $this->data['user_id'];
         $user = new UserItem();
-        $id = $this->data['user_id'];
+        $user->init($data);
 
-        echo json_encode($user->getStudent($id));
+        echo json_encode($user->getStudent());
     }
 
     /**
