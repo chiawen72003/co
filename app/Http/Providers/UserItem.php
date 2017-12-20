@@ -262,7 +262,7 @@ class UserItem
     public function getStudent()
     {
         $return_data = array();
-        $temp_obj = Student::where('student.id',1)
+        $temp_obj = Student::where('student.id',$this->input_array['user_id'])
             ->leftJoin('school', 'school.id', '=', 'student.school_id')
             ->select(
                 'student.login_name',
