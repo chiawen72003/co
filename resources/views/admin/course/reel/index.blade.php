@@ -204,8 +204,8 @@
                     c = course_obj[y]['course_title'];
                 }
             }
-            t.find('#course_area').html(r).removeAttr('id');
-            t.find('#reel_area').html(c).removeAttr('id');
+            t.find('#course_area').html(c).removeAttr('id');
+            t.find('#reel_area').html(r).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
