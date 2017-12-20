@@ -291,6 +291,40 @@ class UserItem
     }
 
     /**
+     * 取得 受測試者資料
+     *
+     */
+    public function getAllStudent()
+    {
+        $return_data = array();
+        $temp_obj = Student::leftJoin('school', 'school.id', '=', 'student.school_id')
+            ->select(
+                'student.login_name',
+                'student.login_pw','name',
+                'student.student_id',
+                'school.school_title'
+            )
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data = array(
+                'login_name' => $v['login_name'],
+                'login_pw' => $v['login_pw'],
+                'name' => $v['name'],
+                'student_id' => $v['student_id'],
+                'school_title' => $v['school_title'],
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 更新 受測試者密碼資料
      *
      */
