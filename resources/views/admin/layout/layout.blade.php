@@ -50,7 +50,7 @@
                         <ul class="mainnav-sub">
                             <li id="li_course"><a href="[! route('ma.course') !]">新增課程</a></li>
                             <li><a href="course-corres.html">課程與學員對應</a></li>
-                            <li><a href="course-control.html">課程與試卷存取控制</a></li>
+                            <li id="li_course_reel"><a href="[! route('ma.course.reel') !]">課程與試卷存取控制</a></li>
                         </ul>
                     </li>
                     <li>
