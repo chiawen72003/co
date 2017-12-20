@@ -41,10 +41,20 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/School/list', ['as' => 'ma.school.list', 'uses' => 'AdController@SchoolList']);
     Route::post('/Ma/School/Add', ['as' => 'ma.school.add', 'uses' => 'AdController@SchoolAdd']);
 
-    //管理員 課程設定
+    //管理員 課程設定 新增課程
     Route::get('/Ma/Course', ['as' => 'ma.course', 'uses' => 'AdController@Course']);
     Route::get('/Ma/Course/list', ['as' => 'ma.course.list', 'uses' => 'AdController@CourseList']);
     Route::post('/Ma/Course/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseAdd']);
+
+    //管理員 課程設定 課程與學員對應
+    Route::get('/Ma/Course/Student', ['as' => 'ma.course', 'uses' => 'AdController@CourseStudent']);
+    Route::get('/Ma/Course/Student/list', ['as' => 'ma.course.list', 'uses' => 'AdController@CourseStudentList']);
+    Route::post('/Ma/Course/Student/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseStudentAdd']);
+
+    //管理員 課程設定 課程-試卷對應
+    Route::get('/Ma/Course/Reel', ['as' => 'ma.course.reel', 'uses' => 'AdController@CourseReel']);
+    Route::get('/Ma/Course/Reel/list', ['as' => 'ma.course.reel.list', 'uses' => 'AdController@CourseReelList']);
+    Route::post('/Ma/Course/Reel/Add', ['as' => 'ma.course.reel.add', 'uses' => 'AdController@CourseReelAdd']);
 
     //管理員 單元結構
     Route::get('/Ma/Unit', ['as' => 'ma.unit', 'uses' => 'AdController@Unit']);
