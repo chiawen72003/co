@@ -51,12 +51,12 @@
                             <ul class="row">
                                 <li>
                                     <div class="form-inline checkbox-group">
-                                        <input type="checkbox" id="checkbox1"/>
-                                        <label for="checkbox1">空白卷</label>
+                                        <input type="checkbox" id="checkbox1" />
+                                        <label id="label_1" for="checkbox1">空白卷</label>
                                     </div>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox2" />
-                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                        <label id="label_2" for="checkbox2">試卷異常，無法批改</label>
                                     </div>
                                 </li>
                                 <li class="right pos-right">
@@ -118,11 +118,11 @@
                                 <li>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox1" />
-                                        <label for="checkbox1">空白卷</label>
+                                        <label id="label_1" for="checkbox1">空白卷</label>
                                     </div>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox2" />
-                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                        <label id="label_2" for="checkbox2">試卷異常，無法批改</label>
                                     </div>
                                 </li>
                                 <li class="right pos-right">
@@ -178,11 +178,11 @@
                                 <li>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox1" />
-                                        <label for="checkbox1">空白卷</label>
+                                        <label id="label_1" for="checkbox1">空白卷</label>
                                     </div>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox2" />
-                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                        <label id="label_2" for="checkbox2">試卷異常，無法批改</label>
                                     </div>
                                 </li>
                                 <li class="right pos-right">
@@ -241,11 +241,11 @@
                                 <li>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox1" />
-                                        <label for="checkbox1">空白卷</label>
+                                        <label id="label_1" for="checkbox1">空白卷</label>
                                     </div>
                                     <div class="form-inline checkbox-group">
                                         <input type="checkbox" id="checkbox2" />
-                                        <label for="checkbox2">試卷異常，無法批改</label>
+                                        <label id="label_2" for="checkbox2">試卷異常，無法批改</label>
                                     </div>
                                 </li>
                                 <li class="right pos-right">
@@ -291,7 +291,6 @@
                     //alert('Ajax request 發生錯誤');
                 },
                 success: function(response) {
-                    console.log(response);
                     if(response['status'] == true && typeof(response['data']['test_data'])  !== "undefined"){
                         order = response['data']['order'];
                         id = response['data']['id'];
@@ -369,6 +368,11 @@
                 }else{
                     t.find('#bt_down').attr('onclick', 'page_change("'+ y +'")').removeAttr('id');
                 }
+                //空白卷
+                t.find('#checkbox1').attr('id','chk_w_'+x);
+                t.find('#label_1').attr('for','chk_w_'+x).removeAttr('id');
+                t.find('#checkbox2').attr('id','chk_e_'+x);
+                t.find('#label_2').attr('for','chk_e_'+x).removeAttr('id');
                 t.attr('id','write_'+x);
                 if(x > 0){
                     t.hide();
@@ -416,10 +420,10 @@
                     var is_blank = false;
                     var is_abnormal = false;
                     score = t.find('#score').val();
-                    if(t.find('#checkbox1').is(':checked')){
+                    if(t.find('#chk_w_'+x).is(':checked')){
                         is_blank = true;
                     }
-                    if(t.find('#checkbox2').is(':checked')){
+                    if(t.find('#chk_e_'+x).is(':checked')){
                         is_abnormal = true;
                     }
 
@@ -446,8 +450,8 @@
                     },
                     success: function(response) {
                         if(response['status'] == true){
-                           // alert(response['msg']);
-                           // location.reload();
+                           alert(response['msg']);
+                           location.reload();
                         }
                     }
                 });
