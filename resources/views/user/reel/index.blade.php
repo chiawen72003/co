@@ -6,6 +6,7 @@
                 試卷管理
             </div>
             <div class="article-content">
+                <!--
                 <div class="article-content-header">
                     <form>
                         <div class="form-inline">
@@ -32,6 +33,7 @@
                         </button>
                     </form>
                 </div>
+                -->
                 <div class="article-content-body">
                     <div class="title">
                         <i class="ion-information-circled"></i>
@@ -43,12 +45,6 @@
                                 <th>
                                     <div class="cell">試卷名稱</div>
                                 </th>
-                                <th>
-                                    <div class="cell">學校</div>
-                                </th>
-                                <th width="120">
-                                    <div class="cell center">區域</div>
-                                </th>
                             </tr>
                         </table>
                     </div>
@@ -58,12 +54,8 @@
     </div>
     <table style="display: none">
         <tr id="copy_tr" >
-            <td><div class="cell" id="title_area">試題名稱</div></td>
             <td>
-                <div class="cell"></div>
-            </td>
-            <td>
-                <div class="cell center"></div>
+                <div class="cell center"><a href="#" class="i-link" id="a_area"></a></div>
             </td>
         </tr>
     </table>
@@ -94,7 +86,7 @@
                     for(var x=0;x<response['data'].length;x++){
                         reel_item.push(
                             {
-                                'reel_id':response['data'][x]['reel_id'],
+                                'path':response['data'][x]['path'],
                                 'reel_title':response['data'][x]['reel_title'],
                             }
                         );
@@ -109,8 +101,8 @@
         for(var x=0;x<reel_item.length;x++){
             var t = tr_item.clone();
             var title = reel_item[x]['reel_title'];
-            var id = reel_item[x]['reel_id'];
-            t.find('#title_area').html(title).removeAttr('id');
+            var path = reel_item[x]['path'];
+            t.find('#a_area').attr('href',path).html(title).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
