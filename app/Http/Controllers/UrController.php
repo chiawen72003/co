@@ -92,10 +92,12 @@ class UrController extends Controller
      */
     public function ReelList()
     {
+        $data = array();
+        $data['id'] = $this->data['user_id'];
         $reel = new MeasuredItem();
-        $id = $this->data['user_id'];
+        $reel->init($data);
 
-        echo json_encode($reel->getMeasured($id));
+        echo json_encode($reel->getMeasured());
     }
 
 
@@ -106,10 +108,9 @@ class UrController extends Controller
      */
     public function ReelEdit($id)
     {
-        $data = array();
-        $data['id'] = $id;
+        $this->data['id'] = $id;
 
-        return view('user.reel.edit', $data);
+        return view('user.reel.edit', $this->data);
     }
 
     /**

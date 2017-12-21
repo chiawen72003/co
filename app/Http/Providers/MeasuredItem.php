@@ -34,15 +34,22 @@ class MeasuredItem
      * 取得 受測者需要測試的試卷資料
      *
      */
-    public function getMeasured($user_id)
+    public function getMeasured()
     {
         $return_data = array();
-        $temp_obj = ListUnderTest::select('reel_id')
-            ->where('user_id',$user_id)
-            ->where('has_test',0)
+        $temp_obj = ListUnderTest::where('list_under_test.user_id', $this->input_array['id'])
+            ->where('list_under_test.has_test',0)
+            ->leftJoin('reel', 'list_under_test.reel_id', '=', 'reel.id')
+            ->select(
+                'list_under_test.reel_id',
+                'reel.reel_title'
+            )
             ->get();
         foreach($temp_obj as $v ){
-            $return_data[] = route('ur.reel.edit',array($v['reel_id']));
+            $return_data[] = array(
+                'reel_title'=>$v['reel_title'],
+                'path'=>route('ur.reel.edit',array($v['reel_id'])),
+            );
         }
 
         $this->msg = array(
