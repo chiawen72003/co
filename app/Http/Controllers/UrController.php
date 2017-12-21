@@ -51,7 +51,7 @@ class UrController extends Controller
     public function UserData()
     {
         $data = array();
-        $data['id'] = $this->data['user_id'];
+        $data['user_id'] = $this->data['user_id'];
         $user = new UserItem();
         $user->init($data);
 
