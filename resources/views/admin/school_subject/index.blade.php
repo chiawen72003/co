@@ -9,13 +9,12 @@
             <form>
                 <label class="i-label">區域</label>
                 <select id="area" onchange="setSchoolList()">
-                    <option value="1">北一區</option>
-                    <option value="2">北二區</option>
-                    <option value="3">桃竹苗區</option>
-                    <option value="4">中區</option>
-                    <option value="5">雲嘉南區</option>
-                    <option value="6">高屏區</option>
-                    <option value="7">東區</option>
+                    <option value="1">北區</option>
+                    <option value="2">桃竹苗區</option>
+                    <option value="3">中區</option>
+                    <option value="4">雲嘉南區</option>
+                    <option value="5">高屏東區</option>
+                    <option value="6">外島</option>
                 </select>
                 <label class="i-label">學校</label>
                 <select id="school_id">
@@ -58,17 +57,19 @@
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
     var li_item = $('#li_school_subject');
+    var main_li_1 = $('#main_li_1');
     var list_item = $('#subject_list');
     var area_item = $('#area');
     var school_id_item = $('#school_id');
     var tr_item = $('#copy_tr');
     var current = 'current';
+    var is_opened = 'is-opened';
     var school_item = [];
     var subject_item = [];
     $( document ).ready(function() {
+        main_li_1.addClass(is_opened);
         li_item.addClass( current);
         getSchoolData();
-        getListData();
     });
 
     function getSchoolData() {
@@ -95,6 +96,7 @@
                     }
                 }
                 setSchoolList();
+                getListData();
             }
         });
     }
@@ -183,7 +185,7 @@
                                 'subject_title':response['subject_title']
                             }
                         );
-                        addList(response['subject_title'],response['id']);
+                        addList(response['subject_title'],response['school_id']);
                         alert(response['msg']);
                     }
                     isSend = false;
@@ -198,7 +200,7 @@
         var t = tr_item.clone();
         var school_name = getSchoolName(id);
         t.find('#school_area').html(school_name).removeAttr('id');
-        t.find('#subject_area').html(school_name).removeAttr('id');
+        t.find('#subject_area').html(title).removeAttr('id');
         t.removeAttr('id');
         list_item.append(t);
     }
