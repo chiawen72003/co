@@ -56,19 +56,14 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_school_subject');
-    var main_li_1 = $('#main_li_1');
     var list_item = $('#subject_list');
     var area_item = $('#area');
     var school_id_item = $('#school_id');
     var tr_item = $('#copy_tr');
-    var current = 'current';
-    var is_opened = 'is-opened';
     var school_item = [];
     var subject_item = [];
     $( document ).ready(function() {
-        main_li_1.addClass(is_opened);
-        li_item.addClass( current);
+        setMenu('li_school_subject', 'main_li_1');
         getSchoolData();
     });
 
