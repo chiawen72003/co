@@ -52,7 +52,7 @@ class UserItem
             $this->msg = array(
                 'status' => true,
                 'msg' => '',
-                'redir' => route('ma.subject'),
+                'redir' => route('ma.school'),
             );
             $has_data = true;
         }
