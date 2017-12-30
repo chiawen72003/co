@@ -105,7 +105,7 @@
     var unit_item = [];
     var reel_item = [];
     $( document ).ready(function() {
-        li_item.addClass( current);
+        setMenu('li_reel', 'main_li_3');
         getUnitData();//因ajax有差性，須先取得單元資料才能抓試卷資料。
     });
 

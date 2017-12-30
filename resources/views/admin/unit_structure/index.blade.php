@@ -86,17 +86,15 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_unit');
     var list_item = $('#unit_list');
     var tr_item = $('#copy_tr');
     var version_item = $('#version');
     var subject_item = $('#subject');
     var book_item = $('#book');
     var title_item = $('#unit_title');
-    var current = 'current';
     var unit_item = [];
     $( document ).ready(function() {
-        li_item.addClass( current);
+        setMenu('li_unit', 'main_li_3');
         getListData();
     });
     

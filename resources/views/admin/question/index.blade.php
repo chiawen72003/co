@@ -53,13 +53,11 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_question');
     var list_item = $('#question_list');
     var tr_item = $('#copy_tr');
-    var current = 'current';
     var question_item = [];
     $( document ).ready(function() {
-        li_item.addClass( current);
+        setMenu('li_question', 'main_li_3');
         getQuestionData();
     });
 

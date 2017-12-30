@@ -106,15 +106,13 @@
             filebrowserImageUploadUrl : '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Images',
             filebrowserFlashUploadUrl : '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Flash'
         });
-        var li_item = $('#li_question');
         var type_item = $('#type');
         var question_title = $('#question_title');
         var type = $('#type');
         var power = $('#power');
-        var current = 'current';
 
         $(document).ready(function() {
-            li_item.addClass( current);
+            setMenu('li_question', 'main_li_3');
             getQuestionData();
         });
 

@@ -65,8 +65,8 @@
                             試題結構控制
                         </a>
                     </li>
-                    <li class="hs-sub">
-                        <a href="#">
+                    <li class="hs-sub" id="main_li_3">
+                        <a href="#" >
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
