@@ -61,19 +61,14 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_course');
-    var main_li_2 = $('#main_li_2');
     var list_item = $('#course_list');
     var tr_item = $('#copy_tr');
     var semester_item = $('#semester');
     var year_item = $('#school_year');
     var title_item = $('#course_title');
-    var current = 'current';
-    var is_opened = 'is-opened';
     var course_item = [];
     $( document ).ready(function() {
-        main_li_2.addClass(is_opened);
-        li_item.addClass( current);
+        setMenu('li_course', 'main_li_2');
         getListData();
     });
     
