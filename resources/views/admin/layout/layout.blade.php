@@ -29,15 +29,15 @@
         <div id="page-body" class="clearfix">
             <nav class="navigate">
                 <ul class="mainnav">
-                    <li class="hs-sub" >
+                    <li class="hs-sub" id="main_li_1" >
                         <a href="#">
                             <i class="mainnav-title-icon ion-ios-people"></i>
                             管理使用者
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
-                            <li id="li_school_subject"><a href="[! route('ma.subject') !]">新增學校/科系</a></li>
                             <li id="li_school"><a href="[! route('ma.school') !]">匯入學校/代碼</a></li>
+                            <li id="li_school_subject"><a href="[! route('ma.subject') !]">新增學校/科系</a></li>
                             <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
@@ -65,7 +65,7 @@
                             試題結構控制
                         </a>
                     </li>
-                    <li class="hs-sub is-opened">
+                    <li class="hs-sub">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
@@ -77,7 +77,7 @@
                             <li id="li_question"><a href="[! route('ma.question') !]">試題管理</a></li>
                         </ul>
                     </li>
-                    <li class="hs-sub is-opened">
+                    <li class="hs-sub">
                         <a href="">
                             <i class="mainnav-title-icon ion-ios-book-outline"></i>
                             批改管理
