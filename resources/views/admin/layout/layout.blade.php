@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     <li class="hs-sub">
-                        <a href="">
+                        <a href="#">
                             <i class="mainnav-title-icon ion-ios-albums-outline"></i>
                             題庫管理
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
@@ -78,7 +78,7 @@
                         </ul>
                     </li>
                     <li class="hs-sub">
-                        <a href="">
+                        <a href="#">
                             <i class="mainnav-title-icon ion-ios-book-outline"></i>
                             批改管理
                         </a>
@@ -107,6 +107,10 @@
     </div>
     <div id="page-footer"></div>
     <script>
+        var li_item,menu_item;
+        var current = 'current';
+        var is_opened = 'is-opened';
+
         $(document).ready(function(){
             $('.hs-sub').click(function(event) {
                 var hsSub = $('.hs-sub');
@@ -119,6 +123,17 @@
             });
         });
 
+        function setMenu(li, menu) {
+            if(li != ''){
+                li_item = $('#'+li);
+                li_item.addClass( current);
+            }
+            if(menu != ''){
+                menu_item = $('#'+menu);
+                menu_item.addClass(is_opened);
+            }
+        }
+        
         function logout() {
             $.ajax({
                 url: "[! route('member.logout') !]",
