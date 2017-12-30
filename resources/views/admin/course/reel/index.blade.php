@@ -8,10 +8,10 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">學年度</label>
-                <select id="year">
+                <select id="year" onchange="setCourse()">
                 </select>
                 <label class="i-label">學期</label>
-                <select id="semester">
+                <select id="semester" onchange="setCourse()">
                     <option value="1">第一學期</option>
                     <option value="2">第二學期</option>
                 </select>
@@ -35,11 +35,20 @@
             <div class="table-wrapper">
                 <table class="table" id="course_list">
                     <tr>
-                        <th width="120">
+                        <th width="100">
+                            <div class="cell center">學年度</div>
+                        </th>
+                        <th width="100">
+                            <div class="cell center">學期</div>
+                        </th>
+                        <th width="200">
                             <div class="cell center">課程名稱</div>
                         </th>
-                        <th >
+                        <th width="200">
                             <div class="cell center">試卷名稱</div>
+                        </th>
+                        <th >
+                            <div class="cell">功能</div>
                         </th>
                     </tr>
                     <!--  -->
@@ -50,13 +59,17 @@
 </div>
 <table style="display: none">
     <tr id="copy_tr" >
-        <td><div class="cell center" id="course_area"></div></td>
-        <td><div class="cell  center"  id="reel_area"></div></td>
+        <td><div class="cell center" id="year"></div></td>
+        <td><div class="cell center" id="semester"></div></td>
+        <td><div class="cell center" id="course_title"></div></td>
+        <td><div class="cell center" id="reel_title"></div></td>
+        <td><div class="cell center" id="tool"></div></td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
     var li_item = $('#li_course_reel');
+    var main_li_2 = $('#main_li_2');
     var list_item = $('#course_list');
     var tr_item = $('#copy_tr');
     var semester_item = $('#semester');
@@ -64,10 +77,12 @@
     var courseName = $('#courseName');
     var reelName = $('#reelName');
     var current = 'current';
+    var is_opened = 'is-opened';
     var course_obj = [];
     var reel_obj = [];
     var list_obj = [];
     $( document ).ready(function() {
+        main_li_2.addClass(is_opened);
         li_item.addClass( current);
         getCourseData();
     });
@@ -190,28 +205,31 @@
     function setList() {
         for(var x=0;x<list_obj.length;x++){
             var t = tr_item.clone();
-            var c = '';
-            var r = '';
-
+            var year = '';
+            var semester = '';
+            var course_title = '';
+            var reel_title = '';
             for(var y=0;y<reel_obj.length;y++){
                 if(reel_obj[y]['id'] == list_obj[x]['reel_id']){
-                    r = reel_obj[y]['reel_title'];
+                    reel_title = reel_obj[y]['reel_title'];
                 }
             }
 
             for(var y=0;y<course_obj.length;y++){
                 if(course_obj[y]['id'] == list_obj[x]['course_id']){
-                    c = course_obj[y]['course_title'];
+                    year = course_obj[y]['school_year'];
+                    semester = course_obj[y]['semester'];
+                    course_title = course_obj[y]['course_title'];
                 }
             }
-            t.find('#course_area').html(c).removeAttr('id');
-            t.find('#reel_area').html(r).removeAttr('id');
+            t.find('#year').html(year).removeAttr('id');
+            t.find('#semester').html(semester).removeAttr('id');
+            t.find('#course_title').html(course_title).removeAttr('id');
+            t.find('#reel_title').html(reel_title).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
     }
-
-
 
     var isSend = false;
     function add(){
