@@ -7,15 +7,21 @@
     <div class="article-content">
         <div class="article-content-header">
             <form>
-                <label class="i-label">學年度</label>
-                <input type="text" class="i-input" id="school_year">
-                <label class="i-label">學期</label>
-                <select id="semester">
-                    <option value="1">第一學期</option>
-                    <option value="2">第二學期</option>
-                </select>
-                <label class="i-label">課程名稱</label>
-                <input type="text" class="i-input" id="course_title">
+                <div class="form-inline">
+                    <label class="i-label">學年度</label>
+                    <input type="text" class="i-input" id="school_year">
+                </div>
+                <div class="form-inline">
+                    <label class="i-label">學期</label>
+                    <select id="semester" class="i-select">
+                        <option value="1">第一學期</option>
+                        <option value="2">第二學期</option>
+                    </select>
+                </div>
+                <div class="form-inline">
+                    <label class="i-label">課程名稱</label>
+                    <input type="text" class="i-input" id="course_title">
+                </div>
                 <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="addCourse()">
                     <i class="ion-android-add"></i>
                     新增
@@ -33,7 +39,7 @@
                         <th width="120">
                             <div class="cell center">學年度</div>
                         </th>
-                        <th >
+                        <th width="120">
                             <div class="cell center">學期</div>
                         </th>
                         <th>
@@ -49,21 +55,24 @@
 <table style="display: none">
     <tr id="copy_tr" >
         <td><div class="cell center" id="year_area"></div></td>
-        <td><div class="cell"  id="semester_area"></div></td>
+        <td><div class="cell center"  id="semester_area"></div></td>
         <td><div class="cell"  id="name_area"></div></td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
     var li_item = $('#li_course');
+    var main_li_2 = $('#main_li_2');
     var list_item = $('#course_list');
     var tr_item = $('#copy_tr');
     var semester_item = $('#semester');
     var year_item = $('#school_year');
     var title_item = $('#course_title');
     var current = 'current';
+    var is_opened = 'is-opened';
     var course_item = [];
     $( document ).ready(function() {
+        main_li_2.addClass(is_opened);
         li_item.addClass( current);
         getListData();
     });
