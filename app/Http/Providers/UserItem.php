@@ -344,4 +344,50 @@ class UserItem
     }
 
 
+    /**
+     * 取得 管理員資料
+     *
+     */
+    public function getAdmin()
+    {
+        $return_data = array();
+        $temp_obj = Admin::select('login_name','login_pw','name')
+            ->where('id',$this->input_array['user_id'])
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data = array(
+                'login_name' => $v['login_name'],
+                'login_pw' => $v['login_pw'],
+                'name' => $v['name'],
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 更新 管理員密碼資料
+     *
+     */
+    public function setAdminPw()
+    {
+        if (isset($this->input_array['new_pw'])) {
+            $update = Admin::find($this->input_array['id']);
+            $update->login_pw = $this->input_array['new_pw'];
+            $update->save();
+            $this->msg = array(
+                'status' => true,
+                'msg' => '更新成功!',
+            );
+        }
+
+        return $this->msg;
+    }
 }

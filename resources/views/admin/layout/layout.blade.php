@@ -93,8 +93,8 @@
                             設定注意事項
                         </a>
                     </li>
-                    <li>
-                        <a href="">
+                    <li id="li_user">
+                        <a href="[! route('ma.user') !]">
                             <i class="mainnav-title-icon ion-person"></i>
                             修改個人資訊
                         </a>

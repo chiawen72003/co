@@ -600,4 +600,45 @@ class AdController extends Controller
 
         echo json_encode($t_obj->addReel());
     }
+
+
+    /**
+     * 個人資料管理
+     *
+     *
+     */
+    public function User()
+    {
+
+        return view('admin.userdata.index', $this->data);
+    }
+
+    /**
+     * 個人資料的資料
+     *
+     *
+     */
+    public function UserData()
+    {
+        $user = new UserItem();
+        $user->init(array('user_id' => $this->data['user_id']));
+
+        echo json_encode($user->getAdmin());
+    }
+
+    /**
+     * 更新個人資料的資料
+     *
+     *
+     */
+    public function UserUpdate()
+    {
+        $data = array();
+        $data['new_pw'] = app('request')->get('new_pw');
+        $data['id'] = $this->data['user_id'];
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->setAdminPw());
+    }
 }

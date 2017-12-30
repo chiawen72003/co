@@ -93,6 +93,12 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/revised/Reel', ['as' => 'ma.revised.reel', 'uses' => 'AdController@RevisedReel']);
     Route::get('/Ma/revised/Reel/List', ['as' => 'ma.revised.reel.list', 'uses' => 'AdController@RevisedReelList']);
     Route::post('/Ma/revised/Reel/Add', ['as' => 'ma.revised.reel.add', 'uses' => 'AdController@RevisedReelAdd']);
+
+    //管理員 修改個人資訊
+    Route::get('/Ma/User', ['as' => 'ma.user', 'uses' => 'AdController@User']);
+    Route::get('/Ma/User/Data', ['as' => 'ma.user.data', 'uses' => 'AdController@UserData']);
+    Route::post('/Ma/User/Update', ['as' => 'ma.user.update', 'uses' => 'AdController@UserUpdate']);
+
 });
 
 //受測者
