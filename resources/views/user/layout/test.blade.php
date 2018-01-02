@@ -15,11 +15,11 @@
         <div class="page-header-right">
             <div class="setting-user">
                 <i class="ion-ios-contact-outline"></i>
-                <span>身份：評閱委員</span>
+                <span>身份：學生</span>
                 <span>姓名：[! $user_name !]</span>
             </div>
             <div class="setting-logout">
-                <a href="">
+                <a onclick="logout()">
                     <i class="ion-log-out"></i>
                     登出
                 </a>
@@ -28,5 +28,28 @@
     </div>
     @yield('content')
 </div>
+<script>
+    function logout() {
+        $.ajax({
+            url: "[! route('member.logout') !]",
+            type:'GET',
+            dataType: "json",
+            data: {
+            },
+            error: function(xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function(response)
+            {
+                if(response['status'] == true)
+                {
+                    alert(response['msg']);
+                    location.replace(response['redir']);
+                }
+            }
+        });
+    }
+</script>
+
 </body>
 </html>
