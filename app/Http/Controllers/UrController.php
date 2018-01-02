@@ -109,6 +109,10 @@ class UrController extends Controller
     public function ReelEdit($id)
     {
         $this->data['id'] = $id;
+        $this->data['user_name'] = app('request')->session()->get('name');
+        $this->data['user_id'] = app('request')->session()->get('user_id');
+        $this->data['student_id'] = app('request')->session()->get('student_id');
+        $this->data['school_title'] = app('request')->session()->get('school_title');
 
         return view('user.reel.edit', $this->data);
     }
