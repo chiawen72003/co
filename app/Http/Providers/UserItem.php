@@ -80,10 +80,22 @@ class UserItem
         }
 
         if(!$has_data){
-            $temp_obj = Student::select('id','name')
+            $temp_obj = Student::select('id','name', 'student_id')
                 ->where('login_name',$this->input_array['login_name'])
                 ->where('login_pw',$this->input_array['login_pw'])
                 ->where('school_id',$this->input_array['school_id'])
+                ->get();
+            $temp_obj = Student::where('student.login_name',$this->input_array['login_name'])
+                ->where('student.login_pw',$this->input_array['login_pw'])
+                ->where('student.school_id',$this->input_array['school_id'])
+                ->leftJoin('school', 'school.id', '=', 'student.school_id')
+                ->select(
+                    'student.id',
+                    'student.name',
+                    'student.student_id',
+                    'student.school_id',
+                    'school.school_title'
+                )
                 ->get();
             foreach($temp_obj as $v ){
                 session([
@@ -91,6 +103,9 @@ class UserItem
                     'user_id' => $v['id'],
                     'name' => $v['name'],
                     'login_name' => $v['login_name'],
+                    'student_id' => $v['student_id'],
+                    'school_title' => $v['school_title'],
+                    'school_id' => $v['school_id'],
                 ]);
                 $this->msg = array(
                     'status' => true,
