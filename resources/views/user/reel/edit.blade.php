@@ -32,8 +32,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a onclick="" class="i-link prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a onclick="" class="i-link next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -248,10 +248,10 @@
     </div>
     <script>
         var question_item = [];
-        var obj_1 = $('#obj_1');
-        var obj_2 = $('#obj_2');
-        var obj_3 = $('#obj_3');
-        var obj_4 = $('#obj_4');
+        var obj_1 = $('#obj_1');//輸入區模組1
+        var obj_2 = $('#obj_2');//輸入區模組2
+        var obj_3 = $('#obj_3');//輸入區模組3
+        var obj_4 = $('#obj_4');//輸入區模組4
         var test_area = $('#test_area');
         $( document ).ready(function() {
             getData();
@@ -321,7 +321,7 @@
                     t.find('#title').html(question_item[x]['question_title']).removeAttr('id');
                 }
                 //試題內容
-                t.find('#dsc').html(question_item[x]['dsc']).removeAttr('id');
+                t.find('#dsc').html(question_item[x]['dsc']).attr('id','dsc_'+x);
                 //使用者在每一個試題內打字的總數量
                 t.find('#count').attr('id', 'write_'+x+'_count');
                 //試題輸入區
@@ -354,6 +354,7 @@
                     reCount();
                 });
             }
+            checkCtrl();
         }
 
         //控制只能輸入全形的值
@@ -394,6 +395,7 @@
                     $('#write_'+x).hide();
                 }
             }
+            $section = $('#dsc_'+x);
         }
 
         //上傳資料
@@ -447,8 +449,6 @@
             }
         }
 
-
-
         //下面處理文章過長時，可以點擊上下頁按鈕來移動文章
         $.fn.scrollStopped = function(callback) {
             var $this = $(this),
@@ -460,21 +460,20 @@
                 $this.data('scrollTimeout', setTimeout(callback, 250, self));
             });
         };
-        $section = $('#exam_title');
-
-    $(function() {
+        $section = $('#dsc_0');
+        $prev = $('.prev');
+        $next = $('.next');
         var $win = $(window),
             $body = $('body'),
-            $prev = $('.prev'),
-            $next = $('.next'),
             sh = 0,
             st = 0,
             sb = 0,
-            hPage = 400;//頁面滑動時要移動的量
-        phase = 1,
+            hPage = 400,//頁面滑動時要移動的量
+            phase = 1,
             triggerEvt = ('touchend' in window) ? 'touchend' : ' click';
+    $(function() {
         if ($section.prop('scrollHeight') > 400) {
-            $('.question-button-wrap').addClass('show');//todo 需要顯示、不顯示的css
+            $('.question-button-wrap').addClass('show');
             calcDimension();
             $section.scrollStopped(checkCtrl);//上下頁滑動完以後，檢查是否顯示按鈕
             //$win.on('resize', calcDimension);
@@ -490,11 +489,8 @@
                 });
             });
         }
-
-        /**
-         * 判斷是否顯示上、下頁按鈕
-         *
-         */
+    });
+         //判斷是否顯示上、下頁按鈕
         function checkCtrl() {
             $prev.removeClass('disabled');
             $next.removeClass('disabled');
@@ -506,12 +502,17 @@
             }
         }
 
-        /**
-         * 初始化 設定值
-         */
+         //初始化 設定值
         function calcDimension() {
-            //todo 需要計算此高度
             sb = $section.prop('scrollHeight') - 50;//st大於此值時，就不顯示下一頁按鈕
         }
+
+        //----------------------------------------------
+        //控制不能複製、貼上等
+        $(document).ready(function () {
+            $('body').bind('cut copy paste', function (e) {
+                e.preventDefault();
+            });
+        });
     </script>
 @stop
