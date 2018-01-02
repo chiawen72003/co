@@ -9,10 +9,10 @@
             </div>
             <div class="chapter">
                 <div class="chapter-header i-alert-info">
-                    <span>學校：國立臺中教育大學</span>
+                    <span>學校：[! $school_title !]</span>
                     <span>身份：學生</span>
-                    <span>學號：ASC106102</span>
-                    <span>姓名：王曉明</span>
+                    <span>學號：[! $student_id !]</span>
+                    <span>姓名：[! $user_name !]</span>
                 </div>
                 <div class="chapter-container" id="test_area">
 
@@ -446,6 +446,72 @@
                 });
             }
         }
-        
+
+
+
+        //下面處理文章過長時，可以點擊上下頁按鈕來移動文章
+        $.fn.scrollStopped = function(callback) {
+            var $this = $(this),
+                self = this;
+            $this.scroll(function() {
+                if ($this.data('scrollTimeout')) {
+                    clearTimeout($this.data('scrollTimeout'));
+                }
+                $this.data('scrollTimeout', setTimeout(callback, 250, self));
+            });
+        };
+        $section = $('#exam_title');
+
+    $(function() {
+        var $win = $(window),
+            $body = $('body'),
+            $prev = $('.prev'),
+            $next = $('.next'),
+            sh = 0,
+            st = 0,
+            sb = 0,
+            hPage = 400;//頁面滑動時要移動的量
+        phase = 1,
+            triggerEvt = ('touchend' in window) ? 'touchend' : ' click';
+        if ($section.prop('scrollHeight') > 400) {
+            $('.question-button-wrap').addClass('show');//todo 需要顯示、不顯示的css
+            calcDimension();
+            $section.scrollStopped(checkCtrl);//上下頁滑動完以後，檢查是否顯示按鈕
+            //$win.on('resize', calcDimension);
+            $body.on(triggerEvt, '.prev, .next', function() {
+                st = $section.scrollTop();//現在scroltop的位置
+                if ($(this).hasClass('prev')) {
+                    phase = -1;
+                } else {
+                    phase = 1;
+                }
+                $section.stop().animate({
+                    scrollTop: st + hPage * phase
+                });
+            });
+        }
+
+        /**
+         * 判斷是否顯示上、下頁按鈕
+         *
+         */
+        function checkCtrl() {
+            $prev.removeClass('disabled');
+            $next.removeClass('disabled');
+            st = $section.scrollTop();
+            if (st >= sb) {
+                $next.addClass('disabled');
+            } else if (st <= 0) {
+                $prev.addClass('disabled');
+            }
+        }
+
+        /**
+         * 初始化 設定值
+         */
+        function calcDimension() {
+            //todo 需要計算此高度
+            sb = $section.prop('scrollHeight') - 50;//st大於此值時，就不顯示下一頁按鈕
+        }
     </script>
 @stop
