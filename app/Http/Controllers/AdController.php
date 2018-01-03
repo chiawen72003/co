@@ -601,7 +601,6 @@ class AdController extends Controller
         echo json_encode($t_obj->addReel());
     }
 
-
     /**
      * 個人資料管理
      *
@@ -632,6 +631,69 @@ class AdController extends Controller
      *
      */
     public function UserUpdate()
+    {
+        $data = array();
+        $data['new_pw'] = app('request')->get('new_pw');
+        $data['id'] = $this->data['user_id'];
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->setAdminPw());
+    }
+
+    /**
+     * 學生資訊
+     *
+     *
+     */
+    public function Student()
+    {
+
+        return view('admin.student.index', $this->data);
+    }
+
+    /**
+     * 學生的資料
+     *
+     *
+     */
+    public function StudentList()
+    {
+        $user = new UserItem();
+        $user->init(array(
+            'school_id' => app('request')->get('school'),
+            'school_subject' => app('request')->get('subject'),
+        ));
+
+        echo json_encode($user->getStudentBySubject());
+    }
+
+    /**
+     * 新增學生的資料
+     *
+     *
+     */
+    public function StudentAdd()
+    {
+        $data = array();
+        $data['login_name'] = app('request')->get('login_name');
+        $data['login_pw'] = app('request')->get('login_pw');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['school_subject'] = app('request')->get('school_subject');
+        $data['student_id'] = app('request')->get('student_id');
+        $data['name'] = app('request')->get('name');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->addStudent());
+    }
+
+    /**
+     * 更新學生的資料
+     *
+     *
+     */
+    public function StudentUpdate()
     {
         $data = array();
         $data['new_pw'] = app('request')->get('new_pw');

@@ -99,6 +99,11 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/User/Data', ['as' => 'ma.user.data', 'uses' => 'AdController@UserData']);
     Route::post('/Ma/User/Update', ['as' => 'ma.user.update', 'uses' => 'AdController@UserUpdate']);
 
+    //管理員 管理使用者 修改學生資訊
+    Route::get('/Ma/Student', ['as' => 'ma.student', 'uses' => 'AdController@Student']);
+    Route::get('/Ma/Student/List', ['as' => 'ma.student.list', 'uses' => 'AdController@StudentList']);
+    Route::post('/Ma/Student/Add', ['as' => 'ma.student.add', 'uses' => 'AdController@StudentAdd']);
+    Route::post('/Ma/Student/Update', ['as' => 'ma.student.update', 'uses' => 'AdController@StudentUpdate']);
 });
 
 //受測者

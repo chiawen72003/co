@@ -306,14 +306,17 @@ class UserItem
     }
 
     /**
-     * 取得 受測試者資料
+     * 取得 指定學校、科系內所有受測試者資料
      *
      */
-    public function getAllStudent()
+    public function getStudentBySubject()
     {
         $return_data = array();
-        $temp_obj = Student::leftJoin('school', 'school.id', '=', 'student.school_id')
+        $temp_obj = Student::where('student.school_id',$this->input_array['school_id'])
+            ->where('student.school_subject',$this->input_array['school_subject'])
+            ->leftJoin('school', 'school.id', '=', 'student.school_id')
             ->select(
+                'student.id',
                 'student.login_name',
                 'student.login_pw','name',
                 'student.student_id',
@@ -321,7 +324,7 @@ class UserItem
             )
             ->get();
         foreach($temp_obj as $v ){
-            $return_data = array(
+            $return_data[] = array(
                 'login_name' => $v['login_name'],
                 'login_pw' => $v['login_pw'],
                 'name' => $v['name'],
@@ -358,6 +361,28 @@ class UserItem
         return $this->msg;
     }
 
+    /**
+     * 新增 受測試者資料
+     *
+     */
+    public function addStudent()
+    {
+        $update = new Student();
+        $update->login_name = $this->input_array['login_name'];
+        $update->login_pw = $this->input_array['login_pw'];
+        $update->school_id = $this->input_array['school_id'];
+        $update->school_subject = $this->input_array['school_subject'];
+        $update->student_id = $this->input_array['student_id'];
+        $update->name = $this->input_array['name'];
+        $update->save();
+        $getID  = $update->id;
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
 
     /**
      * 取得 管理員資料
