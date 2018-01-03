@@ -38,7 +38,7 @@
                         <ul class="mainnav-sub">
                             <li id="li_school"><a href="[! route('ma.school') !]">匯入學校/代碼</a></li>
                             <li id="li_school_subject"><a href="[! route('ma.subject') !]">新增學校/科系</a></li>
-                            <li id="li_member"><a href="">查詢/編輯使用者資料</a></li>
+                            <li id="li_member"><a href="[! route('ma.student') !]">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
                     <li class="hs-sub" id="main_li_2">
@@ -81,6 +81,7 @@
                         <a href="#">
                             <i class="mainnav-title-icon ion-ios-book-outline"></i>
                             批改管理
+                            <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
                             <li id="li_revised"><a href="[! route('ma.revised') !]">評閱者資料管理</a></li>
