@@ -14,36 +14,47 @@
                     <table class="table">
                         <tr>
                             <th width="100">
-                                <div class="cell">總批閱份數</div>
+                                <div class="cell"></div>
                             </th>
-                            <td>
-                                <div class="cell">581</div>
-                            </td>
-                        </tr>
-                        <tr>
+                            <th width="100">
+                                <div class="cell">待批閱份數</div>
+                            </th>
+                            <th  width="100">
+                                <div class="cell">已批閱份數</div>
+                            </th>
                             <th width="100">
                                 <div class="cell">空白份數</div>
                             </th>
+                        </tr>
+                        <tr>
+                            <td width="100">
+                                <div class="cell">空白份數</div>
+                            </td>
+                            <td>
+                                <div class="cell">0</div>
+                            </td>
+                            <td>
+                                <div class="cell">0</div>
+                            </td>
                             <td>
                                 <div class="cell">0</div>
                             </td>
                         </tr>
                         <tr>
-                            <th width="100">
-                                <div class="cell">待批閱份數</div>
-                            </th>
-                            <td>
-                                <div class="cell">346</div>
+                            <td >
+                                <div class="cell">總份數</div>
+                            </td>
+                            <td >
+                                <div class="cell">0</div>
+                            </td>
+                            <td >
+                                <div class="cell">0</div>
+                            </td>
+                            <td >
+                                <div class="cell">0</div>
                             </td>
                         </tr>
-                        <tr>
-                            <th width="100">
-                                <div class="cell">已批閱份數</div>
-                            </th>
-                            <td>
-                                <div class="cell"><a href="" class="i-link">235</a></div>
-                            </td>
-                        </tr>
+
                     </table>
                 </div>
             </div>
