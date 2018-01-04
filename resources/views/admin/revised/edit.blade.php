@@ -53,14 +53,12 @@
     </div>
     [! Html::script('js/jquery-1.11.3.js') !]
     <script>
-        var li_item = $('#li_revised');
         var school = $('#school');
         var area = $('#area');
-        var current = 'current';
         var school_item = [];
         var revised_item = [];
         $( document ).ready(function() {
-            li_item.addClass( current);
+            setMenu('li_revised', 'main_li_4');
             getSchoolData();
         });
 

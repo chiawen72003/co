@@ -78,16 +78,14 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_revised');
     var list_item = $('#revised_list');
     var school = $('#school');
     var area = $('#area');
     var tr_item = $('#copy_tr');
-    var current = 'current';
     var revised_item = [];
     var school_item = [];
     $( document ).ready(function() {
-        li_item.addClass( current);
+        setMenu('li_revised', 'main_li_4');
         getSchoolData();
     });
 
