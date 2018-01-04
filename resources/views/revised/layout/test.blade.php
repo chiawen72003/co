@@ -19,7 +19,7 @@
                 <span>姓名：[! $user_name !]</span>
             </div>
             <div class="setting-logout">
-                <a href="logout()">
+                <a onclick="logout()">
                     <i class="ion-log-out"></i>
                     登出
                 </a>
