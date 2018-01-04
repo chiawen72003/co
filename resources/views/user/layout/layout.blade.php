@@ -36,18 +36,6 @@
                             首頁
                         </a>
                     </li>
-                    <li id="li_reel">
-                        <a href="[! route('ur.reel') !]">
-                            <i class="mainnav-title-icon ion-ios-list"></i>
-                            試卷管理
-                        </a>
-                    </li>
-                    <li id="li_user">
-                        <a href="[! route('ur.user') !]">
-                            <i class="mainnav-title-icon ion-person"></i>
-                            使用者管理
-                        </a>
-                    </li>
                 </ul>
             </nav>
             @yield('content')
