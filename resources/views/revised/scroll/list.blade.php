@@ -20,7 +20,7 @@
                             <div class="cell">需閱卷數量</div>
                         </th>
                         <th>
-                            <div class="cell">已經閱卷數量</div>
+                            <div class="cell">已閱卷數量</div>
                         </th>
                         <th width="120">
                             <div class="cell center">功能</div>
