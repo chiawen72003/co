@@ -10,7 +10,7 @@
 <div id="mainbody">
     <div id="page-header">
         <div class="page-header-left">
-            大學生語文素養－寫作自動計分暨線上寫作測驗平台
+            大學生語文素養－線上寫作測驗平台
         </div>
     </div>
 
