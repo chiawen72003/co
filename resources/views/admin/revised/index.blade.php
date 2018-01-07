@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <div class="form-group">
                         <label class="i-label">區域</label>
-                        <select id="area" onchange="setSchoolData()">
+                        <select id="area" class="i-select" onchange="setSchoolData()">
                             <option value="1">北區</option>
                             <option value="2">桃竹苗區</option>
                             <option value="3">中區</option>
@@ -19,18 +19,20 @@
                             <option value="6">外島</option>
                         </select>
                         <label class="i-label">學校名稱</label>
-                        <select id="school">
+                        <select id="school" class="i-select">
                         </select>
                     </div>
-                    <div class="form-inline">
-                        <label class="i-label">帳號</label>
-                        <input type="text" class="i-input">
-                        <label class="i-label">姓名</label>
-                        <input type="text" class="i-input">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label class="i-label">帳號</label>
+                            <input type="text" class="i-input">
+                            <label class="i-label">姓名</label>
+                            <input type="text" class="i-input">
+                        </div>
+                        <button type="button" class="i-btn">
+                            查詢
+                        </button>
                     </div>
-                    <button type="button" class="i-btn">
-                        查詢
-                    </button>
                 </div>
             </form>
         </div>
@@ -54,7 +56,7 @@
                         <th>
                             <div class="cell">姓名</div>
                         </th>
-                        <th width="100">
+                        <th width="120">
                             <div class="cell center">
                                 功能
                             </div>
