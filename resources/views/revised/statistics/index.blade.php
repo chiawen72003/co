@@ -87,8 +87,8 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    var t = tr_item.clone();
                     for(var x=0;x<response['data'].length;x++){
+                        var t = tr_item.clone();
                         t.find('#title').html(response['data'][x]['title']).removeAttr('id');
                         t.find('#need_num').html(response['data'][x]['total']).removeAttr('id');
                         t.find('#has_num').html(response['data'][x]['has']).removeAttr('id');
