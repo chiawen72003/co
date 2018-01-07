@@ -150,6 +150,7 @@ Route::group(['middleware' => 'RevisedCheck'], function () {
 
     //批閱者 批改統計
     Route::get('/Rv/Statistics', ['as' => 'rv.statistics', 'uses' => 'RvController@Statistics']);
+    Route::get('/Rv/Statistics/Data', ['as' => 'rv.statistics.data', 'uses' => 'RvController@StatisticsData']);
 
     //批閱者 使用者管理
     Route::get('/Rv/User', ['as' => 'rv.user', 'uses' => 'RvController@User']);

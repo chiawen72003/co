@@ -166,6 +166,22 @@ class RvController extends Controller
         return view('revised.statistics.index', $this->data);
     }
 
+
+    /**
+     * 批改統計 全部資料
+     *
+     *
+     */
+    public function StatisticsData()
+    {
+        $data = array();
+        $data['user_id'] = $this->data['user_id'];
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->getRvStatisticsData());
+    }
+
     /**
      * 閱卷訓練
      *
