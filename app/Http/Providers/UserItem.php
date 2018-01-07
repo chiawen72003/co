@@ -325,6 +325,7 @@ class UserItem
             ->get();
         foreach($temp_obj as $v ){
             $return_data[] = array(
+                'id' => $v['id'],
                 'login_name' => $v['login_name'],
                 'login_pw' => $v['login_pw'],
                 'name' => $v['name'],
