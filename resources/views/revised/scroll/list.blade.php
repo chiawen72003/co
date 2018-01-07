@@ -87,7 +87,11 @@
             t.find('#reelTitle').html(list_obj[x]['reel_title']).removeAttr('id');
             t.find('#needNum').html(list_obj[x]['need_num']).removeAttr('id');
             t.find('#viewNum').html(list_obj[x]['view_num']).removeAttr('id');
-            t.find('#path').attr('href',list_obj[x]['path']).removeAttr('id');
+            if(list_obj[x]['need_num'] > list_obj[x]['view_num']){
+                t.find('#path').attr('href',list_obj[x]['path']).removeAttr('id');
+            }else{
+                t.find('#path').remove();
+            }
             t.removeAttr('id');
             list_item.append(t);
         }
