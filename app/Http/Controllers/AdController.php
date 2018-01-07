@@ -696,11 +696,13 @@ class AdController extends Controller
     public function StudentUpdate()
     {
         $data = array();
+        $data['id'] = app('request')->get('user_id');
+        $data['student_id'] = app('request')->get('student_id');
+        $data['name'] = app('request')->get('name');
         $data['new_pw'] = app('request')->get('new_pw');
-        $data['id'] = $this->data['user_id'];
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->setAdminPw());
+        echo json_encode($t_obj->setStudent());
     }
 }

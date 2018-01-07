@@ -385,6 +385,29 @@ class UserItem
         return $this->msg;
     }
 
+
+    /**
+     * 新增 受測試者資料
+     *
+     */
+    public function setStudent()
+    {
+        $update = Student::find($this->input_array['id']);
+        $update->student_id = $this->input_array['student_id'];
+        $update->name = $this->input_array['name'];
+        $update->save();
+        if (isset($this->input_array['new_pw']) && $this->input_array['new_pw'] != '') {
+            $update->login_pw = $this->input_array['new_pw'];
+            $update->save();
+        }
+        $this->msg = array(
+            'status' => true,
+            'msg' => '更新成功!',
+        );
+
+        return $this->msg;
+    }
+
     /**
      * 取得 管理員資料
      *

@@ -120,7 +120,51 @@
         </div>
     </div>
 </div>
-
+<div class="article" id="edit_div" style="display: none">
+    <div class="article-header">
+        查詢/編輯使用者資料
+    </div>
+    <div class="article-content">
+        <div class="article-content-body">
+            <div class="title">
+                <i class="ion-information-circled"></i>
+                編輯使用者
+            </div>
+            <div class="form-group">
+                <label class="i-label">學校</label>
+                <input class="i-input" id="up_school_name" disabled>
+            </div>
+            <div class="form-group">
+                <label class="i-label">帳號</label>
+                <input class="i-input" id="up_login_name" disabled>
+            </div>
+            <div class="form-group">
+                <label class="i-label">姓名</label>
+                <input class="i-input" value="" id="up_name">
+            </div>
+            <div class="form-group">
+                <label class="i-label">學號</label>
+                <input class="i-input" value="" id="up_student_id">
+            </div>
+            <div class="form-group">
+                <label class="i-label">新密碼</label>
+                <input type="password" class="i-input" id="up_pw">
+            </div>
+            <div class="form-group">
+                <label class="i-label">確認新密碼</label>
+                <input type="password" class="i-input" id="up_pw_r">
+            </div>
+            <div class="form-group form-bottom">
+                <button type="button" class="i-btn" onclick="returnList()">
+                    取消
+                </button>
+                <button type="button" class="i-btn i-btn-primary" onclick="sendUpdateData()">
+                    更新
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <table style="display: none">
     <tr id="copy_tr">
         <td><div class="cell" id="school_area"></div></td>
@@ -128,7 +172,7 @@
         <td><div class="cell" id="login_name_area"></div></td>
         <td><div class="cell" id="name_area"></div></td>
         <td>
-            <div class="cell center"><a href="#" class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a></div>
+            <div class="cell center"><a class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a></div>
         </td>
     </tr>
 </table>
@@ -273,7 +317,7 @@
             t.find('#subject_area').html(subject).removeAttr('id');
             t.find('#login_name_area').html(login_name).removeAttr('id');
             t.find('#name_area').html(name).removeAttr('id');
-            //t.find('#a_area').attr('href',a).removeAttr('id');
+            t.find('#a_area').attr('onclick','showUpArea("'+student_item[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -290,6 +334,7 @@
     function returnList() {
         $('#list_div').show();
         $('#add_div').hide();
+        $('#edit_div').hide();
         resetAddSelect();
     }
 
@@ -302,7 +347,7 @@
     function sendAddData()
     {
         if(!is_send && chkInput()){
-            //is_send = true;
+            is_send = true;
             $.ajax({
                 url: "[! route('ma.student.add') !]",
                 type:'POST',
@@ -333,7 +378,6 @@
 
     function chkInput()
     {
-        return true;
         var msg = '';
         if(o_pw.val() == ''){
             msg = msg + '請輸入舊密碼!!\r\n';
@@ -355,6 +399,76 @@
 
         if(msg == ''){
             pw = n_pw.val();
+            return true;
+        }
+        alert(msg);
+
+        return false;
+    }
+    //------------------------------------------------------------------
+    //下面是更新使用者會用到的方法
+    var update_id = 0;
+
+    function showUpArea(u_id) {
+        $('#edit_div').show();
+        $('#add_div').hide();
+        $('#list_div').hide();
+        for(var x=0;x<student_item.length;x++){
+           if(student_item[x]['id'] == u_id){
+               $('#up_school_name').val(student_item[x]['school_title']);
+               $('#up_login_name').val(student_item[x]['login_name']);
+               $('#up_name').val(student_item[x]['name']);
+               $('#up_student_id').val(student_item[x]['student_id']);
+           }
+        }
+        update_id = u_id;
+    }
+    function sendUpdateData()
+    {
+        if(!is_send && chkUpInput()){
+            is_send = true;
+            $.ajax({
+                url: "[! route('ma.student.update') !]",
+                type:'POST',
+                dataType: "json",
+                data: {
+                    _token: '[! csrf_token() !]',
+                    new_pw:$('#up_pw').val(),
+                    student_id:$('#up_student_id').val(),
+                    name:$('#up_name').val(),
+                    user_id:update_id,
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    if(response['status'] == true){
+                        alert(response['msg']);
+                    }
+                    getStudent();
+                    returnList();
+                    is_send = false;
+                }
+            });
+        }
+    }
+
+    function chkUpInput()
+    {
+        var msg = '';
+        if($('#up_name').val() == ''){
+            msg = msg + '請輸入姓名!!\r\n';
+        }
+        if($('#up_student_id').val() == ''){
+            msg = msg + '請輸入學號!!\r\n';
+        }
+        if($('#up_pw').val() != ''){
+            if($('#up_pw').val() != $('#up_pw_r').val()){
+                msg = msg + '新密碼不一致!!\r\n';
+            }
+        }
+
+        if(msg == ''){
             return true;
         }
         alert(msg);
