@@ -7,27 +7,31 @@
     <div class="article-content">
         <div class="article-content-header">
             <form>
-                <label class="i-label">學年度</label>
-                <select id="year">
-                </select>
-                <label class="i-label">學期</label>
-                <select id="semester">
-                    <option value="1">第一學期</option>
-                    <option value="2">第二學期</option>
-                </select>
-                <label class="i-label">課程名稱</label>
-                <select id="courseName">
-                </select>
-                <label class="i-label">學校</label>
-                <select id="school">
-                </select>
-                <label class="i-label">科系</label>
-                <select id="subject">
-                </select>
-                <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="add()">
-                    <i class="ion-android-add"></i>
-                    新增
-                </button>
+                <div class="form-group">
+                    <label class="i-label">學年度</label>
+                    <select id="year" class="i-select">
+                    </select>
+                    <label class="i-label">學期</label>
+                    <select id="semester" class="i-select">
+                        <option value="1">第一學期</option>
+                        <option value="2">第二學期</option>
+                    </select>
+                    <label class="i-label">課程名稱</label>
+                    <select id="courseName" class="i-select">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="i-label" class="i-select">學校</label>
+                    <select id="school" class="i-select">
+                    </select>
+                    <label class="i-label" class="i-select">科系</label>
+                    <select id="subject" class="i-select">
+                    </select>
+                    <button type="button" class="i-btn i-btn-primary" onclick="add()">
+                        <i class="ion-android-add"></i>
+                        新增
+                    </button>
+                </div>
             </form>
         </div>
         <div class="article-content-body">

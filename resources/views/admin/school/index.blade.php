@@ -8,7 +8,7 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">區域</label>
-                <select id="area">
+                <select id="area" class="i-select">
                     <option value="1">北區</option>
                     <option value="2">桃竹苗區</option>
                     <option value="3">中區</option>
@@ -20,7 +20,7 @@
                 <input type="text" class="i-input" id="school_title">
                 <label class="i-label">代碼</label>
                 <input type="text" class="i-input" id="code">
-                <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="addSchool()">
+                <button type="button" class="i-btn i-btn-primary" onclick="addSchool()">
                     <i class="ion-android-add"></i>
                     新增
                 </button>

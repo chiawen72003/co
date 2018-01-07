@@ -22,7 +22,7 @@
                     <label class="i-label">課程名稱</label>
                     <input type="text" class="i-input" id="course_title">
                 </div>
-                <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="addCourse()">
+                <button type="button" class="i-btn i-btn-primary" onclick="addCourse()">
                     <i class="ion-android-add"></i>
                     新增
                 </button>

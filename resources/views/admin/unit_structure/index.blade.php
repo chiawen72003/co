@@ -8,18 +8,18 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">版本</label>
-                <select id="version">
+                <select id="version" class="i-select">
                     <option value="1">全國</option>
                     <option value="2">中區</option>
                     <option value="3">測試</option>
                 </select>
                 <label class="i-label">科目</label>
-                <select id="subject">
+                <select id="subject" class="i-select">
                     <option value="1">國語</option>
                     <option value="2">國文</option>
                 </select>
                 <label class="i-label">冊</label>
-                <select id="book">
+                <select id="book" class="i-select">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -43,7 +43,7 @@
                 </select>
                 <label class="i-label">單元名稱</label>
                 <input type="text" class="i-input" id="unit_title">
-                <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="addUnit()">
+                <button type="button" class="i-btn i-btn-primary" onclick="addUnit()">
                     <i class="ion-android-add"></i>
                     新增
                 </button>
