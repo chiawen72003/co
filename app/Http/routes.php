@@ -68,6 +68,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
 
     //管理員 試題管理
     Route::get('/Ma/Question', ['as' => 'ma.question', 'uses' => 'AdController@Question']);
+    Route::get('/Ma/Question/api', ['as' => 'ma.question.api', 'uses' => 'AdController@QuestionApi']);
     Route::get('/Ma/Question/list', ['as' => 'ma.question.list', 'uses' => 'AdController@QuestionList']);
     Route::get('/Ma/Question/data', ['as' => 'ma.question.data', 'uses' => 'AdController@QuestionData']);
     Route::get('/Ma/Question/pg/add', ['as' => 'ma.question.pg.add', 'uses' => 'AdController@QuestionPgAdd']);
