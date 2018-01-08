@@ -311,6 +311,25 @@ class AdController extends Controller
     }
 
     /**
+     * 試題 api 回傳單元、試卷資料
+     */
+    public function QuestionApi()
+    {
+        $school = new StructureItem();
+        $unit = $school->getUnit();
+        $reel = $school->getReel();
+        $t = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'unit' => $unit['data'],
+                'reel' => $reel['data'],
+            ),
+        );
+        echo json_encode($t);
+    }
+
+    /**
      * 所有試題的資料
      *
      *
