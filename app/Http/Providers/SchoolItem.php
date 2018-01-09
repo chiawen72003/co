@@ -121,7 +121,7 @@ class SchoolItem
     {
         $return_data = array();
         $temp_obj = School::select('id','city', 'code', 'area', 'school_title')
-            ->orderby('city', 'ASC')
+            ->orderby('city', 'DESC')
             ->orderby('area', 'ASC')
             ->orderby('code', 'ASC')
             ->orderby('school_title', 'ASC')
