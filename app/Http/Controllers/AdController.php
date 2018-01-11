@@ -24,6 +24,44 @@ class AdController extends Controller
     }
 
     /**
+     * 學校-班級
+     *
+     *
+     */
+    public function Classes()
+    {
+
+        return view('admin.school_classes.index', $this->data);
+    }
+
+    /**
+     * 所有學校-班級的資料
+     *
+     *
+     */
+    public function ClassesApi()
+    {
+        $school = new SchoolItem();
+
+        echo json_encode($school->getSubject());
+    }
+
+    /**
+     * 新增學校-班級的資料
+     *
+     *
+     */
+    public function ClassesAdd()
+    {
+        $data = array();
+        $data['subject_title'] = app('request')->get('subject_title');
+        $data['school_id'] = app('request')->get('school_id');
+        $t_obj = new SchoolItem();
+        $t_obj->init($data);
+        echo json_encode($t_obj->addSubject());
+    }
+
+    /**
      * 學校-科系
      *
      *
@@ -330,13 +368,16 @@ class AdController extends Controller
     }
 
     /**
-     * 所有試題的資料
+     *指定試卷內所有試題的資料
      *
      *
      */
     public function QuestionList()
     {
         $question = new QuestionItem();
+        $question->init(array(
+            'reel_id' => app('request')->get('id'),
+        ));
 
         echo json_encode($question->getQuestion());
     }
@@ -405,6 +446,8 @@ class AdController extends Controller
         $data['type_title'] = app('request')->get('type_title');
         $data['dsc'] = app('request')->get('dsc');
         $data['power'] = app('request')->get('power');
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['max_score'] = app('request')->get('max_score');
         $t_obj = new QuestionItem();
         $t_obj->init($data);
         echo json_encode($t_obj->addQuestion());
