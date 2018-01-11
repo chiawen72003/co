@@ -29,14 +29,15 @@ class QuestionItem
     }
 
     /**
-     * 取得 試題資料
+     * 取得 指定試卷內所有試題資料
      *
      */
     public function getQuestion()
     {
         $return_data = array();
         $temp_obj = Questions::select('id', 'question_title', 'type', 'type_title')
-            ->orderby('id', 'DESC')
+            ->where('reel_id', $this->input_array['reel_id'])
+            ->orderby('id', 'ASC')
             ->get();
         foreach ($temp_obj as $v) {
             $return_data[] = $v;
@@ -81,10 +82,12 @@ class QuestionItem
     public function addQuestion()
     {
         $update = new Questions();
-        $update->type = $this->input_array['type'];
+        $update->reel_id = $this->input_array['reel_id'];
+        $update->type = json_encode($this->input_array['type'],JSON_UNESCAPED_UNICODE);
         $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
-        $update->question_title = $this->input_array['question_title'];
-        $update->power = $this->input_array['power'];
+        $update->question_title = json_encode($this->input_array['question_title'],JSON_UNESCAPED_UNICODE);
+        $update->power = json_encode($this->input_array['power'],JSON_UNESCAPED_UNICODE);
+        $update->max_score = json_encode($this->input_array['max_score'],JSON_UNESCAPED_UNICODE);
         $update->dsc = $this->input_array['dsc'];
         $update->save();
         $this->msg = array(
