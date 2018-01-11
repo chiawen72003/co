@@ -47,7 +47,7 @@
                 <label class="i-label">試卷名稱</label>
                 <select id="reel" class="i-select">
                 </select>
-                <button type="button" class="i-btn i-btn-primary" onclick="addReel()">
+                <button type="button" class="i-btn i-btn-primary" onclick="getQuestionData()">
                     <i class="ion-android-add"></i>
                     查詢
                 </button>
@@ -146,6 +146,9 @@
         });
     }
 
+    /**
+     * 單元選項設定
+     */
     function setUnit() {
         var v = version_item.val();
         var s = subject_item.val();
@@ -160,6 +163,9 @@
         setReel();
     }
 
+    /**
+     * 試卷選項設定
+     */
     function setReel() {
         var unit_val = unit_sw_item.val();
         $("#reel option").remove();
@@ -170,34 +176,44 @@
         }
     }
 
+    /**
+     * 取指定試卷的所有試題資料
+     */
     function getQuestionData() {
-        $.ajax({
-            url: "[! route('ma.question.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
-                        question_item.push(
-                            {
-                                'id':response['data'][x]['id'],
-                                'question_title':response['data'][x]['question_title'],
-                                'type':response['data'][x]['type'],
-                                'type_title':response['data'][x]['type_title'],
-                            }
-                        );
+        //$(location).attr('pathname');
+        if(reel_sw_item.val() != ''){
+            $.ajax({
+                url: "[! route('ma.question.list') !]",
+                type:'GET',
+                dataType: "json",
+                data: {
+                    'id':reel_sw_item.val(),
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    if(response['status'] == true){
+                        for(var x=0;x<response['data'].length;x++){
+                            question_item.push(
+                                {
+                                    'id':response['data'][x]['id'],
+                                    'question_title':response['data'][x]['question_title'],
+                                    'type':response['data'][x]['type'],
+                                    'type_title':response['data'][x]['type_title'],
+                                }
+                            );
+                        }
                     }
+                    setQuestionList();
                 }
-                setQuestionList();
-            }
-        });
+            });
+        }
     }
 
+    /**
+     * 設定試題列表
+     */
     function setQuestionList() {
         for(var x=0;x<question_item.length;x++){
             var t = tr_item.clone();
