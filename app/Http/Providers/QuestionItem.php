@@ -56,14 +56,19 @@ class QuestionItem
      * 取得 試題資料
      *
      */
-    public function getQuestionByID($id)
+    public function getQuestionByID()
     {
         $return_data = array();
-        $temp_obj = Questions::select('id', 'power', 'question_title', 'type', 'type_title', 'dsc')
-            ->where('id',$id)
+        $temp_obj = Questions::select('id', 'reel_id', 'power', 'question_title', 'type', 'type_title', 'dsc',
+            'max_score')
+            ->where('id', $this->input_array['question_id'])
             ->get();
         foreach ($temp_obj as $v) {
+            $v['type'] = json_decode($v['type']);
             $v['type_title'] = json_decode($v['type_title']);
+            $v['question_title'] = json_decode($v['question_title']);
+            $v['power'] = json_decode($v['power']);
+            $v['max_score'] = json_decode($v['max_score']);
             $return_data[] = $v;
         }
         $this->msg = array(
@@ -83,11 +88,11 @@ class QuestionItem
     {
         $update = new Questions();
         $update->reel_id = $this->input_array['reel_id'];
-        $update->type = json_encode($this->input_array['type'],JSON_UNESCAPED_UNICODE);
-        $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
-        $update->question_title = json_encode($this->input_array['question_title'],JSON_UNESCAPED_UNICODE);
-        $update->power = json_encode($this->input_array['power'],JSON_UNESCAPED_UNICODE);
-        $update->max_score = json_encode($this->input_array['max_score'],JSON_UNESCAPED_UNICODE);
+        $update->type = json_encode($this->input_array['type'], JSON_UNESCAPED_UNICODE);
+        $update->type_title = json_encode($this->input_array['type_title'], JSON_UNESCAPED_UNICODE);
+        $update->question_title = json_encode($this->input_array['question_title'], JSON_UNESCAPED_UNICODE);
+        $update->power = json_encode($this->input_array['power'], JSON_UNESCAPED_UNICODE);
+        $update->max_score = json_encode($this->input_array['max_score'], JSON_UNESCAPED_UNICODE);
         $update->dsc = $this->input_array['dsc'];
         $update->save();
         $this->msg = array(
@@ -109,7 +114,7 @@ class QuestionItem
             $update = Questions::find($this->input_array['id']);
             $update->question_title = $this->input_array['question_title'];
             $update->type = $this->input_array['type'];
-            $update->type_title = json_encode($this->input_array['type_title'],JSON_UNESCAPED_UNICODE);
+            $update->type_title = json_encode($this->input_array['type_title'], JSON_UNESCAPED_UNICODE);
             $update->power = $this->input_array['power'];
             $update->dsc = $this->input_array['dsc'];
             $update->save();
