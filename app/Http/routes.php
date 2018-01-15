@@ -75,9 +75,9 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/Question', ['as' => 'ma.question', 'uses' => 'AdController@Question']);
     Route::get('/Ma/Question/api', ['as' => 'ma.question.api', 'uses' => 'AdController@QuestionApi']);
     Route::get('/Ma/Question/list', ['as' => 'ma.question.list', 'uses' => 'AdController@QuestionList']);
-    Route::get('/Ma/Question/data', ['as' => 'ma.question.data', 'uses' => 'AdController@QuestionData']);
     Route::get('/Ma/Question/pg/add', ['as' => 'ma.question.pg.add', 'uses' => 'AdController@QuestionPgAdd']);
     Route::get('/Ma/Question/pg/edit', ['as' => 'ma.question.pg.edit', 'uses' => 'AdController@QuestionPgEdit']);
+    Route::post('/Ma/Question/api', ['as' => 'ma.question.api', 'uses' => 'AdController@QuestionEditApi']);
     Route::post('/Ma/Question/Add', ['as' => 'ma.question.add', 'uses' => 'AdController@QuestionAdd']);
     Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdController@QuestionUpdate']);
 
