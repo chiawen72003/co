@@ -367,6 +367,32 @@ class AdController extends Controller
         echo json_encode($t);
     }
 
+
+    /**
+     * 試題 api 回傳單元、試卷及使用者設定的資料
+     */
+    public function QuestionEditApi()
+    {
+        $id = app('request')->get('id');
+        $question = new QuestionItem();
+        $question->init(array('question_id' => $id));
+        $school = new StructureItem();
+        $unit = $school->getUnit();
+        $reel = $school->getReel();
+        $question_data = $question->getQuestionByID();
+        $t = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'unit' => $unit['data'],
+                'reel' => $reel['data'],
+                'question_data' => $question_data['data'],
+            ),
+        );
+        echo json_encode($t);
+    }
+
+
     /**
      *指定試卷內所有試題的資料
      *
@@ -380,20 +406,6 @@ class AdController extends Controller
         ));
 
         echo json_encode($question->getQuestion());
-    }
-
-
-    /**
-     * 單一試題的資料
-     *
-     *
-     */
-    public function QuestionData()
-    {
-        $question = new QuestionItem();
-        $id = app('request')->get('id');
-
-        echo json_encode($question->getQuestionByID($id));
     }
 
     /**
