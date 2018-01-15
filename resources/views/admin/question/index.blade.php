@@ -198,7 +198,7 @@
                             question_item.push(
                                 {
                                     'id':response['data'][x]['id'],
-                                    'question_title':response['data'][x]['question_title'],
+                                    'question_name':response['data'][x]['question_name'],
                                     'type':response['data'][x]['type'],
                                     'type_title':response['data'][x]['type_title'],
                                 }
@@ -218,7 +218,7 @@
         for(var x=0;x<question_item.length;x++){
             var t = tr_item.clone();
             var a = "[! route('ma.question.pg.edit') !]?id="+ question_item[x]['id'];
-            var r = question_item[x]['question_title'];
+            var r = question_item[x]['question_name'];
             t.find('#title_area').html(r).removeAttr('id');
             t.find('#a_area').attr('href',a).removeAttr('id');
             t.removeAttr('id');
