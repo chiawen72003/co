@@ -8,7 +8,7 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">區域</label>
-                <select id="area" onchange="setSchoolList('area','school_id','subject_id')">
+                <select id="area" class="i-select" onchange="setSchoolList('area','school_id','subject_id')">
                     <option value="1">北區</option>
                     <option value="2">桃竹苗區</option>
                     <option value="3">中區</option>
@@ -17,12 +17,12 @@
                     <option value="6">外島</option>
                 </select>
                 <label class="i-label">學校</label>
-                <select id="school_id" onchange="setSubjectList('school_id','subject_id')">
+                <select id="school_id" class="i-select" onchange="setSubjectList('school_id','subject_id')">
                 </select>
                 <label class="i-label">科系</label>
-                <select id="subject_id">
+                <select id="subject_id" class="i-select">
                 </select>
-                <button type="button" class="i-btn i-btn-primary i-btn-circle" onclick="getStudent()">
+                <button type="button" class="i-btn i-btn-primary" onclick="getStudent()">
                     <i class="ion-android-add"></i>
                     查詢
                 </button>

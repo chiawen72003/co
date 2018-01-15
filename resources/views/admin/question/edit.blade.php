@@ -12,18 +12,18 @@
                 </div>
                 <div class="form-group">
                     <label class="i-label">版本</label>
-                    <select id="version" class="i-select" onchange="setUnit()">
+                    <select id="version" class="i-select" onchange="setUnitOption()">
                         <option value="1">全國</option>
                         <option value="2">中區</option>
                         <option value="3">測試</option>
                     </select>
                     <label class="i-label">科目</label>
-                    <select id="subject" class="i-select" onchange="setUnit()">
+                    <select id="subject" class="i-select" onchange="setUnitOption()">
                         <option value="1">國語</option>
                         <option value="2">國文</option>
                     </select>
                     <label class="i-label">冊</label>
-                    <select id="book" class="i-select" onchange="setUnit()">
+                    <select id="book" class="i-select" onchange="setUnitOption()">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -46,11 +46,15 @@
                         <option value="20">20</option>
                     </select>
                     <label class="i-label">單元</label>
-                    <select id="unit" class="i-select" onchange="setReel()">
+                    <select id="unit" class="i-select" onchange="setReelOption()">
                     </select>
                     <label class="i-label">試卷名稱</label>
                     <select id="reel" class="i-select">
                     </select>
+                </div>
+                <div class="form-group">
+                    <label class="i-label">試題名稱</label>
+                    <input class="i-input" value="" id="question_name">
                 </div>
                 <div class="form-group">
                     <textarea class="i-textarea i-ckeditor" name="dsc" id="dsc"></textarea>
@@ -60,7 +64,7 @@
                         取消
                     </button>
                     <button type="button" class="i-btn i-btn-primary" onclick="sendData()">
-                        新增
+                        更新
                     </button>
                 </div>
             </div>
@@ -203,8 +207,10 @@
             }
         }
 
+        /**
+         * 更新資料
+         */
         var isSend = false;
-
         function sendData()
         {
             if (!isSend) {
@@ -229,26 +235,28 @@
                     }
                 }
                 $.ajax({
-                    url: '[! route("ma.question.add") !]',
+                    url: '[! route("ma.question.update") !]',
                     type: 'POST',
                     dataType: 'json',
                     data: {
                         _token: '[! csrf_token() !]',
-                        question_title: question_title,
-                        type: type,
-                        type_title: type_titles,
-                        dsc: CKEDITOR.instances.dsc.getData(),
-                        power: power,
-                        max_score: max_score,
-                        reel_id: reel_sw_item.val(),
+                        id:'[! $id !]',
+                        question_title:question_title,
+                        type:type,
+                        type_title:type_titles,
+                        dsc:CKEDITOR.instances.dsc.getData(),
+                        power:power,
+                        max_score:max_score,
+                        reel_id:reel_sw_item.val(),
+                        question_name:$('#question_name').val()
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
                     },
                     success: function(response) {
                         if (response['status'] == true) {
-                            // alert(response['msg']);
-                            //location.replace("[! route('ma.question') !]");
+                            alert(response['msg']);
+                            location.replace("[! route('ma.question') !]?reelID=[! $reel_id !]");
                         }
                         isSend = false;
                     },
@@ -299,9 +307,10 @@
                             question_data.push(
                                 {
                                     'id': response['data']['question_data'][x]['id'],
+                                    'question_name': response['data']['question_data'][x]['question_name'],
                                     'reel_id': response['data']['question_data'][x]['reel_id'],
                                     'power': response['data']['question_data'][x]['power'],
-                                    'question_title': response['question_data']['reel'][x]['question_title'],
+                                    'question_title': response['data']['question_data'][x]['question_title'],
                                     'type': response['data']['question_data'][x]['type'],
                                     'type_title': response['data']['question_data'][x]['type_title'],
                                     'dsc': response['data']['question_data'][x]['dsc'],
@@ -310,8 +319,8 @@
                             );
                         }
                     }
-                    setUnit();
-                    setReel();
+                    setUnitOption();
+                    setReelOption();
                     setQuestionData();
                 },
             });
@@ -320,7 +329,7 @@
         /**
          * 單元選項設定
          */
-        function setUnit()
+        function setUnitOption()
         {
             var v = version_item.val();
             var s = subject_item.val();
@@ -332,13 +341,13 @@
                     unit_sw_item.append($('<option></option>').attr('value', unit_item[x]['id']).text(unit_item[x]['unit_title']));
                 }
             }
-            setReel();
+            setReelOption();
         }
 
         /**
          * 試卷選項設定
          */
-        function setReel()
+        function setReelOption()
         {
             var unit_val = unit_sw_item.val();
             $('#reel option').remove();
@@ -350,217 +359,56 @@
         }
 
         /**
-         * 設定使用者填寫的資料
-         * //todo 帶整理
+         * 帶入使用者填寫的資料
          */
         function setQuestionData()
         {
             for (var y = 0; y < question_data.length; y++) {
+                var power = question_data[y]['power'];
+                var question_title = question_data[y]['question_title'];
+                var type = question_data[y]['type'];
+                var type_title = question_data[y]['type_title'];
+
+
                 CKEDITOR.instances.dsc.setData(question_data[y]['dsc']);
-            }
-        }
-    </script>
-@stop
-
-
-
-@extends('admin.layout.layout')
-@section('content')
-    <div class="article">
-        <div class="article-header">
-            試題管理
-        </div>
-        <div class="article-content">
-            <div class="article-content-body">
-                <div class="title">
-                    <i class="ion-information-circled"></i>
-                    編輯試題
-                </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <label class="i-label">區塊標題</label>
-                        <input class="i-input" value="" id="question_title">
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">能力指標</label>
-                        <select class="i-select" id="power">
-                            <option value="1">3-1能書寫切合功能性寫作文本目的的內容</option>
-                            <option value="2">3-2能寫出切合功能性寫作文本語意清楚、語用正確、組織有條理的內容</option>
-                            <option value="3">3-3能書寫切合批判性寫作文本目的的內容</option>
-                            <option value="4">3-4能寫出切合批判性寫作文本語意清楚、語用正確、組織有條理的內容</option>
-                            <option value="5">3-5能針對批判性寫作文本之特定議題寫出個人立場或想法</option>
-                            <option value="6">3-6能整合與評估批判性寫作文本特定議題的兩方觀點並寫出來</option>
-                            <option value="7">3-7能針對命題寫出個人之經歷與感受</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">試題類型</label>
-                        <select class="i-select" id="type" onchange="showTypeTitle()">
-                            <option value="1">一大區塊</option>
-                            <option value="2">一大區塊，包含同意選項</option>
-                            <option value="3">三大區塊</option>
-                            <option value="4">四大區塊</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group" id="type_title_1">
-                    <div class="form-group">
-                        <label class="i-label">區塊標題</label>
-                        <input class="i-input" name="type_title_1[]" value="">
-                    </div>
-                </div>
-                <div class="form-group" id="type_title_2">
-                    <div class="form-group">
-                        <label class="i-label">區塊標題</label>
-                        <input class="i-input" name="type_title_2[]" value="">
-                    </div>
-                </div>
-                <div class="form-group" id="type_title_3">
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_1</label>
-                        <input class="i-input" name="type_title_3[]" value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_2</label>
-                        <input class="i-input" name="type_title_3[]" value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_3</label>
-                        <input class="i-input" name="type_title_3[]" value="">
-                    </div>
-                </div>
-                <div class="form-group" id="type_title_4">
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_1</label>
-                        <input class="i-input" name="type_title_4[]" value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_2</label>
-                        <input class="i-input" name="type_title_4[]" value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_3</label>
-                        <input class="i-input" name="type_title_4[]" value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="i-label">區塊標題_4</label>
-                        <input class="i-input" name="type_title_4[]" value="">
-                    </div>
-                </div>
-                <div class="i-form mt1">
-                    <textarea class="i-textarea i-ckeditor" name="dsc" id="dsc"></textarea>
-                </div>
-                <div class="form-group form-bottom">
-                    <button type="button" class="i-btn" onclick="history.back()">
-                        取消
-                    </button>
-                    <button type="button" class="i-btn i-btn-primary" onclick="sendData()">
-                        更新
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    [! Html::script('js/jquery-1.11.3.js') !]
-    [! Html::script('js/ckeditor/ckeditor.js') !]
-    <script>
-        CKEDITOR.replace('dsc', {
-            filebrowserBrowseUrl: '[! $ck_finder_path !]/ckfinder.html',
-            filebrowserImageBrowseUrl: '[! $ck_finder_path !]/ckfinder.html?type=Images',
-            filebrowserFlashBrowseUrl: '[! $ck_finder_path !]/ckfinder.html?type=Flash',
-            filebrowserUploadUrl: '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Files',
-            filebrowserImageUploadUrl: '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Images',
-            filebrowserFlashUploadUrl: '[! $ck_finder_path !]/core/connector/php/connector.php?command=QuickUpload&type=Flash',
-        });
-        var type_item = $('#type');
-        var question_title = $('#question_title');
-        var type = $('#type');
-        var power = $('#power');
-
-        $(document).ready(function() {
-            setMenu('li_question', 'main_li_3');
-            getQuestionData();
-        });
-
-        function getQuestionData()
-        {
-            $.ajax({
-                url: '[! route(\'ma.question.data\') !]',
-                type: 'GET',
-                dataType: 'json',
-                data: {
-                    id: '[! $id !]',
-                },
-                error: function(xhr) {
-                    //alert('Ajax request 發生錯誤');
-                },
-                success: function(response) {
-                    if (response['status'] == true) {
-                        for (var y = 0; y < response['data'].length; y++) {
-                            var x = 0;
-                            question_title.val(response['data'][y]['question_title']);
-                            type.val(response['data'][y]['type']);
-                            power.val(response['data'][y]['power']);
-                            $('input[name="type_title_' + response['data'][y]['type'] + '[]"]').each(function() {
-                                $(this).val(response['data'][y]['type_title'][x]);
-                                x++;
-                            });
-                            CKEDITOR.instances.dsc.setData(response['data'][y]['dsc']);
-                        }
-                    }
-                    showTypeTitle();
-                },
-            });
-        }
-
-        function showTypeTitle()
-        {
-            var t = type_item.val();
-            for (var x = 1; x < 5; x++) {
-                if (t == x) {
-                    $('#type_title_' + x).show();
-                } else {
-                    $('#type_title_' + x).hide();
+                $('#question_name').val(question_data[y]['question_name']);
+                for (var z = 0; z < power.length; z++) {
+                    $('#Q_'+z).find('#power').val(power[z]);
                 }
+                for (var z = 0; z < question_title.length; z++) {
+                    $('#Q_'+z).find('#question_title').val(question_title[z]);
+                }
+                for (var z = 0; z < type.length; z++) {
+                    $('#Q_'+z).find('#type').val(type[z]);
+                    showTypeTitle(z);
+                }
+                for (var z = 0; z < type_title.length; z++) {
+                    var typeTitle = type_title[z];
+                    var temp_num =0;
+                    $('#Q_'+z).find('input[name="type_title_' + type[z] + '[]"]').each(function() {
+                        $(this).val(typeTitle[temp_num]);
+                        temp_num++;
+                    });
+                }
+                setReel(question_data[y]['reel_id']);
             }
         }
 
-        var isSend = false;
-
-        function sendData()
-        {
-            if (!isSend) {
-                var type_val = type.val();
-                var type_titles = [];
-                $('input[name="type_title_' + type_val + '[]"]').each(function() {
-                    type_titles.push($(this).val());
-                });
-
-                $.ajax({
-                    url: '[! route(\'ma.question.update\') !]',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        _token: '[! csrf_token() !]',
-                        id: '[! $id !]',
-                        question_title: question_title.val(),
-                        type: $('#type').val(),
-                        type_title: type_titles,
-                        dsc: CKEDITOR.instances.dsc.getData(),
-                        power: power.val(),
-                    },
-                    error: function(xhr) {
-                        //alert('Ajax request 發生錯誤');
-                    },
-                    success: function(response) {
-                        if (response['status'] == true) {
-                            alert(response['msg']);
-                            location.replace('[! route(\'ma.question\') !]');
-                        }
-                        isSend = false;
-                    },
-                });
-                isSend = true;
+        /**
+         * 根據試卷ID設定單元跟試卷的下拉選項
+         */
+        function setReel(reel_id) {
+            for(var x=0;x<reel_item.length;x++){
+                if(reel_item[x]['id'] == reel_id){
+                    var t_obj = reel_item[x];
+                    $('#version').val(t_obj['version']);
+                    $('#subject').val(t_obj['subject']);
+                    $('#book').val(t_obj['book']);
+                    setUnitOption();
+                    $('#unit').val(t_obj['unit']);
+                    setReelOption();
+                    $('#reel').val(t_obj['id']);
+                }
             }
         }
     </script>

@@ -344,6 +344,15 @@ class AdController extends Controller
      */
     public function Question()
     {
+        $reel_id = app('request')->get('reelID');
+        $this->data['has_reel_id'] = false;
+        $this->data['reel_id'] =0;
+
+        if(!is_null($reel_id))
+        {
+            $this->data['reel_id'] =$reel_id;
+            $this->data['has_reel_id'] =true;
+        }
 
         return view('admin.question.index', $this->data);
     }
@@ -434,6 +443,7 @@ class AdController extends Controller
     public function QuestionPgEdit()
     {
         $this->data['id'] = app('request')->get('id');
+        $this->data['reel_id'] = app('request')->get('reelID');
         //設定ckfinder
         //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
         $this->data['ck_finder_path'] = url('/js/ckfinder');
@@ -460,6 +470,7 @@ class AdController extends Controller
         $data['power'] = app('request')->get('power');
         $data['reel_id'] = app('request')->get('reel_id');
         $data['max_score'] = app('request')->get('max_score');
+        $data['question_name'] = app('request')->get('question_name');
         $t_obj = new QuestionItem();
         $t_obj->init($data);
         echo json_encode($t_obj->addQuestion());
@@ -474,11 +485,14 @@ class AdController extends Controller
     {
         $data = array();
         $data['id'] = app('request')->get('id');
-        $data['power'] = app('request')->get('power');
         $data['question_title'] = app('request')->get('question_title');
         $data['type'] = app('request')->get('type');
         $data['type_title'] = app('request')->get('type_title');
         $data['dsc'] = app('request')->get('dsc');
+        $data['power'] = app('request')->get('power');
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['max_score'] = app('request')->get('max_score');
+        $data['question_name'] = app('request')->get('question_name');
         $t_obj = new QuestionItem();
         $t_obj->init($data);
         echo json_encode($t_obj->updateQuestion());

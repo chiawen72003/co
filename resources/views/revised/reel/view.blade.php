@@ -50,11 +50,11 @@
                         <div class="chapter-content-page">
                             <ul class="row">
                                 <li>
-                                    <div class="form-inline checkbox-group">
+                                    <div class="checkbox-group">
                                         <input type="checkbox" id="checkbox1" />
                                         <label id="label_1" for="checkbox1">空白卷</label>
                                     </div>
-                                    <div class="form-inline checkbox-group">
+                                    <div class="checkbox-group">
                                         <input type="checkbox" id="checkbox2" />
                                         <label id="label_2" for="checkbox2">試卷異常，無法批改</label>
                                     </div>

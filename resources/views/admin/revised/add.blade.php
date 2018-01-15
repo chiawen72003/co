@@ -10,10 +10,10 @@
                     <i class="ion-information-circled"></i>
                     新增評閱者資料
                 </div>
-                <div class="form-group">
+                <div class="i-form mt1">
                     <div class="form-group">
                         <label class="i-label">區域</label>
-                        <select id="area" onchange="setSchoolData()">
+                        <select id="area" class="i-select" onchange="setSchoolData()">
                             <option value="1">北區</option>
                             <option value="2">桃竹苗區</option>
                             <option value="3">中區</option>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label class="i-label">學校名稱</label>
-                        <select id="school">
+                        <select id="school" class="i-select">
                         </select>
                     </div>
                     <div class="form-group">
@@ -39,14 +39,14 @@
                         <label class="i-label">姓名</label>
                         <input class="i-input" value="" id="user_name">
                     </div>
-                </div>
-                <div class="form-group form-bottom">
-                    <button type="button" class="i-btn" onclick="history.back()">
-                        取消
-                    </button>
-                    <button type="button" class="i-btn i-btn-primary" onclick="sendData()">
-                        新增
-                    </button>
+                    <div class="form-group form-bottom">
+                        <button type="button" class="i-btn" onclick="history.back()">
+                            取消
+                        </button>
+                        <button type="button" class="i-btn i-btn-primary" onclick="sendData()">
+                            新增
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
         <div class="mem-form">
             <div class="mem-group">
                 <label>學校：</label>
-                <select id="school_id">
+                <select id="school_id" class="i-select">
                 </select>
             </div>
             <div class="mem-group">
