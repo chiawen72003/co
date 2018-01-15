@@ -53,6 +53,10 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label class="i-label">試題名稱</label>
+                    <input class="i-input" value="" id="question_name">
+                </div>
+                <div class="form-group">
                     <textarea class="i-textarea i-ckeditor" name="dsc" id="dsc"></textarea>
                 </div>
                 <div class="form-group form-bottom" id="insert_point">
@@ -239,7 +243,8 @@
                         dsc:CKEDITOR.instances.dsc.getData(),
                         power:power,
                         max_score:max_score,
-                        reel_id:reel_sw_item.val()
+                        reel_id:reel_sw_item.val(),
+                        question_name:$('#question_name').val()
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
