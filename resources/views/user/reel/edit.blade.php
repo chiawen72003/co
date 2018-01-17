@@ -257,6 +257,10 @@
             getData();
         });
 
+        /**
+         *  試卷內所有的資料
+         */
+        var max_quations = 0;
         function getData() {
             $.ajax({
                 url: "[! route('ur.reel.data') !]",
@@ -271,16 +275,21 @@
                 success: function(response) {
                     if(response['status'] == true){
                         for(var x=0;x<response['data'].length;x++){
-                            question_item.push(
-                                {
-                                    'id':response['data'][x]['id'],
-                                    'question_title':response['data'][x]['question_title'],
-                                    'type':response['data'][x]['type'],
-                                    'type_title':response['data'][x]['type_title'],
-                                    'dsc':response['data'][x]['dsc'],
-                                    'max_score':response['data'][x]['max_score'],
-                                }
-                            );
+                            //先將所有試題內的小題都展開成物件資料
+                            var temp_item = response['data'][x];
+                            for(var z=0;z<temp_item['type'].length;z++){
+                                max_quations++;
+                                question_item.push(
+                                    {
+                                        'id':temp_item['id'],
+                                        'question_title':temp_item['question_title'][z],
+                                        'type':temp_item['type'][z],
+                                        'type_title':temp_item['type_title'][z],
+                                        'dsc':temp_item['dsc'],
+                                        'max_score':temp_item['max_score'][z],
+                                    }
+                                );
+                            }
                         }
                     }
                     setList();
@@ -298,56 +307,55 @@
          */
         function setList() {
             var div_total=0;
-            var max_page = question_item.length;
-            for(var x=0,y=1;x<question_item.length;x++,y++)
-            {
+            for(var z=0;z<question_item.length;z++){
                 var t;
-                if(question_item[x]['type'] == 1){
+                if(question_item[z]['type'] == 1){
                     t = obj_1.clone();
                 }
-                if(question_item[x]['type'] == 2){
+                if(question_item[z]['type'] == 2){
                     t = obj_2.clone();
                 }
-                if(question_item[x]['type'] == 3){
+                if(question_item[z]['type'] == 3){
                     t = obj_3.clone();
                 }
-                if(question_item[x]['type'] == 4){
+                if(question_item[z]['type'] == 4){
                     t = obj_4.clone();
                 }
                 //試題標題
-                if(question_item[x]['type'] == 2){
-                    t.find('#title').after(question_item[x]['question_title']).removeAttr('id');
+                if(question_item[z]['type'] == 2){
+                    t.find('#title').after(question_item[z]['question_title']).removeAttr('id');
                 }else{
-                    t.find('#title').html(question_item[x]['question_title']).removeAttr('id');
+                    t.find('#title').html(question_item[z]['question_title']).removeAttr('id');
                 }
                 //試題內容
-                t.find('#dsc').html(question_item[x]['dsc']).attr('id','dsc_'+x);
+                t.find('#dsc').html(question_item[z]['dsc']).attr('id','dsc_'+z);
                 //使用者在每一個試題內打字的總數量
-                t.find('#count').attr('id', 'write_'+x+'_count');
+                t.find('#count').attr('id', 'write_'+z+'_count');
                 //試題輸入區
                 t.find('#textarea').each(function(){
                     $(this).attr('name', 'write_'+div_total+'_text');
                     div_total++;
                 });
                 //上一試題按鈕
-                if(x == 0){
+                if(z == 0){
                     t.find('#bt_up').hide().removeAttr('id');
                 }else{
-                    var t_num = x - 1;
+                    var t_num = z - 1;
                     t.find('#bt_up').attr('onclick', 'page_change("'+ t_num +'")');
                 }
                 //下一試題按鈕
-                if(y == max_page){
+                if((z+1) == max_quations){
                     t.find('#bt_down').html('送出').attr('onclick', 'send_data()').removeAttr('id');
                 }else{
-                    t.find('#bt_down').attr('onclick', 'page_change("'+ y +'")').removeAttr('id');
+                    t.find('#bt_down').attr('onclick', 'page_change("'+ (z+1) +'")').removeAttr('id');
                 }
-                t.attr('id','write_'+x);
-                if(x > 0){
+                t.attr('id','write_'+z);
+                if(z > 0){
                     t.hide();
                 }
                 test_area.append(t);
             }
+
             //文字輸入區綁定計算字數的功能
             for(var x=0;x<div_total;x++){
                 $("div[name='write_"+x+"_text']").bind("DOMSubtreeModified",function(){
@@ -372,7 +380,7 @@
 
         //重新計算所有DIV的字數
         function reCount() {
-            for(var x=0;x<question_item.length;x++)
+            for(var x=0;x<max_quations;x++)
             {
                 var t = $('#write_'+x).clone();
                 var total =0;
@@ -387,7 +395,7 @@
         //試題切換
         function page_change(num)
         {
-            for(var x=0;x<question_item.length;x++)
+            for(var x=0;x<max_quations;x++)
             {
                 if(num == x){
                     $('#write_'+x).show();
@@ -401,6 +409,7 @@
         //上傳資料
         var is_send = false;
         var add_data = [];
+        var questions_id = [];
         function send_data()
         {
             if(!is_send){
@@ -415,11 +424,10 @@
                     t.find('#textarea').each(function(){
                         temp_data.push($(this).text());
                     });
+                    questions_id.push(question_item[x]['id']);
                     add_data.push({
-                        'id':question_item[x]['id'],
                         'type':question_item[x]['type'],
                         'ans':temp_data,
-                        'dsc':question_item[x]['dsc'],
                         'agree':agree,
                         'question_title':question_item[x]['question_title'],
                         'type_title':question_item[x]['type_title'],
@@ -435,14 +443,15 @@
                         _token: '[! csrf_token() !]',
                         reel_id:'[! $id !]',
                         add_data:add_data,
+                        questions_id:questions_id,
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
                     },
                     success: function(response) {
                         if(response['status'] == true){
-                            alert(response['msg']);
-                            location.replace("[! route('ur.reel') !]");
+                            //alert(response['msg']);
+                            //location.replace("[! route('ur.reel') !]");
                         }
                     }
                 });

@@ -4,6 +4,7 @@ namespace App\Http\Providers;
 
 use App\Http\Models\CourseStudent;
 use App\Http\Models\ListUnderTest;
+use App\Http\Models\Questions;
 use App\Http\Models\Reel;
 use App\Http\Models\ReelQuestion;
 use App\Http\Models\ReelModify;
@@ -58,14 +59,14 @@ class MeasuredItem
             )
             ->get();
         foreach ($temp_obj as $v) {
-           $t = json_decode($v->reel_id, true);
-           foreach ($t as $reel_id){
-               if(!in_array($reel_id, $not_in)){
-                   $has_in[] = $reel_id;
-               }
-           }
+            $t = json_decode($v->reel_id, true);
+            foreach ($t as $reel_id) {
+                if (!in_array($reel_id, $not_in)) {
+                    $has_in[] = $reel_id;
+                }
+            }
         }
-        if(count($has_in) > 0){
+        if (count($has_in) > 0) {
             $temp_obj = Reel::whereIn('id', $has_in)
                 ->select(
                     'id',
@@ -74,8 +75,8 @@ class MeasuredItem
                 ->get();
             foreach ($temp_obj as $v) {
                 $return_data[] = array(
-                    'path' =>route('ur.reel.edit', array($v->id)),
-                    'reel_title' =>$v->reel_title,
+                    'path' => route('ur.reel.edit', array($v->id)),
+                    'reel_title' => $v->reel_title,
                 );
             }
         }
@@ -96,25 +97,24 @@ class MeasuredItem
     public function getReelQuation()
     {
         $data = array();
-        $t = ReelQuestion::where('reel_question.reel_id', $this->input_array['id'])
-            ->leftJoin('questions', 'questions.id', '=', 'reel_question.question_id')
+        $t = Questions::where('reel_id', $this->input_array['id'])
             ->select(
-                'questions.type',
-                'questions.type_title',
-                'questions.question_title',
-                'questions.dsc',
-                'questions.id',
-                'questions.max_score'
+                'type',
+                'type_title',
+                'question_title',
+                'dsc',
+                'id',
+                'max_score'
             )
             ->get();
         foreach ($t as $v) {
             $data[] = array(
-                'type' => $v['type'],
+                'type' => json_decode($v['type'], true),
                 'type_title' => json_decode($v['type_title'], true),
-                'question_title' => $v['question_title'],
+                'question_title' => json_decode($v['question_title'], true),
                 'dsc' => $v['dsc'],
                 'id' => $v['id'],
-                'max_score' => $v['max_score'],
+                'max_score' => json_decode($v['max_score'], true),
             );
         }
 
@@ -149,13 +149,14 @@ class MeasuredItem
                 $def_m = $t_array[$t_num];
             }
 
-            ListUnderTest::where('user_id', $this->input_array['user_id'])
-                ->where('reel_id', $this->input_array['reel_id'])
-                ->update([
-                    'test_data' => json_encode($this->input_array['add_data'], JSON_UNESCAPED_UNICODE),
-                    'has_test' => 1,
-                    'modify_id' => $def_m,
-                ]);
+            $temp_obj = new ListUnderTest();
+            $temp_obj->user_id = $this->input_array['user_id'];
+            $temp_obj->reel_id = $this->input_array['reel_id'];
+            $temp_obj->questions_id = json_encode($this->input_array['questions_id']);
+            $temp_obj->test_data = json_encode($this->input_array['add_data'], JSON_UNESCAPED_UNICODE);
+            $temp_obj->has_test = 1;
+            $temp_obj->modify_id = $def_m;
+            $temp_obj->save();
             $this->msg = array(
                 'status' => true,
                 'msg' => '新增成功!',
@@ -237,8 +238,8 @@ class MeasuredItem
                 ->where('user_id', $this->input_array['user_id'])
                 ->update([
                     'view_num' => DB::raw('view_num+1'),
-                    'total_blank' => ($is_blank == true)?DB::raw('total_blank+1'):DB::raw('total_blank'),
-                    'total_abnormal' => ($is_abnormal == true)?DB::raw('total_abnormal+1'):DB::raw('total_abnormal'),
+                    'total_blank' => ($is_blank == true) ? DB::raw('total_blank+1') : DB::raw('total_blank'),
+                    'total_abnormal' => ($is_abnormal == true) ? DB::raw('total_abnormal+1') : DB::raw('total_abnormal'),
                 ]);
             $this->msg = array(
                 'status' => true,
@@ -261,7 +262,7 @@ class MeasuredItem
             'reel_modify.total_blank',
             'reel_modify.total_abnormal',
             'reel.reel_title'
-            )
+        )
             ->leftJoin('reel', 'reel.id', '=', 'reel_modify.reel_id')
             ->where('reel_modify.user_id', $this->input_array['user_id'])
             ->get();
