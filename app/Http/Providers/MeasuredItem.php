@@ -2,7 +2,9 @@
 
 namespace App\Http\Providers;
 
+use App\Http\Models\CourseStudent;
 use App\Http\Models\ListUnderTest;
+use App\Http\Models\Reel;
 use App\Http\Models\ReelQuestion;
 use App\Http\Models\ReelModify;
 use Illuminate\Support\Str;
@@ -38,19 +40,44 @@ class MeasuredItem
     public function getMeasured()
     {
         $return_data = array();
-        $temp_obj = ListUnderTest::where('list_under_test.user_id', $this->input_array['id'])
-            ->where('list_under_test.has_test', 0)
-            ->leftJoin('reel', 'list_under_test.reel_id', '=', 'reel.id')
+        $not_in = array();
+        $has_in = array();
+        $temp_obj = ListUnderTest::where('user_id', $this->input_array['user_id'])
             ->select(
-                'list_under_test.reel_id',
-                'reel.reel_title'
+                'reel_id'
             )
             ->get();
         foreach ($temp_obj as $v) {
-            $return_data[] = array(
-                'reel_title' => $v['reel_title'],
-                'path' => route('ur.reel.edit', array($v['reel_id'])),
-            );
+            $not_in[] = $v['reel_id'];
+        }
+
+        $temp_obj = CourseStudent::where('course_student.student_id', $this->input_array['user_id'])
+            ->leftJoin('course', 'course.id', '=', 'course_student.course_id')
+            ->select(
+                'course.reel_id'
+            )
+            ->get();
+        foreach ($temp_obj as $v) {
+           $t = json_decode($v->reel_id, true);
+           foreach ($t as $reel_id){
+               if(!in_array($reel_id, $not_in)){
+                   $has_in[] = $reel_id;
+               }
+           }
+        }
+        if(count($has_in) > 0){
+            $temp_obj = Reel::whereIn('id', $has_in)
+                ->select(
+                    'id',
+                    'reel_title'
+                )
+                ->get();
+            foreach ($temp_obj as $v) {
+                $return_data[] = array(
+                    'path' =>route('ur.reel.edit', array($v->id)),
+                    'reel_title' =>$v->reel_title,
+                );
+            }
         }
 
         $this->msg = array(
