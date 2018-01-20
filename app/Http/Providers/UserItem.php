@@ -313,7 +313,7 @@ class UserItem
     {
         $return_data = array();
         $temp_obj = Student::where('student.school_id',$this->input_array['school_id'])
-            ->where('student.school_subject',$this->input_array['school_subject'])
+            ->where('student.classes_id',$this->input_array['classes_id'])
             ->leftJoin('school', 'school.id', '=', 'student.school_id')
             ->select(
                 'student.id',
@@ -372,7 +372,7 @@ class UserItem
         $update->login_name = $this->input_array['login_name'];
         $update->login_pw = $this->input_array['login_pw'];
         $update->school_id = $this->input_array['school_id'];
-        $update->school_subject = $this->input_array['school_subject'];
+        $update->classes_id = $this->input_array['classes_id'];
         $update->student_id = $this->input_array['student_id'];
         $update->name = $this->input_array['name'];
         $update->save();

@@ -756,6 +756,30 @@ class AdController extends Controller
         return view('admin.student.index', $this->data);
     }
 
+
+    /**
+     * 學生的資料 初始化的資料
+     *
+     * 包含所有學校、班級資料
+     */
+    public function StudentInit()
+    {
+        $s_obj = new SchoolItem();
+        $school = $s_obj->getSchool();
+        $classes = $s_obj->getAllClasses();
+        $return  = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school' => $school['data'],
+                'classes' => $classes['data'],
+            ),
+        );
+
+        echo json_encode($return);
+    }
+
+
     /**
      * 學生的資料
      *
@@ -766,7 +790,7 @@ class AdController extends Controller
         $user = new UserItem();
         $user->init(array(
             'school_id' => app('request')->get('school'),
-            'school_subject' => app('request')->get('subject'),
+            'classes_id' => app('request')->get('classes_id'),
         ));
 
         echo json_encode($user->getStudentBySubject());
@@ -783,7 +807,7 @@ class AdController extends Controller
         $data['login_name'] = app('request')->get('login_name');
         $data['login_pw'] = app('request')->get('login_pw');
         $data['school_id'] = app('request')->get('school_id');
-        $data['school_subject'] = app('request')->get('school_subject');
+        $data['classes_id'] = app('request')->get('classes_id');
         $data['student_id'] = app('request')->get('student_id');
         $data['name'] = app('request')->get('name');
         $t_obj = new UserItem();

@@ -234,6 +234,29 @@ class SchoolItem
         return $this->msg;
     }
 
+    /**
+     * 取得 所有班級資料
+     *
+     */
+    public function getAllClasses()
+    {
+        $return_data = array();
+        $temp_obj = SchoolClasses::select('id','school_id', 'school_year', 'title')
+            ->orderby('school_year', 'ASC')
+            ->orderby('title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
 
     /**
      * 取得 班級資料

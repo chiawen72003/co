@@ -8,7 +8,7 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">區域</label>
-                <select id="area" class="i-select" onchange="setSchoolList('area','school_id','subject_id')">
+                <select id="area" class="i-select" onchange="setSchoolOption('area','school_id','year_val','classes_id')">
                     <option value="1">北區</option>
                     <option value="2">桃竹苗區</option>
                     <option value="3">中區</option>
@@ -17,10 +17,13 @@
                     <option value="6">外島</option>
                 </select>
                 <label class="i-label">學校</label>
-                <select id="school_id" class="i-select" onchange="setSubjectList('school_id','subject_id')">
+                <select id="school_id" class="i-select" onchange="setSubjectOption('school_id','year_val','classes_id')">
                 </select>
-                <label class="i-label">科系</label>
-                <select id="subject_id" class="i-select">
+                <label class="i-label">學年度</label>
+                <select id="year_val" class="i-select" onchange="setClassesOption('year_val','classes_id')">
+                </select>
+                <label class="i-label">班級</label>
+                <select id="classes_id" class="i-select">
                 </select>
                 <button type="button" class="i-btn i-btn-primary" onclick="getStudent()">
                     <i class="ion-android-add"></i>
@@ -38,12 +41,15 @@
             </div>
             <div class="table-wrapper">
                 <table class="table" id="student_list">
-                    <tr>
+                    <tr id="tr_default">
                         <th>
                             <div class="cell">學校</div>
                         </th>
                         <th>
-                            <div class="cell">科系</div>
+                            <div class="cell">學年度</div>
+                        </th>
+                        <th>
+                            <div class="cell">班級</div>
                         </th>
                         <th>
                             <div class="cell">帳號</div>
@@ -74,7 +80,7 @@
             </div>
             <div class="form-group">
                 <label class="i-label">區域</label>
-                <select id="area_add" onchange="setSchoolList('area_add','school_id_add','subject_id_add')">
+                <select id="area_add" onchange="setSchoolOption('area_add','school_id_add','year_val_add','classes_id_add')">
                     <option value="1">北區</option>
                     <option value="2">桃竹苗區</option>
                     <option value="3">中區</option>
@@ -85,12 +91,17 @@
             </div>
             <div class="form-group">
                 <label class="i-label">學校</label>
-                <select id="school_id_add" onchange="setSubjectList('school_id_add','subject_id_add')">
+                <select id="school_id_add" onchange="setSubjectOption('school_id_add','year_val_add','classes_id_add')">
                 </select>
             </div>
             <div class="form-group">
-                <label class="i-label">科系</label>
-                <select id="subject_id_add">
+                <label class="i-label">學年度</label>
+                <select id="year_val_add" onchange="setClassesOption('year_val_add','classes_id_add')">
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="i-label">班級</label>
+                <select id="classes_id_add">
                 </select>
             </div>
             <div class="form-group">
@@ -168,7 +179,8 @@
 <table style="display: none">
     <tr id="copy_tr">
         <td><div class="cell" id="school_area"></div></td>
-        <td><div class="cell" id="subject_area"></div></td>
+        <td><div class="cell" id="year_area"></div></td>
+        <td><div class="cell" id="classes_area"></div></td>
         <td><div class="cell" id="login_name_area"></div></td>
         <td><div class="cell" id="name_area"></div></td>
         <td>
@@ -180,19 +192,22 @@
 <script>
     var list_item = $('#student_list');
     var tr_item = $('#copy_tr');
-    var subject_id_item = $('#subject_id');
+    var classes_id_item = $('#classes_id');
     var student_item = [];
     var school_item = [];
+    var classes_item = [];
     var subject_item = [];
 
     $( document ).ready(function() {
         setMenu('li_member', 'main_li_1');
-        getSchoolData();
+        getInit();
     });
 
-    function getSchoolData() {
+    //取得初始化用的資料
+    function getInit()
+    {
         $.ajax({
-            url: "[! route('ma.school.list') !]",
+            url: "[! route('ma.student.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -202,75 +217,86 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['school'].length;x++){
+                        var school = response['data']['school'][x];
                         school_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'code':response['data'][x]['code'],
-                                'area':response['data'][x]['area'],
-                                'school_title':response['data'][x]['school_title']
+                                'id':school['id'],
+                                'code':school['code'],
+                                'area':school['area'],
+                                'school_title':school['school_title']
                             }
                         );
                     }
-                }
-                setSchoolList('area','school_id','subject_id');
-                getSubjectData();
-            }
-        });
-    }
-
-    function getSubjectData() {
-        $.ajax({
-            url: "[! route('ma.subject.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
-                        subject_item.push(
+                    for(var x=0;x<response['data']['classes'].length;x++){
+                        var classes = response['data']['classes'][x];
+                        classes_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'school_id':response['data'][x]['school_id'],
-                                'subject_title':response['data'][x]['subject_title']
+                                'id':classes['id'],
+                                'school_id':classes['school_id'],
+                                'school_year':classes['school_year'],
+                                'title':classes['title']
                             }
                         );
                     }
                 }
-                setSubjectList('school_id','subject_id');
+                setSchoolOption('area','school_id','year_val', 'classes_id');
             }
         });
     }
 
-    function setSchoolList(item1,item2,item3) {
+    //設定學校下拉選單資料
+    function setSchoolOption(item1,item2,item3,item4) {
         var t_val = $('#'+item1).val();
         $("#"+item2+" option").remove();
         $("#"+item3+" option").remove();
+        $("#"+item4+" option").remove();
         for(var x=0;x<school_item.length;x++){
             if(school_item[x]['area'] == t_val){
                 $("#"+item2).append($("<option></option>").attr("value", school_item[x]['id']).text(school_item[x]['school_title']));
             }
         }
-        setSubjectList(item2,item3);
+        setSubjectOption(item2,item3,item4);
     }
 
+    //設定學年度跟班級下拉選單資料
+    function setSubjectOption(item1,item2,item3) {
+        var t_val = $('#'+item1).val();
+        var years = [];
+        $("#"+item2+" option").remove();
+        for(var x=0;x<classes_item.length;x++){
+            if(classes_item[x]['school_id'] == t_val){
+                if(jQuery.inArray(classes_item[x]['school_year'], years) == -1){
+                    years.push(classes_item[x]['school_year']);
+                }
+            }
+        }
+        for(var x=0;x<years.length;x++){
+            $("#"+item2).append($("<option></option>").attr("value", years[x]).text(years[x]));
+        }
+        setClassesOption(item2,item3);
+    }
 
-    function setSubjectList(item1,item2) {
+    //設定學年度跟班級下拉選單資料
+    function setClassesOption(item1,item2) {
         var t_val = $('#'+item1).val();
         $("#"+item2+" option").remove();
-        for(var x=0;x<subject_item.length;x++){
-            if(subject_item[x]['school_id'] == t_val){
-                $("#"+item2).append($("<option></option>").attr("value", subject_item[x]['id']).text(subject_item[x]['subject_title']));
+        for(var x=0;x<classes_item.length;x++){
+            if(classes_item[x]['school_year'] == t_val){
+                $("#"+item2).append($("<option></option>").attr("value", classes_item[x]['id']).text(classes_item[x]['title']));
             }
         }
     }
 
+    //查詢學生資料
     function getStudent() {
-        var t = subject_id_item.val();
+        //先清除學生資料
+        list_item.find('tr').each(function(){
+            if($(this).attr('id') != 'tr_default'){
+                $(this).remove();
+            }
+        });
+        var t = classes_id_item.val();
         if(t != ''){
             student_item = [];
             $.ajax({
@@ -279,7 +305,7 @@
                 dataType: "json",
                 data: {
                     'school':$('#school_id').val(),
-                    'subject':$('#subject_id').val(),
+                    'classes_id':$('#classes_id').val(),
                 },
                 error: function(xhr) {
                     //alert('Ajax request 發生錯誤');
@@ -305,16 +331,19 @@
         }
     }
 
+    //設定學生列表的資料
     function setStudentList() {
         var school = $("#school_id").find(":selected").text();
-        var subject = $("#subject_id").find(":selected").text();
+        var classes = $("#classes_id").find(":selected").text();
+        var year = $("#year_val").find(":selected").text();
         for(var x=0;x<student_item.length;x++){
             var t = tr_item.clone();
             //var a = "[! route('ma.question.pg.edit') !]?id="+ question_item[x]['id'];
             var login_name = student_item[x]['login_name'];
             var name = student_item[x]['name'];
             t.find('#school_area').html(school).removeAttr('id');
-            t.find('#subject_area').html(subject).removeAttr('id');
+            t.find('#year_area').html(year).removeAttr('id');
+            t.find('#classes_area').html(classes).removeAttr('id');
             t.find('#login_name_area').html(login_name).removeAttr('id');
             t.find('#name_area').html(name).removeAttr('id');
             t.find('#a_area').attr('onclick','showUpArea("'+student_item[x]['id']+'")').removeAttr('id');
@@ -328,7 +357,7 @@
     function showAddArea() {
         $('#add_div').show();
         $('#list_div').hide();
-        setSchoolList('area_add','school_id_add','subject_id_add');
+        setSchoolOption('area_add','school_id_add','year_val_add','classes_id_add');
     }
 
     function returnList() {
@@ -357,7 +386,7 @@
                     login_name:$('#new_login_name').val(),
                     login_pw:$('#new_pw').val(),
                     school_id:$('#school_id_add').val(),
-                    school_subject:$('#subject_id_add').val(),
+                    classes_id:$('#classes_id_add').val(),
                     student_id:$('#new_student_id').val(),
                     name:$('#new_name').val(),
                 },
@@ -379,26 +408,26 @@
     function chkInput()
     {
         var msg = '';
-        if(o_pw.val() == ''){
-            msg = msg + '請輸入舊密碼!!\r\n';
-        }else{
-            if(o_pw.val() != pw){
-                msg = msg + '舊密碼不一致!!\r\n';
-            }
+        if($('#school_id_add').val() == ''){
+            msg = msg + '請選擇學校!!\r\n';
         }
-        if(n_pw.val() == ''){
+        if($('#year_val_add').val() == ''){
+            msg = msg + '請選擇學年度!!\r\n';
+        }
+        if($('#classes_id_add').val() == ''){
+            msg = msg + '請選擇班級!!\r\n';
+        }
+        if($('#new_login_name').val() == ''){
+            msg = msg + '請輸入帳號!!\r\n';
+        }
+        if($('#new_pw').val() == ''){
             msg = msg + '請輸入新密碼!!\r\n';
-        }else{
-            if(n_pw.val() != n_pw_r.val()){
-                msg = msg + '新密碼不一致!!\r\n';
-            }
         }
-        if(msg == '' && n_pw.val() == o_pw.val()){
-            msg = msg + '新舊密碼不能一樣!!\r\n';
+        if($('#new_name').val() == ''){
+            msg = msg + '請輸入姓名!!\r\n';
         }
 
         if(msg == ''){
-            pw = n_pw.val();
             return true;
         }
         alert(msg);
@@ -459,9 +488,11 @@
         if($('#up_name').val() == ''){
             msg = msg + '請輸入姓名!!\r\n';
         }
+        /*
         if($('#up_student_id').val() == ''){
             msg = msg + '請輸入學號!!\r\n';
         }
+        */
         if($('#up_pw').val() != ''){
             if($('#up_pw').val() != $('#up_pw_r').val()){
                 msg = msg + '新密碼不一致!!\r\n';
