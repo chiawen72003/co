@@ -3,6 +3,7 @@
 namespace App\Http\Providers;
 
 use App\Http\Models\School;
+use App\Http\Models\SchoolClasses;
 use App\Http\Models\SchoolSubject;
 use Illuminate\Support\Str;
 use \Input;
@@ -16,17 +17,24 @@ use \Input;
 class SchoolItem
 {
 
-    private $input_array = array();
+    private $init = array();
 
     private $msg = array(
         'status' => false,
         'msg' => '',
     );
 
+    public function __construct($input_data = array())
+    {
+        foreach ($input_data as $k => $v) {
+            $this->init[$k] = $v;
+        }
+    }
+
     public function init($input_data = array())
     {
         foreach ($input_data as $k => $v) {
-            $this->input_array[$k] = $v;
+            $this->init[$k] = $v;
         }
     }
 
@@ -61,16 +69,16 @@ class SchoolItem
     public function addSubject()
     {
         $update = new SchoolSubject();
-        $update->school_id = $this->input_array['school_id'];
-        $update->subject_title = $this->input_array['subject_title'];
+        $update->school_id = $this->init['school_id'];
+        $update->subject_title = $this->init['subject_title'];
         $update->save();
         $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
             'id' => $getID,
-            'school_id' => $this->input_array['school_id'],
-            'subject_title' => $this->input_array['subject_title'],
+            'school_id' => $this->init['school_id'],
+            'subject_title' => $this->init['subject_title'],
         );
 
         return $this->msg;
@@ -83,9 +91,9 @@ class SchoolItem
      */
     public function updateSubject()
     {
-        if (isset($this->input_array['id']) && isset($this->input_array['subject_title'])) {
-            $update = SchoolSubject::find($this->input_array['id']);
-            $update->subject_title = $this->input_array['subject_title'];
+        if (isset($this->init['id']) && isset($this->init['subject_title'])) {
+            $update = SchoolSubject::find($this->init['id']);
+            $update->subject_title = $this->init['subject_title'];
             $update->save();
             $this->msg = array(
                 'status' => true,
@@ -102,8 +110,8 @@ class SchoolItem
      */
     public function deleteSubject()
     {
-        if (isset($this->input_array['id'])) {
-            SchoolSubject::destroy($this->input_array['id']);
+        if (isset($this->init['id'])) {
+            SchoolSubject::destroy($this->init['id']);
             $this->msg = array(
                 'status' => true,
                 'msg' => '刪除成功!',
@@ -114,7 +122,7 @@ class SchoolItem
     }
 
     /**
-     *  取得學校資料
+     *  取得所有學校資料
      *
      */
     public function getSchool()
@@ -139,6 +147,30 @@ class SchoolItem
         return $this->msg;
     }
 
+
+    /**
+     *  取得單一學校資料
+     *
+     */
+    public function getOneSchool()
+    {
+        $return_data = array();
+        $temp_obj = School::select('id','city', 'code', 'area', 'school_title')
+            ->where('id',  $this->init['id'])
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data = $v->toArray();
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
     /**
      * 新增 學校資料
      *
@@ -146,19 +178,19 @@ class SchoolItem
     public function addSchool()
     {
         $update = new School();
-        $update->city = $this->input_array['city'];
-        $update->code = $this->input_array['code'];
-        $update->area = $this->input_array['area'];
-        $update->school_title = $this->input_array['school_title'];
+        $update->city = $this->init['city'];
+        $update->code = $this->init['code'];
+        $update->area = $this->init['area'];
+        $update->school_title = $this->init['school_title'];
         $update->save();
         $getID  = $update->id;
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
             'id' => $getID,
-            'code' => $this->input_array['code'],
-            'school_title' => $this->input_array['school_title'],
-            'area' => $this->input_array['area'],
+            'code' => $this->init['code'],
+            'school_title' => $this->init['school_title'],
+            'area' => $this->init['area'],
         );
 
         return $this->msg;
@@ -171,10 +203,10 @@ class SchoolItem
      */
     public function updateSchool()
     {
-        if (isset($this->input_array['id']) && isset($this->input_array['school_title'])) {
-            $update = School::find($this->input_array['id']);
-            $update->school_title = $this->input_array['school_title'];
-            $update->area = $this->input_array['area'];
+        if (isset($this->init['id']) && isset($this->init['school_title'])) {
+            $update = School::find($this->init['id']);
+            $update->school_title = $this->init['school_title'];
+            $update->area = $this->init['area'];
             $update->save();
             $this->msg = array(
                 'status' => true,
@@ -191,13 +223,58 @@ class SchoolItem
      */
     public function deleteSchool()
     {
-        if (isset($this->input_array['id'])) {
-            School::destroy($this->input_array['id']);
+        if (isset($this->init['id'])) {
+            School::destroy($this->init['id']);
             $this->msg = array(
                 'status' => true,
                 'msg' => '刪除成功!',
             );
         }
+
+        return $this->msg;
+    }
+
+
+    /**
+     * 取得 班級資料
+     *
+     */
+    public function getClasses()
+    {
+        $return_data = array();
+        $temp_obj = SchoolClasses::select('id','school_id', 'school_year', 'title')
+            ->where('school_id', $this->init['id'])
+            ->orderby('school_year', 'ASC')
+            ->orderby('title', 'ASC')
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = $v;
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 新增 科系資料
+     *
+     */
+    public function addClasses()
+    {
+        $update = new SchoolClasses();
+        $update->school_id = $this->init['school_id'];
+        $update->school_year = $this->init['school_year'];
+        $update->title = $this->init['title'];
+        $update->save();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '新增成功!',
+        );
 
         return $this->msg;
     }

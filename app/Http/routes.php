@@ -39,11 +39,11 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     //管理員 管理使用者-匯入學校/代碼
     Route::get('/Ma/School', ['as' => 'ma.school', 'uses' => 'AdController@School']);
     Route::get('/Ma/School/list', ['as' => 'ma.school.list', 'uses' => 'AdController@SchoolList']);
-    Route::post('/Ma/School/Add', ['as' => 'ma.school.add', 'uses' => 'AdController@SchoolAdd']);
+    Route::get('/Ma/School/Init', ['as' => 'ma.school.init', 'uses' => 'AdController@SchoolInit']);
 
     //管理員 學校-班級
-    Route::get('/Ma/Classes', ['as' => 'ma.classes', 'uses' => 'AdController@Classes']);
-    Route::get('/Ma/Classes/Api', ['as' => 'ma.classes.api', 'uses' => 'AdController@ClassesApi']);
+    Route::get('/Ma/Classes/', ['as' => 'ma.classes', 'uses' => 'AdController@Classes']);
+    Route::get('/Ma/Classes/Init', ['as' => 'ma.classes.init', 'uses' => 'AdController@ClassesInit']);
     Route::post('/Ma/Classes/Add', ['as' => 'ma.classes.add', 'uses' => 'AdController@ClassesAdd']);
 
     //管理員 課程設定 新增課程

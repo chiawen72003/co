@@ -36,9 +36,7 @@
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
-                            <li id="li_classes"><a href="[! route('ma.classes') !]">新增學校/班級</a></li>
-                            <li id="li_school"><a href="[! route('ma.school') !]">匯入學校/代碼</a></li>
-                            <li id="li_school_subject"><a href="[! route('ma.subject') !]">新增學校/科系</a></li>
+                            <li id="li_classes"><a href="[! route('ma.school') !]">新增學校/班級</a></li>
                             <li id="li_member"><a href="[! route('ma.student') !]">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>

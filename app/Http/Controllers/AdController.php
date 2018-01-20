@@ -25,25 +25,37 @@ class AdController extends Controller
 
     /**
      * 學校-班級
-     *
-     *
      */
     public function Classes()
     {
+        $this->data['school_id'] = app('request')->get('s_id');
 
         return view('admin.school_classes.index', $this->data);
     }
 
     /**
-     * 所有學校-班級的資料
-     *
-     *
+     * 指定學校跟班級的資料
      */
-    public function ClassesApi()
+    public function ClassesInit()
     {
-        $school = new SchoolItem();
+        $school_id = app('request')->get('sid');
+        $school = new SchoolItem(array(
+            'id' => $school_id,
+        ));
+        $school_obj = $school->getOneSchool();
+        $classses = $school->getClasses();
+        $return  = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school_data' => $school_obj['data'],
+                'classes_data' => $classses['data'],
+                'area_data' => config('area'),
+            ),
+        );
 
-        echo json_encode($school->getSubject());
+
+        echo json_encode($return);
     }
 
     /**
@@ -54,11 +66,13 @@ class AdController extends Controller
     public function ClassesAdd()
     {
         $data = array();
-        $data['subject_title'] = app('request')->get('subject_title');
+        $data['school_year'] = app('request')->get('school_year');
         $data['school_id'] = app('request')->get('school_id');
+        $data['title'] = app('request')->get('title');
         $t_obj = new SchoolItem();
         $t_obj->init($data);
-        echo json_encode($t_obj->addSubject());
+
+        echo json_encode($t_obj->addClasses());
     }
 
     /**
@@ -101,8 +115,6 @@ class AdController extends Controller
 
     /**
      * 學校
-     *
-     *
      */
     public function School()
     {
@@ -123,20 +135,24 @@ class AdController extends Controller
     }
 
     /**
-     * 新增學校的資料
+     * 學校跟區域資料
      *
      *
      */
-    public function SchoolAdd()
+    public function SchoolInit()
     {
-        $data = array();
-        $data['school_title'] = app('request')->get('school_title');
-        $data['area'] = app('request')->get('area');
-        $data['code'] = app('request')->get('code');
-        $data['city'] = 0;
-        $t_obj = new SchoolItem();
-        $t_obj->init($data);
-        echo json_encode($t_obj->addSchool());
+        $school = new SchoolItem();
+        $school_data = $school->getSchool();
+        $return_data = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school_data' => $school_data['data'],
+                'area_data' => config('area'),
+            ),
+        );
+
+        echo json_encode($return_data);
     }
 
     /**
