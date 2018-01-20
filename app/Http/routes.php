@@ -111,6 +111,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/Student/List', ['as' => 'ma.student.list', 'uses' => 'AdController@StudentList']);
     Route::post('/Ma/Student/Add', ['as' => 'ma.student.add', 'uses' => 'AdController@StudentAdd']);
     Route::post('/Ma/Student/Update', ['as' => 'ma.student.update', 'uses' => 'AdController@StudentUpdate']);
+    Route::post('/Ma/Student/Del', ['as' => 'ma.student.del', 'uses' => 'AdController@StudentDel']);
 });
 
 //受測者

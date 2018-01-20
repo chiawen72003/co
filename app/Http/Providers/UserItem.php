@@ -409,6 +409,21 @@ class UserItem
     }
 
     /**
+     * 刪除 受測試者資料
+     *
+     */
+    public function unsetStudent()
+    {
+        Student::where('id',$this->input_array['id'])
+            ->delete();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '刪除成功!',
+        );
+
+        return $this->msg;
+    }
+    /**
      * 取得 管理員資料
      *
      */

@@ -57,7 +57,7 @@
                         <th>
                             <div class="cell">姓名</div>
                         </th>
-                        <th width="100">
+                        <th width="150">
                             <div class="cell center">
                                 功能
                             </div>
@@ -184,7 +184,10 @@
         <td><div class="cell" id="login_name_area"></div></td>
         <td><div class="cell" id="name_area"></div></td>
         <td>
-            <div class="cell center"><a class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a></div>
+            <div class="cell center">
+                <a class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a>
+                <a class="i-link" id="a_del"><i class="ion-trash-a"></i>移除</a>
+            </div>
         </td>
     </tr>
 </table>
@@ -347,11 +350,34 @@
             t.find('#login_name_area').html(login_name).removeAttr('id');
             t.find('#name_area').html(name).removeAttr('id');
             t.find('#a_area').attr('onclick','showUpArea("'+student_item[x]['id']+'")').removeAttr('id');
+            t.find('#a_del').attr('onclick','unsetStudent("'+student_item[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
     }
 
+
+    //移除學生資料
+    function unsetStudent(id) {
+        $.ajax({
+            url: "[! route('ma.student.del') !]",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                _token: '[! csrf_token() !]',
+                user_id: id,
+            },
+            error: function (xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function (response) {
+                if(response['status'] == true){
+                    alert(response['msg']);
+                }
+                getStudent();
+            }
+        });
+    }
     //------------------------------------------------------------------
     //下面是新增使用者會用到的方法
     function showAddArea() {

@@ -833,4 +833,17 @@ class AdController extends Controller
 
         echo json_encode($t_obj->setStudent());
     }
+
+    /**
+     * 刪除學生的資料
+     */
+    public function StudentDel()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('user_id');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->unsetStudent());
+    }
 }
