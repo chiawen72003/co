@@ -20,7 +20,7 @@
                 <select id="school_id" class="i-select" onchange="setSubjectOption('school_id','year_val','classes_id')">
                 </select>
                 <label class="i-label">學年度</label>
-                <select id="year_val" class="i-select" onchange="setClassesOption('year_val','classes_id')">
+                <select id="year_val" class="i-select" onchange="setClassesOption('school_id','year_val','classes_id')">
                 </select>
                 <label class="i-label">班級</label>
                 <select id="classes_id" class="i-select">
@@ -96,7 +96,7 @@
             </div>
             <div class="form-group">
                 <label class="i-label">學年度</label>
-                <select id="year_val_add" onchange="setClassesOption('year_val_add','classes_id_add')">
+                <select id="year_val_add" onchange="setClassesOption('school_id_add','year_val_add','classes_id_add')">
                 </select>
             </div>
             <div class="form-group">
@@ -277,16 +277,17 @@
         for(var x=0;x<years.length;x++){
             $("#"+item2).append($("<option></option>").attr("value", years[x]).text(years[x]));
         }
-        setClassesOption(item2,item3);
+        setClassesOption(item1,item2,item3);
     }
 
     //設定學年度跟班級下拉選單資料
-    function setClassesOption(item1,item2) {
+    function setClassesOption(item1,item2,item3) {
         var t_val = $('#'+item1).val();
-        $("#"+item2+" option").remove();
+        var t_val_2 = $('#'+item2).val();
+        $("#"+item3+" option").remove();
         for(var x=0;x<classes_item.length;x++){
-            if(classes_item[x]['school_year'] == t_val){
-                $("#"+item2).append($("<option></option>").attr("value", classes_item[x]['id']).text(classes_item[x]['title']));
+            if(classes_item[x]['school_id'] == t_val && classes_item[x]['school_year'] == t_val_2){
+                $("#"+item3).append($("<option></option>").attr("value", classes_item[x]['id']).text(classes_item[x]['title']));
             }
         }
     }
