@@ -45,6 +45,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/Classes/', ['as' => 'ma.classes', 'uses' => 'AdController@Classes']);
     Route::get('/Ma/Classes/Init', ['as' => 'ma.classes.init', 'uses' => 'AdController@ClassesInit']);
     Route::post('/Ma/Classes/Add', ['as' => 'ma.classes.add', 'uses' => 'AdController@ClassesAdd']);
+    Route::post('/Ma/Classes/Add/Student', ['as' => 'ma.classes.add.student', 'uses' => 'AdController@ClassesAddStudent']);
 
     //管理員 課程設定 新增課程
     Route::get('/Ma/Course', ['as' => 'ma.course', 'uses' => 'AdController@Course']);
@@ -98,7 +99,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::post('/Ma/revised/Add', ['as' => 'ma.revised.add', 'uses' => 'AdController@RevisedAdd']);
     Route::post('/Ma/revised/Update', ['as' => 'ma.revised.update', 'uses' => 'AdController@RevisedUpdate']);
 
-    //管理員 評閱者-試卷資料管理
+    //管理員 批改管理 派卷管理
     Route::get('/Ma/revised/Reel', ['as' => 'ma.revised.reel', 'uses' => 'AdController@RevisedReel']);
     Route::get('/Ma/revised/Reel/List', ['as' => 'ma.revised.reel.list', 'uses' => 'AdController@RevisedReelList']);
     Route::post('/Ma/revised/Reel/Add', ['as' => 'ma.revised.reel.add', 'uses' => 'AdController@RevisedReelAdd']);

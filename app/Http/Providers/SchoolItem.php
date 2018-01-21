@@ -5,6 +5,7 @@ namespace App\Http\Providers;
 use App\Http\Models\School;
 use App\Http\Models\SchoolClasses;
 use App\Http\Models\SchoolSubject;
+use App\Http\Models\Student;
 use Illuminate\Support\Str;
 use \Input;
 
@@ -24,16 +25,16 @@ class SchoolItem
         'msg' => '',
     );
 
-    public function __construct($input_data = array())
+    public function __construct($init = array())
     {
-        foreach ($input_data as $k => $v) {
+        foreach ($init as $k => $v) {
             $this->init[$k] = $v;
         }
     }
 
-    public function init($input_data = array())
+    public function init($init = array())
     {
-        foreach ($input_data as $k => $v) {
+        foreach ($init as $k => $v) {
             $this->init[$k] = $v;
         }
     }
@@ -297,6 +298,66 @@ class SchoolItem
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 從excel匯入學生的檔案
+     */
+    function get_import_student()
+    {
+        if(
+            $this -> init['classes_id']
+            AND $this -> init['school_id']
+            AND $this -> init['import_user_file']
+        )
+        {
+            if ( $this -> init['import_user_file'] ->isValid() )
+            {
+                $extension = $this -> init['import_user_file'] -> getClientOriginalExtension(); // getting image extension
+                $fileName = time().'.'.$extension; // renameing image
+                $this -> init['import_user_file'] -> move('files/tmp/', $fileName); // uploading file to given path
+                $this -> init['import_file_name'] = 'files/tmp/'.$fileName;
+
+                $excel_obj = new PhpExcel();
+                $excel_obj -> init($this -> init);
+                $cell_data = $excel_obj -> import_student_data();
+                $user_info = null;
+                $user_status = null;
+                //系統產生登入帳號
+                $t_id = time();
+                $data_total = count($cell_data);
+                if($data_total > 0)
+                {
+                    $user_info = array();
+                    foreach($cell_data as $v)
+                    {
+                        if(
+                            $v['D']
+                            AND $v['E']
+                        )
+                        {
+                            $user_info[] = array(
+                                'login_name' => $t_id,
+                                'login_pw' => '123456',
+                                'school_id' => $this -> init['school_id'],
+                                'classes_id' => $this -> init['classes_id'],
+                                'student_id' => !is_null($v['D'])?$v['D']:'',
+                                'name' => !is_null($v['E'])?$v['E']:'',
+                            );
+                            $t_id++;
+                        }
+                    }
+                    //以批次新增的方式處理
+                    Student::insert($user_info);
+                }
+            }
+        }
+        $this->msg = array(
+            'status' => true,
+            'msg' => '匯入成功!',
         );
 
         return $this->msg;

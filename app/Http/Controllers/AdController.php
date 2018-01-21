@@ -75,6 +75,25 @@ class AdController extends Controller
         echo json_encode($t_obj->addClasses());
     }
 
+
+    /**
+     * 匯入班級內的學生資料
+     *
+     *
+     */
+    public function ClassesAddStudent()
+    {
+        $fp = Input::all();
+        $data = array(
+            'school_id' => isset($fp['school_id']) ? $fp['school_id'] : null,
+            'classes_id' => isset($fp['classes_id']) ? $fp['classes_id'] : null,
+            'import_user_file' => Input::file('import_file') ? Input::file('import_file') : null,
+        );
+        $member_obj = new SchoolItem();
+        $member_obj->init($data);
+
+        echo json_encode($member_obj->get_import_student());
+    }
     /**
      * 學校-科系
      *

@@ -48,7 +48,12 @@
     <tr id="copy_tr" >
         <td><div class="cell center" id="year"></div></td>
         <td><div class="cell center" id="name"></div></td>
-        <td><div class="cell" ><a href="#" class="i-link" id="tool">匯入學生資料</a></div></td>
+        <td>
+            <div class="cell" >
+                <input type="file" class="i-input" id="up_file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                <a href="#" class="i-link" id="tool">匯入學生資料</a>
+            </div>
+        </td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
@@ -111,7 +116,8 @@
             var t = tr_item.clone();
             t.find('#year').html(s_obj['school_year']).removeAttr('id');
             t.find('#name').html(s_obj['title']).removeAttr('id');
-            t.find('#tool').removeAttr('id');
+            t.find('#tool').attr('onclick', 'upExcel('+x+','+s_obj['id']+')').removeAttr('id');
+            t.find('#up_file').attr('id', 'up_file_'+x);
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -164,6 +170,41 @@
                 }
             });
             isSend = true;
+        }
+    }
+
+    //上傳excel
+    function upExcel(id,classes_id)
+    {
+        var val = $("#up_file_"+id).val();
+        if(val != ''){
+            var form_data = new FormData();
+            form_data.append('import_file', $("#up_file_"+id)[0].files[0]);
+            form_data.append('_token', '[! csrf_token() !]');
+            form_data.append('classes_id', classes_id);
+            form_data.append('school_id', '[! $school_id !]');
+            $.ajax({
+                type:'POST',
+                dataType: "json",
+                url:"[! route('ma.classes.add.student') !]",
+                processData: false,
+                contentType: false,
+                data:form_data,
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response)
+                {
+                    if(response['status'] == true)
+                    {
+                        alert(response['msg']);
+                    }
+                    isSend = false;
+                }
+            });
+            isSend = true;
+        }else{
+            alert('請選擇要上傳的Excel檔案!!');
         }
     }
 </script>
