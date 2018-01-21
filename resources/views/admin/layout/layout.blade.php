@@ -84,7 +84,7 @@
                         </a>
                         <ul class="mainnav-sub">
                             <li id="li_revised"><a href="[! route('ma.revised') !]">評閱者資料管理</a></li>
-                            <li id="li_reel_modify"><a href="#">派卷管理</a></li>
+                            <li id="li_reel_modify"><a href="[! route('ma.revised.reel') !]">派卷管理</a></li>
                         </ul>
                     </li>
                     <li id="li_precautions">
