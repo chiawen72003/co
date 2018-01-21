@@ -94,6 +94,7 @@ class UrController extends Controller
     {
         $data = array();
         $data['user_id'] = $this->data['user_id'];
+        $data['classes_id'] = app('request')->session()->get('classes_id');
         $reel = new MeasuredItem();
         $reel->init($data);
 

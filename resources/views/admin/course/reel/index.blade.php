@@ -34,7 +34,7 @@
             </div>
             <div class="table-wrapper">
                 <table class="table" id="course_list">
-                    <tr>
+                    <tr id="tr_default">
                         <th width="100">
                             <div class="cell center">學年度</div>
                         </th>
@@ -63,7 +63,9 @@
         <td><div class="cell center" id="semester"></div></td>
         <td><div class="cell center" id="course_title"></div></td>
         <td><div class="cell center" id="reel_title"></div></td>
-        <td><div class="cell center" id="tool"></div></td>
+        <td><div class="cell center" >
+                <a class="i-link" id="a_del"><i class="ion-trash-a"></i>移除</a>
+            </div></td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
@@ -79,12 +81,13 @@
     var list_obj = [];
     $( document ).ready(function() {
         setMenu('li_course_reel', 'main_li_2');
-        getCourseData();
+        getInitData();
     });
 
-    function getCourseData() {
+    //資料初始
+    function getInitData() {
         $.ajax({
-            url: "[! route('ma.course.list') !]",
+            url: "[! route('ma.course.reel.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -94,73 +97,41 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['course'].length;x++){
+                        var course = response['data']['course'][x];
                         course_obj.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'school_year':response['data'][x]['school_year'],
-                                'semester':response['data'][x]['semester'],
-                                'course_title':response['data'][x]['course_title']
+                                'id':course['id'],
+                                'school_year':course['school_year'],
+                                'semester':course['semester'],
+                                'course_title':course['course_title']
                             }
                         );
                     }
-                }
-                getReelData();
-            }
-        });
-    }
-    function getReelData() {
-        $.ajax({
-            url: "[! route('ma.reel.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['reel'].length;x++){
+                        var reel = response['data']['reel'][x];
                         reel_obj.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'reel_title':response['data'][x]['reel_title']
+                                'id':reel['id'],
+                                'reel_title':reel['reel_title']
                             }
                         );
                     }
-                }
-                getListData();
-            }
-        });
-    }
-
-    function getListData() {
-        $.ajax({
-            url: "[! route('ma.course.reel.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['list'].length;x++){
+                        var list = response['data']['list'][x];
                         list_obj.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'course_id':response['data'][x]['course_id'],
-                                'reel_id':response['data'][x]['reel_id'],
+                                'id':list['id'],
+                                'course_id':list['course_id'],
+                                'reel_id':list['reel_id'],
                             }
                         );
                     }
+                    setYear();
+                    setCourse();
+                    setReel();
+                    setList();
                 }
-                setYear();
-                setCourse();
-                setReel();
-                setList();
             }
         });
     }
@@ -198,6 +169,13 @@
     }
 
     function setList() {
+        //先清除學校資料
+        list_item.find('tr').each(function(){
+            if($(this).attr('id') != 'tr_default'){
+                $(this).remove();
+            }
+        });
+
         for(var x=0;x<list_obj.length;x++){
             var t = tr_item.clone();
             var year = '';
@@ -221,6 +199,7 @@
             t.find('#semester').html(semester).removeAttr('id');
             t.find('#course_title').html(course_title).removeAttr('id');
             t.find('#reel_title').html(reel_title).removeAttr('id');
+            t.find('#a_del').attr('onclick','unset("'+list_obj[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -246,13 +225,68 @@
                     if(response['status'] == true)
                     {
                         alert(response['msg']);
-                        location.reload();
+                        getListData();
                     }
                     isSend = false;
                 }
             });
             isSend = true;
         }
+    }
+
+    //取得所有設定的資料
+    function getListData()
+    {
+        list_obj = [];
+        $.ajax({
+            url: "[! route('ma.course.reel.list') !]",
+            type:'GET',
+            dataType: "json",
+            data: {
+            },
+            error: function(xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function(response)
+            {
+                if(response['status'] == true)
+                {
+                    for(var x=0;x<response['data'].length;x++){
+                        var list = response['data'][x];
+                        list_obj.push(
+                            {
+                                'id':list['id'],
+                                'course_id':list['course_id'],
+                                'reel_id':list['reel_id'],
+                            }
+                        );
+                    }
+                }
+                setList();
+            }
+        });
+    }
+
+    //移除資料
+    function unset(id) {
+        $.ajax({
+            url: "[! route('ma.course.reel.del') !]",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                _token: '[! csrf_token() !]',
+                id: id,
+            },
+            error: function (xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function (response) {
+                if(response['status'] == true){
+                    alert(response['msg']);
+                }
+                getListData();
+            }
+        });
     }
 </script>
 @stop

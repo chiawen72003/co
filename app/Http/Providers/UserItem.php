@@ -94,7 +94,8 @@ class UserItem
                     'student.name',
                     'student.student_id',
                     'student.school_id',
-                    'school.school_title'
+                    'school.school_title',
+                    'student.classes_id'
                 )
                 ->get();
             foreach($temp_obj as $v ){
@@ -106,6 +107,7 @@ class UserItem
                     'student_id' => $v['student_id'],
                     'school_title' => $v['school_title'],
                     'school_id' => $v['school_id'],
+                    'classes_id' => $v['classes_id'],
                 ]);
                 $this->msg = array(
                     'status' => true,

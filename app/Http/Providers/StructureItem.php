@@ -386,6 +386,22 @@ class StructureItem
         return $this->msg;
     }
 
+
+    /**
+     * 移除 課程-試卷資料
+     *
+     */
+    public function unsetCourseReel()
+    {
+        CourseReel::where('id',$this->input_array['id'] )
+            ->delete();
+        $this->msg = array(
+            'status' => true,
+            'msg' => '刪除成功!',
+        );
+
+        return $this->msg;
+    }
     /**
      * 取得 課程-學員資料
      *
@@ -393,9 +409,10 @@ class StructureItem
     public function getCourseStudent()
     {
         $return_data = array();
-        $temp_obj = CourseStudent::select('id','course_id', 'school_id')
-            ->groupBy('course_id')
-            ->groupBy('school_id')
+        $temp_obj = CourseStudent::select('id','course_id', 'school_id', 'classes_id')
+            ->orderBy('course_id')
+            ->orderBy('school_id')
+            ->orderBy('classes_id')
             ->get();
         foreach($temp_obj as $v ){
             $return_data[] = $v;
@@ -419,6 +436,7 @@ class StructureItem
         $update = new CourseStudent();
         $update->course_id = $this->input_array['course_id'];
         $update->school_id = $this->input_array['school_id'];
+        $update->classes_id = $this->input_array['classes_id'];
         $update->save();
         $getID  = $update->id;
         $this->msg = array(
@@ -426,16 +444,6 @@ class StructureItem
             'msg' => '新增成功!',
         );
 
-        //todo 暫時先以學校為單位，等格式確認後在調整
-        /*
-        $t = new UserItem();
-        $all_student = $t->getAllStudent();
-        array(
-            array('name' => 'blah'),
-            array('name' => 'blah')
-        )
-        User::insert($data)
-*/
         return $this->msg;
     }
 }

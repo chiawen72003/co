@@ -9,10 +9,10 @@
             <form>
                 <div class="form-group">
                     <label class="i-label">學年度</label>
-                    <select id="year" class="i-select">
+                    <select id="year" class="i-select" onchange="setCourse()">
                     </select>
                     <label class="i-label">學期</label>
-                    <select id="semester" class="i-select">
+                    <select id="semester" class="i-select" onchange="setCourse()">
                         <option value="1">第一學期</option>
                         <option value="2">第二學期</option>
                     </select>
@@ -22,10 +22,13 @@
                 </div>
                 <div class="form-group">
                     <label class="i-label" class="i-select">學校</label>
-                    <select id="school" class="i-select">
+                    <select id="school" class="i-select" onchange="setClassesYear()">
                     </select>
-                    <label class="i-label" class="i-select">科系</label>
-                    <select id="subject" class="i-select">
+                    <label class="i-label" class="i-select">學年度</label>
+                    <select id="classes_year" class="i-select" onchange="setClasses()">
+                    </select>
+                    <label class="i-label" class="i-select">班級</label>
+                    <select id="classes" class="i-select">
                     </select>
                     <button type="button" class="i-btn i-btn-primary" onclick="add()">
                         <i class="ion-android-add"></i>
@@ -48,6 +51,12 @@
                         <th >
                             <div class="cell center">學校名稱</div>
                         </th>
+                        <th >
+                            <div class="cell center">學年度</div>
+                        </th>
+                        <th >
+                            <div class="cell center">班級</div>
+                        </th>
                     </tr>
                     <!--  -->
                 </table>
@@ -59,6 +68,8 @@
     <tr id="copy_tr" >
         <td><div class="cell center" id="course_area"></div></td>
         <td><div class="cell  center"  id="school_area"></div></td>
+        <td><div class="cell  center"  id="classes_area"></div></td>
+        <td><div class="cell  center"  id="classes_name"></div></td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
@@ -69,20 +80,22 @@
     var year_item = $('#year');
     var courseName = $('#courseName');
     var school = $('#school');
-    var subject = $('#subject');
+    var classesYear = $('#classes_year');
+    var classes = $('#classes');
     var course_obj = [];
     var list_obj = [];
     var school_item = [];
-    var subject_item = [];
+    var classes_item = [];
 
     $( document ).ready(function() {
         setMenu('li_course_student', 'main_li_2');
-        getCourseData();
+        geInitData();
     });
 
-    function getCourseData() {
+    //資料初始化 課程、學校、班級(?學生)
+    function geInitData() {
         $.ajax({
-            url: "[! route('ma.course.list') !]",
+            url: "[! route('ma.course.student.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -92,126 +105,69 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['course'].length;x++){
+                        var course = response['data']['course'][x];
                         course_obj.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'school_year':response['data'][x]['school_year'],
-                                'semester':response['data'][x]['semester'],
-                                'course_title':response['data'][x]['course_title']
+                                'id':course['id'],
+                                'school_year':course['school_year'],
+                                'semester':course['semester'],
+                                'course_title':course['course_title']
                             }
                         );
                     }
-                }
-                getSchoolData();
-            }
-        });
-    }
-
-
-    function getSchoolData() {
-        $.ajax({
-            url: "[! route('ma.school.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['school'].length;x++){
+                        var school = response['data']['school'][x];
                         school_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'code':response['data'][x]['code'],
-                                'area':response['data'][x]['area'],
-                                'school_title':response['data'][x]['school_title']
+                                'id':school['id'],
+                                'code':school['code'],
+                                'area':school['area'],
+                                'school_title':school['school_title']
                             }
                         );
                     }
-                }
-                getSubjectData();
-            }
-        });
-    }
-
-    function getSubjectData() {
-        $.ajax({
-            url: "[! route('ma.subject.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
-                        subject_item.push(
+                    for(var x=0;x<response['data']['classes'].length;x++){
+                        var classes = response['data']['classes'][x];
+                        classes_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'school_id':response['data'][x]['school_id'],
-                                'subject_title':response['data'][x]['subject_title']
+                                'id':classes['id'],
+                                'school_id':classes['school_id'],
+                                'school_year':classes['school_year'],
+                                'title':classes['title']
                             }
                         );
                     }
-                }
-                setSchoolList();
-                setSubject();
-                getListData();
-            }
-        });
-    }
-
-    function getListData() {
-        $.ajax({
-            url: "[! route('ma.course.student.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['list'].length;x++){
+                        var list = response['data']['list'][x];
                         list_obj.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'course_id':response['data'][x]['course_id'],
-                                'school_id':response['data'][x]['school_id'],
+                                'id':list['id'],
+                                'course_id':list['course_id'],
+                                'school_id':list['school_id'],
+                                'classes_id':list['classes_id']
                             }
                         );
                     }
                 }
-                setYear();
+                setYearOption();
                 setCourse();
+                setSchoolOption();
+                setClassesYear();
                 setList();
             }
         });
     }
-
-    function setSubject() {
-        var t= school.val();
-        for(var x=0;x<subject_item.length;x++){
-            if(subject_item[x]['school_id'] == t){
-                subject.append($("<option></option>").attr("value", subject_item[x]['id']).text(subject_item[x]['subject_title']));
-            }
-        }
-    }
-
-    function setSchoolList() {
+    
+    //設定學校的下拉選單
+    function setSchoolOption() {
         $("#school option").remove();
         for(var x=0;x<school_item.length;x++){
             school.append($("<option></option>").attr("value", school_item[x]['id']).text(school_item[x]['school_title']));
         }
     }
     //設定學年度下拉選單
-    function setYear() {
+    function setYearOption() {
         var tt = [];
         for(var x=0;x<course_obj.length;x++){
             if($.inArray( course_obj[x]['school_year'], tt ) < 0 ){
@@ -234,35 +190,75 @@
 
     }
 
+    //設定班級的學年度下拉選單
+    function setClassesYear() {
+        $("#classes_year option").remove();
+        var tt = [];
+        for (var x = 0; x < classes_item.length; x++) {
+            if (classes_item[x]['school_id'] == school.val()) {
+                if ($.inArray(classes_item[x]['school_year'], tt) < 0) {
+                    tt.push(classes_item[x]['school_year']);
+                }
+            }
+        }
+
+        for (var x = 0; x < tt.length; x++) {
+            classesYear.append($("<option></option>").attr("value", tt[x]).text(tt[x]));
+        }
+        setClasses();
+    }
+
+    //設定班級的下拉選單
+    function setClasses() {
+        $("#classes option").remove();
+        var tt = [];
+        for (var x = 0; x < classes_item.length; x++) {
+            var t = classes_item[x];
+            if (t['school_id'] == school.val() && t['school_year'] == classesYear.val()) {
+                classes.append($("<option></option>").attr("value", t['id']).text(t['title']));
+            }
+        }
+
+    }
+
     function setList() {
         for(var x=0;x<list_obj.length;x++){
             var t = tr_item.clone();
-            var c = '';
-            var s = '';
+            var course = '';
+            var school = '';
+            var classes_year = '';
+            var classes = '';
 
             for(var y=0;y<school_item.length;y++){
                 if(school_item[y]['id'] == list_obj[x]['school_id']){
-                    s = school_item[y]['school_title'];
+                    school = school_item[y]['school_title'];
                 }
             }
 
             for(var y=0;y<course_obj.length;y++){
                 if(course_obj[y]['id'] == list_obj[x]['course_id']){
-                    c = course_obj[y]['course_title'];
+                    course = course_obj[y]['course_title'];
                 }
             }
-            t.find('#course_area').html(c).removeAttr('id');
-            t.find('#school_area').html(s).removeAttr('id');
+            for(var y=0;y<classes_item.length;y++){
+                if(classes_item[y]['id'] == list_obj[x]['classes_id']){
+                    classes_year = classes_item[y]['school_year'];
+                    classes = classes_item[y]['title'];
+                }
+            }
+
+            t.find('#course_area').html(course).removeAttr('id');
+            t.find('#school_area').html(school).removeAttr('id');
+            t.find('#classes_area').html(classes_year).removeAttr('id');
+            t.find('#classes_name').html(classes).removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
     }
 
-
-
     var isSend = false;
     function add(){
-        if(!isSend && courseName.val() != '' && school.val() != ''){
+        if(!isSend && courseName.val() != '' && classes.val() != ''){
             $.ajax({
                 url: "[! route('ma.course.student.add') !]",
                 type:'POST',
@@ -271,6 +267,7 @@
                     _token: '[! csrf_token() !]',
                     course_id:courseName.val(),
                     school_id:school.val(),
+                    classes_id:classes.val(),
                 },
                 error: function(xhr) {
                     //alert('Ajax request 發生錯誤');

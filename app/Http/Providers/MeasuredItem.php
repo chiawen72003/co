@@ -52,7 +52,7 @@ class MeasuredItem
             $not_in[] = $v['reel_id'];
         }
 
-        $temp_obj = CourseStudent::where('course_student.student_id', $this->input_array['user_id'])
+        $temp_obj = CourseStudent::where('course_student.classes_id', $this->input_array['classes_id'])
             ->leftJoin('course', 'course.id', '=', 'course_student.course_id')
             ->select(
                 'course.reel_id'
