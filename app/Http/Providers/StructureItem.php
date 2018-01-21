@@ -129,12 +129,13 @@ class StructureItem
     public function getCourse()
     {
         $return_data = array();
-        $temp_obj = Course::select('id','school_year', 'semester', 'course_title')
+        $temp_obj = Course::select('id','school_year', 'semester', 'course_title', 'reel_id')
             ->orderby('school_year', 'ASC')
             ->orderby('semester', 'ASC')
             ->orderby('course_title', 'ASC')
             ->get();
         foreach($temp_obj as $v ){
+            $v['reel_id'] = json_decode($v['reel_id'],true);
             $return_data[] = $v;
         }
 
@@ -157,6 +158,7 @@ class StructureItem
         $update->school_year = $this->input_array['school_year'];
         $update->semester = $this->input_array['semester'];
         $update->course_title = $this->input_array['course_title'];
+        $update->reel_id = json_encode(array());
         $update->save();
         $getID  = $update->id;
         $this->msg = array(
@@ -350,12 +352,17 @@ class StructureItem
     public function getCourseReel()
     {
         $return_data = array();
-        $temp_obj = CourseReel::select('id','course_id', 'reel_id')
-            ->groupBy('course_id')
-            ->groupBy('reel_id')
+        $temp_obj = Course::select('id', 'reel_id')
             ->get();
         foreach($temp_obj as $v ){
-            $return_data[] = $v;
+            $data = json_decode($v['reel_id'],true);
+            foreach ($data as $reel_id){
+                $return_data[] = array(
+                    'id'=>$reel_id,
+                    'course_id'=>$v['id'],
+                    'reel_id'=>$reel_id,
+                );
+            }
         }
 
         $this->msg = array(
@@ -373,11 +380,14 @@ class StructureItem
      */
     public function addCourseReel()
     {
-        $update = new CourseReel();
-        $update->course_id = $this->input_array['course_id'];
-        $update->reel_id = $this->input_array['reel_id'];
-        $update->save();
-        $getID  = $update->id;
+        $update = Course::where('id',$this->input_array['course_id'])
+        ->get();
+        foreach ($update as $v){
+            $t = json_decode($v['reel_id'],true);
+            $t[] = $this->input_array['reel_id'];
+            $v['reel_id'] = json_encode($t);
+            $v->save();
+        }
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
@@ -393,8 +403,16 @@ class StructureItem
      */
     public function unsetCourseReel()
     {
-        CourseReel::where('id',$this->input_array['id'] )
-            ->delete();
+        $t = Course::where('id', $this->input_array['course_id'])
+            ->get();
+        foreach ($t as $v){
+            $reel_ids = json_decode($v['reel_id'],true);
+            if (($key = array_search($this->input_array['reel_id'], $reel_ids)) !== false) {
+                unset($reel_ids[$key]);
+            }
+            $v['reel_id'] = json_encode(array_values($reel_ids));
+            $v->save();
+        }
         $this->msg = array(
             'status' => true,
             'msg' => '刪除成功!',

@@ -107,6 +107,17 @@
                                 'course_title':course['course_title']
                             }
                         );
+                        for(var u=0;u<course['reel_id'].length;u++){
+                            var reel_id = course['reel_id'][u];
+                            list_obj.push(
+                                {
+                                    'id':reel_id,
+                                    'course_id':course['id'],
+                                    'reel_id':reel_id,
+                                }
+                            );
+                        }
+
                     }
                     for(var x=0;x<response['data']['reel'].length;x++){
                         var reel = response['data']['reel'][x];
@@ -114,16 +125,6 @@
                             {
                                 'id':reel['id'],
                                 'reel_title':reel['reel_title']
-                            }
-                        );
-                    }
-                    for(var x=0;x<response['data']['list'].length;x++){
-                        var list = response['data']['list'][x];
-                        list_obj.push(
-                            {
-                                'id':list['id'],
-                                'course_id':list['course_id'],
-                                'reel_id':list['reel_id'],
                             }
                         );
                     }
@@ -199,7 +200,7 @@
             t.find('#semester').html(semester).removeAttr('id');
             t.find('#course_title').html(course_title).removeAttr('id');
             t.find('#reel_title').html(reel_title).removeAttr('id');
-            t.find('#a_del').attr('onclick','unset("'+list_obj[x]['id']+'")').removeAttr('id');
+            t.find('#a_del').attr('onclick','unset("'+list_obj[x]['id']+'","'+list_obj[x]['course_id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -268,14 +269,15 @@
     }
 
     //移除資料
-    function unset(id) {
+    function unset(reelid,courseid) {
         $.ajax({
             url: "[! route('ma.course.reel.del') !]",
             type: 'POST',
             dataType: "json",
             data: {
                 _token: '[! csrf_token() !]',
-                id: id,
+                reel_id: reelid,
+                course_id: courseid,
             },
             error: function (xhr) {
                 //alert('Ajax request 發生錯誤');

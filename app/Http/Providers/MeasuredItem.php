@@ -60,9 +60,11 @@ class MeasuredItem
             ->get();
         foreach ($temp_obj as $v) {
             $t = json_decode($v->reel_id, true);
-            foreach ($t as $reel_id) {
-                if (!in_array($reel_id, $not_in)) {
-                    $has_in[] = $reel_id;
+            if(is_array($t)){
+                foreach ($t as $reel_id) {
+                    if (!in_array($reel_id, $not_in)) {
+                        $has_in[] = $reel_id;
+                    }
                 }
             }
         }

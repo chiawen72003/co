@@ -280,7 +280,8 @@ class AdController extends Controller
     public function CourseReelDel()
     {
         $data = array();
-        $data['id'] = app('request')->get('id');
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['course_id'] = app('request')->get('course_id');
         $t_obj = new StructureItem();
         $t_obj->init($data);
         echo json_encode($t_obj->unsetCourseReel());
