@@ -25,7 +25,7 @@
         <div class="chapter-body" id="obj_1" >
             <div class="chapter-content-wrap">
                 <div class="chapter-content-title">
-                    敘述性寫作題組評分標準表：
+                    請先閱讀文本，並於右方欄位回答問題
                 </div>
                 <div class="chapter-content">
                     <div class="chapter-content-article-left" id="dsc">
@@ -45,7 +45,7 @@
                     <div class="chapter-content-article-right">
                         <div style="height:50px">放置全形標點符號位置, 高度50px</div>
                         <div class="textarea-wrap">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);" can_count="true"></div>
                         </div>
                         <div class="chapter-content-page">
                             <ul class="row">
@@ -74,7 +74,7 @@
         <div class="chapter-body" id="obj_2">
             <div class="chapter-content-wrap">
                 <div class="chapter-content-title">
-                    敘述性寫作題組評分標準表：
+                    請先閱讀文本，並於右方欄位回答問題
                 </div>
                 <div class="chapter-content">
                     <div class="chapter-content-article-left" id="dsc">
@@ -90,6 +90,7 @@
             <div class="chapter-content-wrap">
                 <div class="chapter-content-title" >
                     <br id="title">
+                    <br>
                     (請點選
                     <div class="form-inline checkbox-group">
                         <input type="radio" id="radio1" name="agree" value="0" checked />
@@ -102,11 +103,10 @@
                 <div class="chapter-content" style="border-top: 0;">
                     <div class="chapter-content-article-right">
                         <div style="height:50px">放置全形標點符號位置, 高度50px</div>
-                        <div class="textarea-wrap textarea-wrap2">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
-                        </div>
-                        <div class="textarea-wrap textarea-wrap2">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
+                        <div class="textarea-wrap">
+                            <div id="textarea" name="text_1" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true"></div>
+
+                            <div id="textarea" name="text_2" contenteditable="true" onkeypress="return onKeyPress_(event);" style="display: none"  can_count="false"></div>
                         </div>
                         <div class="chapter-content-page">
                             <ul class="row">
@@ -135,7 +135,7 @@
         <div class="chapter-body" id="obj_3">
             <div class="chapter-content-wrap">
                 <div class="chapter-content-title">
-                    敘述性寫作題組評分標準表：
+                    請先閱讀文本，並於右方欄位回答問題
                 </div>
                 <div class="chapter-content">
                     <div class="chapter-content-article-left" id="dsc">
@@ -155,13 +155,13 @@
                     <div class="chapter-content-article-right">
                         <div style="height:50px">放置全形標點符號位置, 高度50px</div>
                         <div class="textarea-wrap textarea-wrap3">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">正方：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">正方：</div>
                         </div>
                         <div class="textarea-wrap textarea-wrap3">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">反方：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">反方：</div>
                         </div>
                         <div class="textarea-wrap textarea-wrap3">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">因應之道：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">因應之道：</div>
                         </div>
                         <div class="chapter-content-page">
                             <ul class="row">
@@ -190,7 +190,7 @@
         <div class="chapter-body" id="obj_4">
             <div class="chapter-content-wrap">
                 <div class="chapter-content-title">
-                    敘述性寫作題組評分標準表：
+                    請先閱讀文本，並於右方欄位回答問題
                 </div>
                 <div class="chapter-content">
                     <div class="chapter-content-article-left" id="dsc">
@@ -210,16 +210,16 @@
                     <div class="chapter-content-article-right">
                         <div style="height:50px">放置全形標點符號位置, 高度50px</div>
                         <div class="textarea-wrap textarea-wrap4">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">正方：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">正方：</div>
                         </div>
                         <div class="textarea-wrap textarea-wrap4">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">反方：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">反方：</div>
                         </div>
                         <div class="textarea-wrap textarea-wrap4">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">因應之道：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">因應之道：</div>
                         </div>
                         <div class="textarea-wrap textarea-wrap4">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);">因應之道：</div>
+                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"  can_count="true">因應之道：</div>
                         </div>
                         <div class="chapter-content-page">
                             <ul class="row">
@@ -324,6 +324,8 @@
                 //試題標題
                 if(question_item[z]['type'] == 2){
                     t.find('#title').after(question_item[z]['question_title']).removeAttr('id');
+                    t.find('#radio1').attr('onclick', 'change_w("'+z+'","1")').removeAttr('id');
+                    t.find('#radio2').attr('onclick', 'change_w("'+z+'","2")').removeAttr('id');
                 }else{
                     t.find('#title').html(question_item[z]['question_title']).removeAttr('id');
                 }
@@ -385,7 +387,9 @@
                 var t = $('#write_'+x).clone();
                 var total =0;
                 t.find('#textarea').each(function(){
-                    total = total + $(this).text().length;
+                    if($(this).attr('can_count') == "true"){
+                        total = total + $(this).text().length;
+                    }
                 });
 
                 $('#write_'+x+'_count').val(total);
@@ -450,12 +454,27 @@
                     },
                     success: function(response) {
                         if(response['status'] == true){
-                            //alert(response['msg']);
-                            //location.replace("[! route('ur.reel') !]");
+                            alert(response['msg']);
+                            location.replace("[! route('ur.reel') !]");
                         }
                     }
                 });
             }
+        }
+
+        //根據勾選同意或不同意時，顯示對應的輸入區塊
+        function change_w(z,id) {
+            var x = $('#write_'+z);
+            var begin_num = 1;
+            x.find('#textarea').each(function(){
+                if(begin_num == id){
+                    $(this).attr('can_count',"true").show();
+                }else{
+                    $(this).attr('can_count',"false").hide();
+                }
+                begin_num++;
+            });
+            reCount();
         }
 
         //下面處理文章過長時，可以點擊上下頁按鈕來移動文章
