@@ -169,12 +169,20 @@ class MeasuredItem
     }
 
     /**
-     * 隨機取得一個指定試卷的受測資料
+     * 取得一個指定試卷的受測資料
      */
     public function getReelTestData()
     {
         $return_data = array();
-        $temp_obj = ListUnderTest::select('id', 'test_data', 'modify_id', 's_modify_id')
+        $questions_id = array();
+        $questions_data = array();
+        $temp_obj = ListUnderTest::select(
+            'id',
+            'test_data',
+            'modify_id',
+            's_modify_id',
+            'questions_id'
+            )
             ->where('reel_id', $this->input_array['reel_id'])
             ->where('has_test', 1)
             ->where('has_review', 0)
@@ -188,13 +196,34 @@ class MeasuredItem
                 'id' => $v['id'],
                 'order' => $order,
                 'test_data' => json_decode($v['test_data'], true),
+                'questions_id' => json_decode($v['questions_id'], true),
             );
+            $questions_id = json_decode($v['questions_id'], true);
         }
+        if(count($questions_id) > 0){
+            $questions_id = array_unique($questions_id);
+            $temp_obj = Questions::select(
+                'id',
+                'dsc'
+            )
+                ->whereIn('id', $questions_id)
+                ->get();
+            foreach ($temp_obj as $v) {
+                $questions_data[] = array(
+                    'id' => $v->id,
+                    'dsc' => $v->dsc,
+                );
+            }
+        }
+
 
         $this->msg = array(
             'status' => true,
             'msg' => '',
-            'data' => $return_data,
+            'data' => array(
+                't_data' => $return_data,
+                'q_data' => $questions_data,
+            ),
         );
 
         return $this->msg;
