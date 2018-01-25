@@ -105,11 +105,9 @@
                 </div>
                 <div class="chapter-content" style="border-top: 0;">
                     <div class="chapter-content-article-right">
-                        <div class="textarea-wrap textarea-wrap2">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
-                        </div>
-                        <div class="textarea-wrap textarea-wrap2">
-                            <div id="textarea" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
+                        <div class="textarea-wrap">
+                            <div id="textarea" name="text_1" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
+                            <div id="textarea" name="text_2" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
                         </div>
                         <div class="chapter-content-page">
                             <ul class="row">
@@ -303,6 +301,7 @@
                                     'type_title':t['type_title'],
                                     'dsc':t['dsc'],
                                     'max_score':t['max_score'],
+                                    'agree':t['agree'],
                                     'ans':t['ans'],
                                 }
                             );
@@ -357,6 +356,23 @@
                 //試題標題
                 if(test_item[x]['type'] == 2){
                     t.find('#title').after(test_item[x]['question_title']).removeAttr('id');
+                    if(test_item[x]['agree'] == 0){
+                        t.find('#radio1').prop('checked', true).removeAttr('id');
+                    }
+                    if(test_item[x]['agree'] == 1){
+                        t.find('#radio2').prop('checked', true).removeAttr('id');
+                    }
+                    var temp_num = 0;
+                    t.find('#textarea').each(function(){
+                        if(test_item[x]['agree'] == temp_num){
+                            $(this).show();
+                        }else{
+                            $(this).hide();
+                        }
+
+                        temp_num++;
+                    });
+
                 }else{
                     t.find('#title').html(test_item[x]['question_title']).removeAttr('id');
                 }
