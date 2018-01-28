@@ -32,8 +32,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a onclick="" class="i-link prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a onclick="" class="i-link next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -142,8 +142,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,8 +197,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -329,8 +329,12 @@
                 }else{
                     t.find('#title').html(question_item[z]['question_title']).removeAttr('id');
                 }
-                //試題內容
+                //文章內容
                 t.find('#dsc').html(question_item[z]['dsc']).attr('id','dsc_'+z);
+                //文章上下頁按鈕
+                t.find('#dsc_prev').attr('onclick', 'dsc_prev("'+z+'")').attr('id','prev_'+z);
+                t.find('#dsc_next').attr('onclick', 'dsc_next("'+z+'")').attr('id','next_'+z);
+
                 //使用者在每一個試題內打字的總數量
                 t.find('#count').attr('id', 'write_'+z+'_count');
                 //試題輸入區
@@ -364,7 +368,8 @@
                     reCount();
                 });
             }
-            checkCtrl();
+            //checkCtrl();
+            setDefaultScrollData();
         }
 
         //控制只能輸入全形的值
@@ -478,6 +483,11 @@
         }
 
         //下面處理文章過長時，可以點擊上下頁按鈕來移動文章
+        var st = 0,
+            sb = 0,
+            hPage = 400;//頁面滑動時要移動的量
+
+        //綁定一個自定義的方法到每個物件內
         $.fn.scrollStopped = function(callback) {
             var $this = $(this),
                 self = this;
@@ -488,53 +498,51 @@
                 $this.data('scrollTimeout', setTimeout(callback, 250, self));
             });
         };
-        $section = $('#dsc_0');
-        $prev = $('.prev');
-        $next = $('.next');
-        var $win = $(window),
-            $body = $('body'),
-            sh = 0,
-            st = 0,
-            sb = 0,
-            hPage = 400,//頁面滑動時要移動的量
-            phase = 1,
-            triggerEvt = ('touchend' in window) ? 'touchend' : ' click';
-    $(function() {
-        if ($section.prop('scrollHeight') > 400) {
-            $('.question-button-wrap').addClass('show');
-            calcDimension();
-            $section.scrollStopped(checkCtrl);//上下頁滑動完以後，檢查是否顯示按鈕
-            //$win.on('resize', calcDimension);
-            $body.on(triggerEvt, '.prev, .next', function() {
-                st = $section.scrollTop();//現在scroltop的位置
-                if ($(this).hasClass('prev')) {
-                    phase = -1;
-                } else {
-                    phase = 1;
+
+        function setDefaultScrollData()
+        {
+            for(var z=0;z<question_item.length;z++){
+                var t = $('#dsc_'+z);
+                if (t.prop('scrollHeight') > 400) {
+                    t.scrollStopped(checkCtrl);//上下頁滑動完以後，檢查是否顯示按鈕
                 }
-                $section.stop().animate({
-                    scrollTop: st + hPage * phase
-                });
-            });
+            }
         }
-    });
          //判斷是否顯示上、下頁按鈕
-        function checkCtrl() {
-            $prev.removeClass('disabled');
-            $next.removeClass('disabled');
-            st = $section.scrollTop();
-            if (st >= sb) {
-                $next.addClass('disabled');
-            } else if (st <= 0) {
-                $prev.addClass('disabled');
+        function checkCtrl()
+        {
+            for(var z=0;z<question_item.length;z++){
+                var t_prev = $('#prev_'+z);
+                var t_next = $('#next_'+z);
+                t_prev.removeClass('disabled');
+                t_next.removeClass('disabled');
+                st = $('#dsc_'+z).scrollTop();
+                sb = $('#dsc_'+z).prop('scrollHeight') - (hPage+100);//st大於此值時，就不顯示下一頁按鈕
+                if (st >= sb) {
+                    t_next.addClass('disabled');
+                } else if (st <= 0) {
+                    t_prev.addClass('disabled');
+                }
             }
         }
 
-         //初始化 設定值
-        function calcDimension() {
-            sb = $section.prop('scrollHeight') - 50;//st大於此值時，就不顯示下一頁按鈕
+        //文章內容上一頁
+        function dsc_prev(id) {
+            var temp_dsc = $('#dsc_'+id);
+            var st = temp_dsc.scrollTop();//現在scroltop的位置
+            temp_dsc.stop().animate({
+                scrollTop: st + hPage * -1
+            });
         }
 
+        //文章內容下一頁
+        function dsc_next(id) {
+            var temp_dsc = $('#dsc_'+id);
+            var st = temp_dsc.scrollTop();//現在scroltop的位置
+            temp_dsc.stop().animate({
+                scrollTop: st + hPage * 1
+            });
+        }
         //----------------------------------------------
         //控制不能複製、貼上等
         $(document).ready(function () {
