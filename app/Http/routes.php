@@ -157,6 +157,8 @@ Route::group(['middleware' => 'RevisedCheck'], function () {
     Route::get('/Rv/Scroll/Reel/List', ['as' => 'rv.scroll.reel.list', 'uses' => 'RvController@ScrollReelList']);
     //批閱者 開始批改 批改試卷資料
     Route::get('/Rv/Scroll/Reel/View/{id}', ['as' => 'rv.scroll.reel.view', 'uses' => 'RvController@ScrollReelView']);
+    Route::get('/Rv/Scroll/Change/List', ['as' => 'rv.scroll.change.list', 'uses' => 'RvController@ScrollChangeList']);
+    Route::get('/Rv/Scroll/Change/{id}', ['as' => 'rv.scroll.reel.change', 'uses' => 'RvController@ScrollChange']);
     Route::get('/Rv/Scroll/Reel/Data', ['as' => 'rv.scroll.reel.data', 'uses' => 'RvController@ScrollReelData']);
     Route::post('/Rv/Scroll/Reel/Update', ['as' => 'rv.scroll.reel.update', 'uses' => 'RvController@ScrollReelUpdate']);
 
