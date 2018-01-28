@@ -32,8 +32,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -142,8 +142,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,8 +197,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link prev" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a class="i-link next" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
