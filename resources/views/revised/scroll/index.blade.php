@@ -14,6 +14,7 @@
                     <li><a href="[! url('files/demo/樣卷.zip') !]">參考樣卷</a></li>
                     <li><a href="[! url('files/demo/閱卷訓練.zip') !]">閱卷訓練</a></li>
                     <li><a href="[! route('rv.scroll.reel.pg') !]">開始批改</a></li>
+                    <li><a href="[! route('rv.scroll.change.list') !]">分數修改</a></li>
                 </ul>
             </div>
         </div>
