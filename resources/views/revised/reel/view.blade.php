@@ -31,8 +31,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -85,8 +85,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -148,8 +148,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -207,8 +207,8 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a href="" class="i-link"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
-                            <li><a href="" class="i-link">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
+                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -379,7 +379,10 @@
                 //試題內容
                 for(var k=0;k<question_item.length;k++){
                     if(question_item[k]['id'] == test_item[x]['question_id']){
-                        t.find('#dsc').html(question_item[k]['dsc']).removeAttr('id');
+                        t.find('#dsc').html(question_item[k]['dsc']).attr('id','dsc_'+x);
+                        //文章上下頁按鈕
+                        t.find('#dsc_prev').attr('onclick', 'dsc_prev("'+x+'")').attr('id','prev_'+x);
+                        t.find('#dsc_next').attr('onclick', 'dsc_next("'+x+'")').attr('id','next_'+x);
                     }
                 }
 
@@ -413,6 +416,7 @@
                 }
                 test_area.append(t);
             }
+            setDefaultScrollData();
         }
 
         //控制只能輸入全形的值
@@ -491,6 +495,68 @@
                 });
             }
         }
-        
+
+        //下面處理文章過長時，可以點擊上下頁按鈕來移動文章
+        var st = 0,
+            sb = 0,
+            hPage = 400;//頁面滑動時要移動的量
+
+        //綁定一個自定義的方法到每個物件內
+        $.fn.scrollStopped = function(callback) {
+            var $this = $(this),
+                self = this;
+            $this.scroll(function() {
+                if ($this.data('scrollTimeout')) {
+                    clearTimeout($this.data('scrollTimeout'));
+                }
+                $this.data('scrollTimeout', setTimeout(callback, 250, self));
+            });
+        };
+
+        function setDefaultScrollData()
+        {
+            for(var z=0;z<question_item.length;z++){
+                var t = $('#dsc_'+z);
+                if (t.prop('scrollHeight') > 400) {
+                    t.scrollStopped(checkCtrl);//上下頁滑動完以後，檢查是否顯示按鈕
+                }
+            }
+        }
+        //判斷是否顯示上、下頁按鈕
+        function checkCtrl()
+        {
+            for(var z=0;z<question_item.length;z++){
+                var t_prev = $('#prev_'+z);
+                var t_next = $('#next_'+z);
+                t_prev.removeClass('disabled');
+                t_next.removeClass('disabled');
+                st = $('#dsc_'+z).scrollTop();
+                sb = $('#dsc_'+z).prop('scrollHeight') - (hPage+100);//st大於此值時，就不顯示下一頁按鈕
+                if (st >= sb) {
+                    t_next.addClass('disabled');
+                } else if (st <= 0) {
+                    t_prev.addClass('disabled');
+                }
+            }
+        }
+
+        //文章內容上一頁
+        function dsc_prev(id) {
+            var temp_dsc = $('#dsc_'+id);
+            var st = temp_dsc.scrollTop();//現在scroltop的位置
+            temp_dsc.stop().animate({
+                scrollTop: st + hPage * -1
+            });
+        }
+
+        //文章內容下一頁
+        function dsc_next(id) {
+            var temp_dsc = $('#dsc_'+id);
+            var st = temp_dsc.scrollTop();//現在scroltop的位置
+            temp_dsc.stop().animate({
+                scrollTop: st + hPage * 1
+            });
+        }
+
     </script>
 @stop
