@@ -264,13 +264,14 @@
     <script>
         var test_item = [];
         var question_item = [];
+        var review_item = [];
         var obj_1 = $('#obj_1');
         var obj_2 = $('#obj_2');
         var obj_3 = $('#obj_3');
         var obj_4 = $('#obj_4');
         var test_area = $('#test_area');
         var order = 'F';
-        var id = 0;
+        var id = [! $id !];
         $( document ).ready(function() {
             getData();
         });
@@ -281,7 +282,8 @@
                 type:'GET',
                 dataType: "json",
                 data: {
-                    'id':'[! $id !]'
+                    id:id,
+                    reel_id:'[! $reel_id !]'
                 },
                 error: function(xhr) {
                     //alert('Ajax request 發生錯誤');
@@ -318,6 +320,24 @@
                                 );
                             }
                         }
+
+                        @if($change_score)
+                        //載入評閱資料
+                        if(typeof(response['data']['t_data']['review_data']['view_data'])  !== "undefined")
+                        {
+                            var view_data = response['data']['t_data']['review_data']['view_data'];
+                            for(var x=0;x<view_data.length;x++){
+                                var tp = view_data[x];
+                                review_item.push(
+                                    {
+                                        'score':tp['score'],
+                                        'is_blank':tp['is_blank'],
+                                        'is_abnormal':tp['is_abnormal']
+                                    }
+                                );
+                            }
+                        }
+                        @endif
 
                         setList();
                     }else{
@@ -414,6 +434,18 @@
                 if(x > 0){
                     t.hide();
                 }
+                @if($change_score)
+                //載入評閱資料
+                var view_data = review_item[x];
+                if(view_data['is_abnormal'] == "true"){
+                    t.find('#chk_e_'+x).attr('checked','checked');
+                }
+                if(view_data['is_blank'] == "true"){
+                    t.find('#chk_w_'+x).attr('checked','checked');
+                }
+                t.find('#score').val(view_data['score']);
+                @endif
+
                 test_area.append(t);
             }
             setDefaultScrollData();
@@ -479,9 +511,10 @@
                     data: {
                         _token: '[! csrf_token() !]',
                         id:id,
-                        reel_id:'[! $id !]',
+                        reel_id:'[! $reel_id !]',
                         add_data:add_data,
                         order:order,
+                        change_score:[! $change_score !],
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
@@ -489,7 +522,11 @@
                     success: function(response) {
                         if(response['status'] == true){
                            alert(response['msg']);
-                           location.reload();
+                           @if($change_score)
+                            location.href='[! route("rv.scroll.change.list").$path !]';
+                           @else
+                             location.reload();
+                           @endif
                         }
                     }
                 });
@@ -558,5 +595,10 @@
             });
         }
 
+
+        @if($change_score)
+        //
+
+        @endif
     </script>
 @stop
