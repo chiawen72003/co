@@ -60,7 +60,7 @@ class MeasuredItem
             ->get();
         foreach ($temp_obj as $v) {
             $t = json_decode($v->reel_id, true);
-            if(is_array($t)){
+            if (is_array($t)) {
                 foreach ($t as $reel_id) {
                     if (!in_array($reel_id, $not_in)) {
                         $has_in[] = $reel_id;
@@ -184,27 +184,27 @@ class MeasuredItem
             'questions_id',
             'review_1',
             'review_2'
-            )
+        )
             ->where('reel_id', $this->init['reel_id'])
             ->where('has_test', 1)
             ->where(function ($query) {
                 $query->where('modify_id', $this->init['user_id'])
                     ->orWhere('s_modify_id', $this->init['user_id']);
             });
-        if($this->init['id'] > 0){
+        if ($this->init['id'] > 0) {
             $temp_obj = $temp_obj->where('has_review', 1)
-            ->where('id',$this->init['id']);
-        }else{
+                ->where('id', $this->init['id']);
+        } else {
             $temp_obj = $temp_obj->where('has_review', 0);
         }
         $temp_obj = $temp_obj->get();
         foreach ($temp_obj as $v) {
-            if($v['modify_id'] == $this->init['user_id']){
+            if ($v['modify_id'] == $this->init['user_id']) {
                 $order = 'F';
-                $review_data = ($v['review_1']!='')?json_decode($v['review_1'], true):array();
-            }else{
+                $review_data = ($v['review_1'] != '') ? json_decode($v['review_1'], true) : array();
+            } else {
                 $order = 'S';
-                $review_data = ($v['review_2']!='')?json_decode($v['review_2'], true):array();
+                $review_data = ($v['review_2'] != '') ? json_decode($v['review_2'], true) : array();
             }
 
             $return_data = array(
@@ -216,7 +216,7 @@ class MeasuredItem
             );
             $questions_id = json_decode($v['questions_id'], true);
         }
-        if(count($questions_id) > 0){
+        if (count($questions_id) > 0) {
             $questions_id = array_unique($questions_id);
             $temp_obj = Questions::select(
                 'id',
@@ -259,10 +259,10 @@ class MeasuredItem
                 if (is_numeric($v['score'])) {
                     $total_score += $v['score'];
                 }
-                if ($v['is_blank'] == true) {
+                if ($v['is_blank'] == "true") {
                     $is_blank = true;
                 }
-                if ($v['is_abnormal'] == true) {
+                if ($v['is_abnormal'] == "true") {
                     $is_abnormal = true;
                 }
             }
@@ -283,12 +283,12 @@ class MeasuredItem
                     $t_tab => time(),
                     'has_review' => 1,
                 ]);
-            if($this->init['change_score']){
+            if ($this->init['change_score'] == "true") {
                 $this->msg = array(
                     'status' => true,
                     'msg' => '更新成功!',
                 );
-            }else{
+            } else {
                 ReelModify::where('reel_id', $this->init['reel_id'])
                     ->where('user_id', $this->init['user_id'])
                     ->update([
@@ -362,37 +362,37 @@ class MeasuredItem
             ->where('list_under_test.modify_id', $this->init['user_id'])
             ->whereBetween('list_under_test.review_1_time', [$s_time, $e_time])
             ->get();
-            foreach ($temp_obj as $v) {
-                $return_data[$v['review_1_time']] = array(
-                    'reel_id' => $v['reel_id'],
-                    'review_time' => \Carbon\Carbon::createFromTimestamp($v['review_1_time'], 'Asia/Taipei')->toDateTimeString(),
-                    'reel_title' => $v['reel_title'],
-                    'path' => route('rv.scroll.reel.change',array($v['id'])).$this->init['path'].'&reel_id='.$v['reel_id'],
-                );
-            }
+        foreach ($temp_obj as $v) {
+            $return_data[$v['review_1_time']] = array(
+                'reel_id' => $v['reel_id'],
+                'review_time' => \Carbon\Carbon::createFromTimestamp($v['review_1_time'], 'Asia/Taipei')->toDateTimeString(),
+                'reel_title' => $v['reel_title'],
+                'path' => route('rv.scroll.reel.change', array($v['id'])) . $this->init['path'] . '&reel_id=' . $v['reel_id'],
+            );
+        }
 
-            $temp_obj = ListUnderTest::select(
-                'list_under_test.id',
-                'list_under_test.reel_id',
-                'list_under_test.review_2_time',
-                'list_under_test.modify_id',
-                'list_under_test.s_modify_id',
-                'reel.reel_title'
-            )
-                ->leftJoin('reel', 'reel.id', '=', 'list_under_test.reel_id')
-                ->where('list_under_test.has_review', 1)
-                ->where('list_under_test.s_modify_id', $this->init['user_id'])
-                ->whereBetween('list_under_test.review_2_time', array($s_time, $e_time))
-                ->get();
-            foreach ($temp_obj as $v) {
-                $return_data[$v['review_2_time']] = array(
-                    'reel_id' => $v['reel_id'],
-                    'review_time' => \Carbon\Carbon::createFromTimestamp($v['review_2_time'], 'Asia/Taipei')->toDateTimeString(),
-                    'reel_title' => $v['reel_title'],
-                    'path' => route('rv.scroll.reel.change',array($v['id'])).$this->init['path'].'&reel_id='.$v['reel_id'],
-                );
+        $temp_obj = ListUnderTest::select(
+            'list_under_test.id',
+            'list_under_test.reel_id',
+            'list_under_test.review_2_time',
+            'list_under_test.modify_id',
+            'list_under_test.s_modify_id',
+            'reel.reel_title'
+        )
+            ->leftJoin('reel', 'reel.id', '=', 'list_under_test.reel_id')
+            ->where('list_under_test.has_review', 1)
+            ->where('list_under_test.s_modify_id', $this->init['user_id'])
+            ->whereBetween('list_under_test.review_2_time', array($s_time, $e_time))
+            ->get();
+        foreach ($temp_obj as $v) {
+            $return_data[$v['review_2_time']] = array(
+                'reel_id' => $v['reel_id'],
+                'review_time' => \Carbon\Carbon::createFromTimestamp($v['review_2_time'], 'Asia/Taipei')->toDateTimeString(),
+                'reel_title' => $v['reel_title'],
+                'path' => route('rv.scroll.reel.change', array($v['id'])) . $this->init['path'] . '&reel_id=' . $v['reel_id'],
+            );
 
-            }
+        }
         ksort($return_data);
         $return_data = array_values($return_data);
         $this->msg = array(

@@ -61,7 +61,7 @@
                                 <li class="right pos-right">
                                     <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px" id="score">
+                                        <input type="text" class="i-input" style="width: 40px" id="score" value="0">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -124,7 +124,7 @@
                                 <li class="right pos-right">
                                     <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px" id="score">
+                                        <input type="text" class="i-input" style="width: 40px" id="score" value="0">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -183,7 +183,7 @@
                                 <li class="right pos-right">
                                     <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px" id="score">
+                                        <input type="text" class="i-input" style="width: 40px" id="score" value="0">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -246,7 +246,7 @@
                                 <li class="right pos-right">
                                     <div class="form-inline">
                                         得分：
-                                        <input type="text" class="i-input" style="width: 40px" id="score">
+                                        <input type="text" class="i-input" style="width: 40px" id="score" value="0">
                                         分（上限5分）
                                     </div>
                                     <div class="form-inline">
@@ -430,6 +430,8 @@
                 t.find('#label_1').attr('for','chk_w_'+x).removeAttr('id');
                 t.find('#checkbox2').attr('id','chk_e_'+x);
                 t.find('#label_2').attr('for','chk_e_'+x).removeAttr('id');
+                //設定最大得分值
+                t.find('#score').attr('onchange','chkScore("'+x+'","'+test_item[x]['max_score']+'")');
                 t.attr('id','write_'+x);
                 if(x > 0){
                     t.hide();
@@ -514,7 +516,7 @@
                         reel_id:'[! $reel_id !]',
                         add_data:add_data,
                         order:order,
-                        change_score:[! $change_score !],
+                        change_score:[! ($change_score)?'true':'false' !],
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
@@ -530,6 +532,22 @@
                         }
                     }
                 });
+            }
+        }
+
+        //檢查得分是否在條件範圍內
+        function chkScore(id,max_score)
+        {
+            var t = $('#write_'+id);
+            var score = t.find('#score').val();
+            score = parseInt(score);
+            if(!Number.isInteger(score) ){
+                t.find('#score').focus();
+                alert('請輸入整數!!');
+            }else if(score < 0 || score > max_score)
+            {
+                t.find('#score').focus();
+                alert('得分必須介於0至'+max_score+'分之間!!');
             }
         }
 
@@ -596,9 +614,5 @@
         }
 
 
-        @if($change_score)
-        //
-
-        @endif
     </script>
 @stop
