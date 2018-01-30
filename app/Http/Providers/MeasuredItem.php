@@ -404,4 +404,64 @@ class MeasuredItem
         return $this->msg;
     }
 
+    /**
+     * 取得指定使用者的所有受測成績資料
+     */
+    public function getAllStudentScore()
+    {
+        $return_data = array();
+        $temp_obj = ListUnderTest::select(
+            'list_under_test.review_1',
+            'list_under_test.review_2',
+            'list_under_test.cp_review',
+            'list_under_test.created_at',
+            'reel.reel_title'
+        )
+            ->leftJoin('reel', 'reel.id', '=', 'list_under_test.reel_id')
+            ->where('list_under_test.user_id', $this->init['user_id'])
+            ->orderBy('list_under_test.created_at', 'DESC')
+            ->get();
+        foreach ($temp_obj as $v) {
+            $date = $v->created_at->setTimezone('Asia/Taipei')->toDateTimeString();
+            $t_array = array(
+                'total' => 0,
+                'scores' => array(),
+                'title' => $v->reel_title,
+                'date' => substr($date, 0, 16),
+            );
+            if($v->review_1 !=''){
+                $t = json_decode($v->review_1, true);
+                $t_array['total'] += $t['total_score'];
+                foreach($t['view_data'] as $k => $data){
+                    if(!isset($t_array['scores'][$k])){
+                        $t_array['scores'][$k] = $data['score'];
+                    }else{
+                        $t_array['scores'][$k] += $data['score'];
+                    }
+                }
+            }
+            if($v->review_2 !=''){
+                $t = json_decode($v->review_2, true);
+                $t_array['total'] += $t['total_score'];
+                foreach($t['view_data'] as $k => $data){
+                    if(!isset($t_array['scores'][$k])){
+                        $t_array['scores'][$k] = $data['score'];
+                    }else{
+                        $t_array['scores'][$k] += $data['score'];
+                    }
+                }
+            }
+
+            $t_array['scores'] = array_values($t_array['scores']);
+            $t_array['scores'] = implode(" ",$t_array['scores']);
+            $return_data[] = $t_array;
+        }
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
 }

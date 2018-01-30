@@ -13,7 +13,7 @@ use App\Http\Providers\UserItem;
 
 class UrController extends Controller
 {
-    private $data =array();
+    private $data = array();
 
     public function __construct()
     {
@@ -23,8 +23,6 @@ class UrController extends Controller
 
     /**
      * 受測者-首頁
-     *
-     *
      */
     public function Index()
     {
@@ -34,8 +32,6 @@ class UrController extends Controller
 
     /**
      * 受測者管理
-     *
-     *
      */
     public function User()
     {
@@ -45,8 +41,6 @@ class UrController extends Controller
 
     /**
      * 受測者的資料
-     *
-     *
      */
     public function UserData()
     {
@@ -60,8 +54,6 @@ class UrController extends Controller
 
     /**
      * 更新受測者的資料
-     *
-     *
      */
     public function UserUpdate()
     {
@@ -76,8 +68,6 @@ class UrController extends Controller
 
     /**
      * 試卷管理
-     *
-     *
      */
     public function Reel()
     {
@@ -87,8 +77,6 @@ class UrController extends Controller
 
     /**
      * 試卷管理
-     *
-     *
      */
     public function ReelList()
     {
@@ -104,8 +92,6 @@ class UrController extends Controller
 
     /**
      * 試卷 填寫頁面
-     *
-     *
      */
     public function ReelEdit($id)
     {
@@ -135,8 +121,6 @@ class UrController extends Controller
 
     /**
      * 新增試卷填寫的資料
-     *
-     *
      */
     public function ReelAdd()
     {
@@ -149,5 +133,27 @@ class UrController extends Controller
         $t_obj->init($data);
 
         echo json_encode($t_obj->setTestData());
+    }
+
+    /**
+     * 受測成績查詢頁面
+     */
+    public function Score()
+    {
+
+        return view('user.score.index', $this->data);
+    }
+
+    /**
+     * 受測成績的資料
+     */
+    public function ScoreApi()
+    {
+        $data = array();
+        $data['user_id'] = $this->data['user_id'];
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->getAllStudentScore());
     }
 }

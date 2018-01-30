@@ -135,6 +135,10 @@ Route::group(['middleware' => 'StudentCheck'], function () {
     Route::get('/Ur/Reel/Data', ['as' => 'ur.reel.data', 'uses' => 'UrController@ReelData']);
     Route::get('/Ur/Reel/Edit/{id}', ['as' => 'ur.reel.edit', 'uses' => 'UrController@ReelEdit']);
     Route::post('/Ur/Reel/Add', ['as' => 'ur.reel.add', 'uses' => 'UrController@ReelAdd']);
+
+    //受測者 成果查詢
+    Route::get('/Ur/Score', ['as' => 'ur.score', 'uses' => 'UrController@Score']);
+    Route::get('/Ur/Score/Api', ['as' => 'ur.score.api', 'uses' => 'UrController@ScoreApi']);
 });
 
 //批閱者
