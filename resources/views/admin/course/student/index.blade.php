@@ -2,7 +2,7 @@
 @section('content')
 <div class="article">
     <div class="article-header">
-        課程-學員設定
+        課程-班級設定
     </div>
     <div class="article-content">
         <div class="article-content-header">
