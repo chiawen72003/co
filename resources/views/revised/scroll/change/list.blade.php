@@ -8,7 +8,7 @@
         <div class="article-content-header">
             <form>
                 <label class="i-label">日期</label>
-                <input type="text" class="i-input" id="sw_date" value="" >
+                <input type="text" class="i-input datepicker" id="sw_date" value="" >
                 <label class="i-label">時間</label>
                 <select id="sw_time" class="i-select">
                     <option value="0">00:00 ~ 00:59</option>
@@ -78,6 +78,7 @@
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
+[! Html::script('js/datepicker.min.js') !]
 <script>
     var li_item = $('#li_scroll');
     var current = 'current';
@@ -139,5 +140,15 @@
     function search() {
         location.href = "?date="+$('#sw_date').val()+'&s_time='+$('#sw_time').val();
     }
+    $(function() {
+        $(".datepicker").datepicker(
+            {
+                date: 'yy-mm-dd',
+                format: 'yyyy-mm-dd',
+                monthsShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+                daysMin:["日","一","二","三","四","五","六"],
+            }
+        );
+    });
 </script>
 @stop

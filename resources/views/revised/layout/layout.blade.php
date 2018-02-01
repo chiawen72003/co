@@ -5,6 +5,7 @@
     <title>寫作閱卷標準手冊 | 大學生語文素養</title>
     [! Html::style('css/ionicons.min.css') !]
     [! Html::style('css/style.css') !]
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.4/datepicker.css">
 </head>
 <body>
 <div id="mainbody">
