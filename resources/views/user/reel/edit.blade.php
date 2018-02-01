@@ -512,16 +512,19 @@
         function checkCtrl()
         {
             for(var z=0;z<question_item.length;z++){
-                var t_prev = $('#prev_'+z);
-                var t_next = $('#next_'+z);
-                t_prev.removeClass('disabled');
-                t_next.removeClass('disabled');
-                st = $('#dsc_'+z).scrollTop();
-                sb = $('#dsc_'+z).prop('scrollHeight') - (hPage+100);//st大於此值時，就不顯示下一頁按鈕
-                if (st >= sb) {
-                    t_next.addClass('disabled');
-                } else if (st <= 0) {
-                    t_prev.addClass('disabled');
+                if(!$('#dsc_'+z).is(':hidden'))
+                {
+                    var t_prev = $('#prev_'+z);
+                    var t_next = $('#next_'+z);
+                    t_prev.removeClass('disabled');
+                    t_next.removeClass('disabled');
+                    st = $('#dsc_'+z).scrollTop();
+                    sb = $('#dsc_'+z).prop('scrollHeight') - (hPage+100);//st大於此值時，就不顯示下一頁按鈕
+                    if (st >= sb) {
+                        t_next.addClass('disabled');
+                    } else if (st <= 0) {
+                        t_prev.addClass('disabled');
+                    }
                 }
             }
         }
