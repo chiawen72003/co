@@ -89,8 +89,14 @@
                     </li>
                     <li id="li_precautions">
                         <a href="[! route('ma.precautions') !]">
-                            <i class="mainnav-title-icon ion-person"></i>
+                            <i class="mainnav-title-icon ion-android-alert"></i>
                             設定注意事項
+                        </a>
+                    </li>
+                    <li id="li_files">
+                        <a href="[! route('ma.files') !]">
+                            <i class="mainnav-title-icon ion-android-archive"></i>
+                            下載檔案管理
                         </a>
                     </li>
                     <li id="li_user">

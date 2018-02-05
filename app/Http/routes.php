@@ -116,6 +116,13 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::post('/Ma/Student/Add', ['as' => 'ma.student.add', 'uses' => 'AdController@StudentAdd']);
     Route::post('/Ma/Student/Update', ['as' => 'ma.student.update', 'uses' => 'AdController@StudentUpdate']);
     Route::post('/Ma/Student/Del', ['as' => 'ma.student.del', 'uses' => 'AdController@StudentDel']);
+
+    //管理員 檔案下載管理
+    Route::get('/Ma/Files', ['as' => 'ma.files', 'uses' => 'AdController@Files']);
+    Route::get('/Ma/Files/Download/{id}', ['as' => 'ma.files.download', 'uses' => 'AdController@FilesDownload']);
+    Route::post('/Ma/Files/Update', ['as' => 'ma.files.update', 'uses' => 'AdController@FilesUpdate']);
+    Route::post('/Ma/Files/Delete', ['as' => 'ma.files.delete', 'uses' => 'AdController@FilesDelete']);
+
 });
 
 //受測者

@@ -12,6 +12,10 @@ class FileItem
 {
     private $init = array();
     private $page_num = 5;
+    private $msg = array(
+        'status' => false,
+        'msg' => '',
+    );
 
     public function init($input_data = array())
     {
@@ -53,5 +57,30 @@ class FileItem
         }
 
         return $news_data;
+    }
+
+    /**
+     * 移除一筆系統資料
+     *
+     */
+    public function deleteFile()
+    {
+        if(isset($this->init['id']))
+        {
+            $temp_data = Files::where('id',$this->init['id'])->get();
+            foreach ($temp_data as $v){
+                if($v['file_path'] > '' AND file_exists($v['file_path']))
+                {
+                    unlink($v['file_path']);
+                }
+            }
+            Files::destroy($this->init['id']);
+        }
+        $this->msg = array(
+            'status' => true,
+            'msg' => '檔案刪除成功!!',
+        );
+
+        return $this->msg;
     }
 }

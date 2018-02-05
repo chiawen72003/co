@@ -312,7 +312,6 @@ class RvController extends Controller
 
                 return response()->download($news_data['file_path'],$news_data['file_name']);
             }catch (\Exception $e){
-echo $e->getMessage();
             }
         }
 

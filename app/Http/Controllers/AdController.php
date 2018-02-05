@@ -12,6 +12,7 @@ use App\Http\Providers\SchoolItem;
 use App\Http\Providers\StructureItem;
 use App\Http\Providers\QuestionItem;
 use App\Http\Providers\ModifyItem;
+use App\Http\Providers\FileItem;
 
 class AdController extends Controller
 {
@@ -925,5 +926,66 @@ class AdController extends Controller
         $t_obj->init($data);
 
         echo json_encode($t_obj->unsetStudent());
+    }
+
+
+    /**
+     * 檔案下載管理
+     */
+    public function Files()
+    {
+        $t_obj = new FileItem();
+        $this->data['list_data'] = $t_obj -> getFilesData();
+
+        return view('admin.files.index', $this->data);
+    }
+
+    /**
+     * 檔案下載 附件下載
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function FilesDownload($id)
+    {
+        $news_obj = new FileItem();
+        $news_obj -> init(array('id'=>$id));
+        $news_data = $news_obj ->getOneFilesData();
+        if(isset($news_data['file_path']) and $news_data['file_path'] != ''){
+            try{
+
+                return response()->download($news_data['file_path'],$news_data['file_name']);
+            }catch (\Exception $e){
+            }
+        }
+
+        return ;
+    }
+
+    /**
+     * 更新一筆系統公告的資料
+     *
+     */
+    public function FilesUpdate()
+    {
+        $fp = Input::all();
+        $newsobj = new FileItem();
+        $newsobj->init($fp);
+        $newsobj->update_data();
+
+        return redirect()->route('ad.news.list')->with('message', '系統公告更新完畢!');
+    }
+
+    /**
+     * 移除一個系統公告
+     *
+     */
+    public function FilesDelete()
+    {
+        $tobj = new FileItem();
+        $tobj->init(array(
+            'id' => app('request')->get('id')
+        ));
+
+        echo json_encode($tobj->deleteFile());
     }
 }
