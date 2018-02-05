@@ -178,5 +178,6 @@ Route::group(['middleware' => 'RevisedCheck'], function () {
 
     //批閱者 檔案下載
     Route::get('/Rv/Files', ['as' => 'rv.files', 'uses' => 'RvController@Files']);
+    Route::get('/Rv/Files/Download/{id}', ['as' => 'rv.files.download', 'uses' => 'RvController@FilesDownload']);
 });
 

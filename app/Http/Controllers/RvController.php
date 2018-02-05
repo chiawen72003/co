@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Providers\FileItem;
 use App\Http\Providers\ModifyItem;
 use \Input;
 use \Validator;
@@ -286,13 +287,35 @@ class RvController extends Controller
     }
 
     /**
-     * 檔案下載
-     *
-     *
+     * 檔案下載 list
      */
     public function Files()
     {
+        $t_obj = new FileItem();
+        $this->data['list_data'] = $t_obj -> getFilesData();
 
         return view('revised.files.index', $this->data);
+    }
+
+    /**
+     * 檔案下載 附件下載
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function FilesDownload($id)
+    {
+        $news_obj = new FileItem();
+        $news_obj -> init(array('id'=>$id));
+        $news_data = $news_obj ->getOneFilesData();
+        if(isset($news_data['file_path']) and $news_data['file_path'] != ''){
+            try{
+
+                return response()->download($news_data['file_path'],$news_data['file_name']);
+            }catch (\Exception $e){
+echo $e->getMessage();
+            }
+        }
+
+        return ;
     }
 }
