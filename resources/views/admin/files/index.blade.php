@@ -64,16 +64,20 @@
                 $.ajax({
                     url: "[! route('ma.files.delete') !]",
                     type:'POST',
+                    dataType: "json",
                     data: {
                         _token: '[! csrf_token() !]',
-                        id:id,
+                        id:id
                     },
                     error: function(xhr) {
                         //alert('Ajax request 發生錯誤');
                     },
                     success: function(response) {
-                        alert(response['msg']);
-                        location.reload();
+                        if(response['status'] == true)
+                        {
+                            alert(response['msg']);
+                            location.reload();
+                        }
                     }
                 });
             }

@@ -90,7 +90,7 @@ class FileItem
         {
             $temp_data = Files::where('id',$this->init['id'])->get();
             foreach ($temp_data as $v){
-                if($v['file_path'] > '' AND file_exists($v['file_path']))
+                if($v['file_path'] > '' && file_exists($v['file_path']))
                 {
                     unlink($v['file_path']);
                 }

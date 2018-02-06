@@ -884,7 +884,7 @@ class AdController extends Controller
             'classes_id' => app('request')->get('classes_id'),
         ));
 
-        echo json_encode($user->getStudentBySubject());
+        echo json_encode($user->getStudentBySubject(),JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -904,7 +904,7 @@ class AdController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->addStudent());
+        echo json_encode($t_obj->addStudent(),JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -922,7 +922,7 @@ class AdController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->setStudent());
+        echo json_encode($t_obj->setStudent(),JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -935,7 +935,7 @@ class AdController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->unsetStudent());
+        echo json_encode($t_obj->unsetStudent(),JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -978,18 +978,18 @@ class AdController extends Controller
     public function FilesAdd()
     {
         if (Input::file('import_file') != null) {
-            $save_path = 'upfire/image';
-            $file_name =  Input::file('img')->getClientOriginalName();//原始檔名
-            $extension = Input::file('img')->getClientOriginalExtension(); //取得副檔名
+            $save_path = 'files/upfile/'. date("Ymd");
+            $extension = Input::file('import_file')->getClientOriginalExtension(); //取得副檔名
+            $file_name =  Input::file('import_file')->getClientOriginalName();//原始檔名
             $new_file_name = time() . '.' . $extension; // renameing image
-            Input::file('img')->move($save_path, $new_file_name); // uploading file to given path
+            Input::file('import_file')->move($save_path, $new_file_name); // uploading file to given path
             $data['file_name'] = $file_name;
             $data['new_file_name'] = $new_file_name;
-            $data['save_path'] = $new_file_name;
+            $data['save_path'] = $save_path;
             $t_obj = new FileItem();
             $t_obj->init($data);
 
-            echo json_encode($t_obj->addFile());
+            echo json_encode($t_obj->addFile(),JSON_UNESCAPED_UNICODE);
         }
 
         echo '';
@@ -1006,6 +1006,6 @@ class AdController extends Controller
             'id' => app('request')->get('id')
         ));
 
-        echo json_encode($tobj->deleteFile());
+        echo json_encode($tobj->deleteFile(),JSON_UNESCAPED_UNICODE);
     }
 }
