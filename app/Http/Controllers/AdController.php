@@ -417,8 +417,6 @@ class AdController extends Controller
 
     /**
      * 新增試卷的資料
-     *
-     *
      */
     public function ReelAdd()
     {
@@ -433,6 +431,18 @@ class AdController extends Controller
         echo json_encode($t_obj->addReel());
     }
 
+    /**
+     * 刪除試卷的資料
+     */
+    public function ReelDel()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('reel_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->deleteReel());
+    }
 
     /**
      * 試題

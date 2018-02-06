@@ -75,6 +75,9 @@
                         <th>
                             <div class="cell">試卷名稱</div>
                         </th>
+                        <th>
+                            <div class="cell">功能</div>
+                        </th>
                     </tr>
                     <!--  -->
                 </table>
@@ -89,6 +92,11 @@
         <td><div class="cell"  id="book_area"></div></td>
         <td><div class="cell"  id="unit_area"></div></td>
         <td><div class="cell"  id="name_area"></div></td>
+        <td>
+            <div class="cell center">
+                <a class="i-link" id="a_del"><i class="ion-trash-a"></i>移除</a>
+            </div>
+        </td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
@@ -140,6 +148,7 @@
     }
 
     function getListData() {
+        reel_item =[];
         $.ajax({
             url: "[! route('ma.reel.list') !]",
             type:'GET',
@@ -194,6 +203,7 @@
             t.find('#book_area').html(b).removeAttr('id');
             t.find('#unit_area').html(u).removeAttr('id');
             t.find('#name_area').html(r).removeAttr('id');
+            t.find('#a_del').attr('onclick','unsetReel("'+reel_item[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -269,6 +279,30 @@
 
     function clearInput() {
         title_item.val('');
+    }
+
+    //移除試卷資料
+    function unsetReel(id) {
+        if(confirm("確定刪除試卷及相關的資料嗎?\r\n")) {
+            $.ajax({
+                url: "[! route('ma.reel.del') !]",
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    _token: '[! csrf_token() !]',
+                    reel_id: id,
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    if (response['status'] == true) {
+                        alert(response['msg']);
+                    }
+                    getListData();
+                }
+            });
+        }
     }
 </script>
 @stop

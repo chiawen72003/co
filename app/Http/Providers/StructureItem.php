@@ -291,6 +291,7 @@ class StructureItem
      */
     public function deleteReel()
     {
+        //todo 其他相關的資料是否也要一併刪除
         if (isset($this->input_array['id'])) {
             Reel::destroy($this->input_array['id']);
             $this->msg = array(
