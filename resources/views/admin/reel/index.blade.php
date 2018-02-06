@@ -59,7 +59,7 @@
             </div>
             <div class="table-wrapper">
                 <table class="table" id="reel_list">
-                    <tr>
+                    <tr id="point">
                         <th width="120">
                             <div class="cell center">版本</div>
                         </th>
@@ -149,6 +149,8 @@
 
     function getListData() {
         reel_item =[];
+        //todo 這邊需要清空列表資料
+        $('#point').after().remove();
         $.ajax({
             url: "[! route('ma.reel.list') !]",
             type:'GET',
