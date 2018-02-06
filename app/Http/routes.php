@@ -120,7 +120,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     //管理員 檔案下載管理
     Route::get('/Ma/Files', ['as' => 'ma.files', 'uses' => 'AdController@Files']);
     Route::get('/Ma/Files/Download/{id}', ['as' => 'ma.files.download', 'uses' => 'AdController@FilesDownload']);
-    Route::post('/Ma/Files/Update', ['as' => 'ma.files.update', 'uses' => 'AdController@FilesUpdate']);
+    Route::post('/Ma/Files/Add', ['as' => 'ma.files.add', 'uses' => 'AdController@FilesAdd']);
     Route::post('/Ma/Files/Delete', ['as' => 'ma.files.delete', 'uses' => 'AdController@FilesDelete']);
 
 });

@@ -5,6 +5,16 @@
             檔案下載
         </div>
         <div class="article-content">
+            <div class="article-content-header">
+                <form>
+                    <label class="i-label">新增檔案</label>
+                    <input type="file" class="i-input" id="up_file">
+                    <button type="button" class="i-btn i-btn-primary" onclick="addFiles()">
+                        <i class="ion-android-add"></i>
+                        新增
+                    </button>
+                </form>
+            </div>
             <div class="article-content-body">
                 <div class="table-wrapper">
                     <table class="table">
@@ -47,7 +57,8 @@
         $( document ).ready(function() {
             li_item.addClass( current);
         });
-        //確認是否刪除單元
+
+        //確認是否刪除檔案
         function del_unit(id){
             if(confirm("確定刪除檔案嗎?\r\n")){
                 $.ajax({
@@ -65,6 +76,40 @@
                         location.reload();
                     }
                 });
+            }
+        }
+
+        //上傳檔案
+        function addFiles()
+        {
+            var val = $("#up_file").val();
+            if(val != ''){
+                var form_data = new FormData();
+                form_data.append('import_file', $("#up_file")[0].files[0]);
+                form_data.append('_token', '[! csrf_token() !]');
+                $.ajax({
+                    type:'POST',
+                    dataType: "json",
+                    url:"[! route('ma.files.add') !]",
+                    processData: false,
+                    contentType: false,
+                    data:form_data,
+                    error: function(xhr) {
+                        //alert('Ajax request 發生錯誤');
+                    },
+                    success: function(response)
+                    {
+                        if(response['status'] == true)
+                        {
+                            alert(response['msg']);
+                            location.href="[! route('ma.files') !]";
+                        }
+                        isSend = false;
+                    }
+                });
+                isSend = true;
+            }else{
+                alert('請選擇要上傳的檔案!!');
             }
         }
     </script>

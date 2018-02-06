@@ -25,6 +25,27 @@ class FileItem
     }
 
     /**
+     * 新增一個下載檔案資料
+     *
+     * @return null
+     */
+    public function addFile()
+    {
+        $update = new Files();
+        $update->title = $this->init['file_name'];
+        $update->file_path = $this->init['save_path'].'/'.$this->init['new_file_name'];
+        $update->file_name = $this->init['file_name'];
+        $update->save();
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '檔案上傳成功!!',
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 取出檔案list資料
      *
      * @return null

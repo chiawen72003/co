@@ -962,21 +962,31 @@ class AdController extends Controller
     }
 
     /**
-     * 更新一筆系統公告的資料
+     * 新增一筆下載檔案的資料
      *
      */
-    public function FilesUpdate()
+    public function FilesAdd()
     {
-        $fp = Input::all();
-        $newsobj = new FileItem();
-        $newsobj->init($fp);
-        $newsobj->update_data();
+        if (Input::file('import_file') != null) {
+            $save_path = 'upfire/image';
+            $file_name =  Input::file('img')->getClientOriginalName();//原始檔名
+            $extension = Input::file('img')->getClientOriginalExtension(); //取得副檔名
+            $new_file_name = time() . '.' . $extension; // renameing image
+            Input::file('img')->move($save_path, $new_file_name); // uploading file to given path
+            $data['file_name'] = $file_name;
+            $data['new_file_name'] = $new_file_name;
+            $data['save_path'] = $new_file_name;
+            $t_obj = new FileItem();
+            $t_obj->init($data);
 
-        return redirect()->route('ad.news.list')->with('message', '系統公告更新完畢!');
+            echo json_encode($t_obj->addFile());
+        }
+
+        echo '';
     }
 
     /**
-     * 移除一個系統公告
+     * 移除一個下載檔案資料
      *
      */
     public function FilesDelete()
