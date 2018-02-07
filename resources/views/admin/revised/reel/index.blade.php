@@ -71,12 +71,12 @@
     var list_obj = [];
     $( document ).ready(function() {
         li_item.addClass( current);
-        getListData();
+        getInitData();
     });
 
-    function getListData() {
+    function getInitData() {
         $.ajax({
-            url: "[! route('ma.revised.reel.list') !]",
+            url: "[! route('ma.revised.reel.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -87,48 +87,35 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['list'].length;x++)
+                    {
+                        var t = response['data']['list'][x];
                         list_obj.push(
                             {
-                                'reel_id':response['data'][x]['reel_id'],
-                                'reel_title':response['data'][x]['reel_title'],
-                                'need_num':response['data'][x]['need_num'],
-                                'view_num':response['data'][x]['view_num']
+                                'reel_id':t['reel_id'],
+                                'reel_title':t['reel_title'],
+                                'need_num':t['need_num'],
+                                'view_num':t['view_num']
+                            }
+                        );
+                    }
+                    for(var x=0;x<response['data']['reel'].length;x++)
+                    {
+                        var t = response['data']['reel'][x];
+
+                        reel_obj.push(
+                            {
+                                'id':t['id'],
+                                'version':t['version'],
+                                'subject':t['subject'],
+                                'book':t['book'],
+                                'unit':t['unit'],
+                                'reel_title':t['reel_title'],
                             }
                         );
                     }
                 }
                 setListData();
-                getReelData();
-            }
-        });
-    }
-
-    function getReelData() {
-        $.ajax({
-            url: "[! route('ma.reel.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
-                        reel_obj.push(
-                            {
-                                'id':response['data'][x]['id'],
-                                'version':response['data'][x]['version'],
-                                'subject':response['data'][x]['subject'],
-                                'book':response['data'][x]['book'],
-                                'unit':response['data'][x]['unit'],
-                                'reel_title':response['data'][x]['reel_title'],
-                            }
-                        );
-                    }
-                }
                 setReelData();
             }
         });

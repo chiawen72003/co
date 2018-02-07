@@ -103,7 +103,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
 
     //管理員 批改管理 派卷管理
     Route::get('/Ma/revised/Reel', ['as' => 'ma.revised.reel', 'uses' => 'AdController@RevisedReel']);
-    Route::get('/Ma/revised/Reel/List', ['as' => 'ma.revised.reel.list', 'uses' => 'AdController@RevisedReelList']);
+    Route::get('/Ma/revised/Reel/Init', ['as' => 'ma.revised.reel.init', 'uses' => 'AdController@RevisedReelInit']);
     Route::post('/Ma/revised/Reel/Add', ['as' => 'ma.revised.reel.add', 'uses' => 'AdController@RevisedReelAdd']);
 
     //管理員 修改個人資訊

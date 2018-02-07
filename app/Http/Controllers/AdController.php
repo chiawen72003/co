@@ -809,14 +809,25 @@ class AdController extends Controller
      *
      *
      */
-    public function RevisedReelList()
+    public function RevisedReelInit()
     {
         $data = array();
         $data['id'] = app('request')->get('id');
         $t_obj = new ModifyItem();
         $t_obj->init($data);
+        $list = $t_obj->getReelList();
+        $t_obj = new StructureItem();
+        $reel = $t_obj->getReel();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'list' => $list['data'],
+                'reel' => $reel['data'],
+            ),
+        );
 
-        echo json_encode($t_obj->getReelList());
+        echo json_encode($msg);
     }
 
     /**
