@@ -59,38 +59,10 @@
         var revised_item = [];
         $( document ).ready(function() {
             setMenu('li_revised', 'main_li_4');
-            getSchoolData();
+            getInitData();
         });
 
-        function getSchoolData() {
-            $.ajax({
-                url: "[! route('ma.school.list') !]",
-                type:'GET',
-                dataType: "json",
-                data: {
-                },
-                error: function(xhr) {
-                    //alert('Ajax request 發生錯誤');
-                },
-                success: function(response) {
-                    if(response['status'] == true){
-                        for(var x=0;x<response['data'].length;x++){
-                            school_item.push(
-                                {
-                                    'id':response['data'][x]['id'],
-                                    'area':response['data'][x]['area'],
-                                    'school_title':response['data'][x]['school_title']
-                                }
-                            );
-                        }
-                    }
-                    setSchoolData();
-                    getRevisedData();
-                }
-            });
-        }
-
-        function getRevisedData() {
+        function getInitData() {
             $.ajax({
                 url: "[! route('ma.revised.data') !]",
                 type:'GET',
@@ -102,17 +74,31 @@
                     //alert('Ajax request 發生錯誤');
                 },
                 success: function(response) {
-                    if(response['status'] == true){
+                    if(response['status'] == true)
+                    {
+                        var revised = response['data']['revised'];
                         revised_item.push(
                             {
-                                'id':response['data']['id'],
-                                'name':response['data']['name'],
-                                'login_name':response['data']['login_name'],
-                                'login_pw':response['data']['login_pw'],
-                                'school_id':response['data']['school_id']
+                                'id':revised['id'],
+                                'name':revised['name'],
+                                'login_name':revised['login_name'],
+                                'login_pw':revised['login_pw'],
+                                'school_id':revised['school_id']
                             }
                         );
+                        for(var x=0;x<response['data']['school'].length;x++)
+                        {
+                            var school = response['data']['school'][x];
+                            school_item.push(
+                                {
+                                    'id':school['id'],
+                                    'area':school['area'],
+                                    'school_title':school['school_title']
+                                }
+                            );
+                        }
                     }
+                    setSchoolData();
                     setRevisedList();
                 }
             });

@@ -716,8 +716,19 @@ class AdController extends Controller
         $data['id'] = app('request')->get('id');
         $t_obj = new UserItem();
         $t_obj->init($data);
+        $revised = $t_obj->getRevised();
+        $t_obj = new SchoolItem();
+        $school = $t_obj->getSchool();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school' => $school['data'],
+                'revised' => $revised['data'],
+            ),
+        );
 
-        echo json_encode($t_obj->getRevised());
+        echo json_encode($msg);
     }
     /**
      * 新增評閱者資料的編輯頁面
