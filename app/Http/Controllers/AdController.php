@@ -97,8 +97,6 @@ class AdController extends Controller
     }
     /**
      * 學校-科系
-     *
-     *
      */
     public function SchoolSubject()
     {
@@ -107,15 +105,23 @@ class AdController extends Controller
     }
 
     /**
-     * 所有學校-科系的資料
-     *
-     *
+     * 學校-科系的初始化資料
      */
-    public function SchoolSubjectList()
+    public function SchoolSubjectInit()
     {
-        $school = new SchoolItem();
+        $tobj = new SchoolItem();
+        $list = $tobj->getSubject();
+        $school = $tobj->getSchool();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school' => $school['data'],
+                'list' => $list['data'],
+            ),
+        );
 
-        echo json_encode($school->getSubject());
+        echo json_encode($msg);
     }
 
     /**

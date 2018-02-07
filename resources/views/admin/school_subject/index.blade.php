@@ -64,12 +64,12 @@
     var subject_item = [];
     $( document ).ready(function() {
         setMenu('li_school_subject', 'main_li_1');
-        getSchoolData();
+        getInitData();
     });
 
-    function getSchoolData() {
+    function getInitData() {
         $.ajax({
-            url: "[! route('ma.school.list') !]",
+            url: "[! route('ma.subject.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -79,45 +79,31 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['list'].length;x++)
+                    {
+                        var t = response['data']['list'][x];
+                        subject_item.push(
+                            {
+                                'id':t['id'],
+                                'school_id':t['school_id'],
+                                'subject_title':t['subject_title']
+                            }
+                        );
+                    }
+                    for(var x=0;x<response['data']['school'].length;x++)
+                    {
+                        var t = response['data']['school'][x];
                         school_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'code':response['data'][x]['code'],
-                                'area':response['data'][x]['area'],
-                                'school_title':response['data'][x]['school_title']
+                                'id':t['id'],
+                                'code':t['code'],
+                                'area':t['area'],
+                                'school_title':t['school_title']
                             }
                         );
                     }
                 }
                 setSchoolList();
-                getListData();
-            }
-        });
-    }
-
-    function getListData() {
-        $.ajax({
-            url: "[! route('ma.subject.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
-                        subject_item.push(
-                            {
-                                'id':response['data'][x]['id'],
-                                'school_id':response['data'][x]['school_id'],
-                                'subject_title':response['data'][x]['subject_title']
-                            }
-                        );
-                    }
-                }
                 setList();
             }
         });
