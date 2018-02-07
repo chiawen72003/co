@@ -72,7 +72,8 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
 
     //管理員 試卷設定
     Route::get('/Ma/Reel', ['as' => 'ma.reel', 'uses' => 'AdController@Reel']);
-    Route::get('/Ma/Reel/list', ['as' => 'ma.reel.list', 'uses' => 'AdController@ReelList']);
+    Route::get('/Ma/Reel/Init', ['as' => 'ma.reel.init', 'uses' => 'AdController@ReelInit']);
+    Route::get('/Ma/Reel/List', ['as' => 'ma.reel.list', 'uses' => 'AdController@ReelList']);
     Route::post('/Ma/Reel/Add', ['as' => 'ma.reel.add', 'uses' => 'AdController@ReelAdd']);
     Route::post('/Ma/Reel/Del', ['as' => 'ma.reel.del', 'uses' => 'AdController@ReelDel']);
 

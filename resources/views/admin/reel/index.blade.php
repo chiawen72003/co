@@ -59,7 +59,7 @@
             </div>
             <div class="table-wrapper">
                 <table class="table" id="reel_list">
-                    <tr id="point">
+                    <tr id="tr_title">
                         <th width="120">
                             <div class="cell center">版本</div>
                         </th>
@@ -114,10 +114,11 @@
     var reel_item = [];
     $( document ).ready(function() {
         setMenu('li_reel', 'main_li_3');
-        getUnitData();//因ajax有差性，須先取得單元資料才能抓試卷資料。
+        getInitData();
     });
 
-    function getUnitData() {
+    //取得初始化資料
+    function getInitData() {
         $.ajax({
             url: "[! route('ma.unit.list') !]",
             type:'GET',
@@ -129,28 +130,48 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['unit'].length;x++)
+                    {
+                        var t_data = response['data']['unit'][x];
                         unit_item.push(
+                            {
+                                'id':t_data['id'],
+                                'version':t_data['version'],
+                                'subject':t_data['subject'],
+                                'book':t_data['book'],
+                                'unit_title':t_data['unit_title'],
+                            }
+                        );
+                    }
+                    for(var x=0;x<response['data']['reel'].length;x++)
+                    {
+                        var t_data = response['data']['reel'][x];
+                        reel_item.push(
                             {
                                 'id':response['data'][x]['id'],
                                 'version':response['data'][x]['version'],
                                 'subject':response['data'][x]['subject'],
                                 'book':response['data'][x]['book'],
-                                'unit_title':response['data'][x]['unit_title'],
+                                'unit':response['data'][x]['unit'],
+                                'reel_title':response['data'][x]['reel_title'],
                             }
                         );
                     }
                 }
                 setUnitList();
-                getListData();
+                setList();
             }
         });
     }
 
+    //重拉list資料
     function getListData() {
         reel_item =[];
-        //todo 這邊需要清空列表資料
-        $('#point').after().remove();
+        list_item.find('tr').each(function(){
+            if($(this).attr('id') != 'tr_title'){
+                $(this).remove();
+            }
+        });
         $.ajax({
             url: "[! route('ma.reel.list') !]",
             type:'GET',

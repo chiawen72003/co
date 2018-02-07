@@ -405,14 +405,32 @@ class AdController extends Controller
 
     /**
      * 所有試卷的資料
-     *
-     *
      */
     public function ReelList()
     {
         $school = new StructureItem();
 
         echo json_encode($school->getReel());
+    }
+
+    /**
+     * 提供 試卷管理頁面 初始化用的資料
+     */
+    public function ReelInit()
+    {
+        $obj = new StructureItem();
+        $unit = $obj->getUnit();
+        $reel = $obj->getReel();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'unit' => $unit['data'],
+                'reel' => $reel['data'],
+            ),
+        );
+
+        echo json_encode($msg);
     }
 
     /**
