@@ -88,12 +88,12 @@
     var school_item = [];
     $( document ).ready(function() {
         setMenu('li_revised', 'main_li_4');
-        getSchoolData();
+        getInitData();
     });
 
-    function getSchoolData() {
+    function getInitData() {
         $.ajax({
-            url: "[! route('ma.school.list') !]",
+            url: "[! route('ma.revised.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -103,45 +103,31 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
+                    for(var x=0;x<response['data']['revised'].length;x++)
+                    {
+                        var t = response['data']['revised'][x];
+                        revised_item.push(
+                            {
+                                'id':t['id'],
+                                'name':t['name'],
+                                'login_name':t['login_name'],
+                                'school_id':t['school_id']
+                            }
+                        );
+                    }
+                    for(var x=0;x<response['data']['school'].length;x++)
+                    {
+                        var t = response['data']['school'][x];
                         school_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'area':response['data'][x]['area'],
-                                'school_title':response['data'][x]['school_title']
+                                'id':t['id'],
+                                'area':t['area'],
+                                'school_title':t['school_title']
                             }
                         );
                     }
                 }
                 setSchoolData();
-                getRevisedData();
-            }
-        });
-    }
-
-    function getRevisedData() {
-        $.ajax({
-            url: "[! route('ma.revised.list') !]",
-            type:'GET',
-            dataType: "json",
-            data: {
-            },
-            error: function(xhr) {
-                //alert('Ajax request 發生錯誤');
-            },
-            success: function(response) {
-                if(response['status'] == true){
-                    for(var x=0;x<response['data'].length;x++){
-                        revised_item.push(
-                            {
-                                'id':response['data'][x]['id'],
-                                'name':response['data'][x]['name'],
-                                'login_name':response['data'][x]['login_name'],
-                                'school_id':response['data'][x]['school_id']
-                            }
-                        );
-                    }
-                }
                 setRevisedList();
             }
         });

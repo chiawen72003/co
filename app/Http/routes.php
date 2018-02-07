@@ -94,7 +94,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
 
     //管理員 評閱者資料管理
     Route::get('/Ma/revised', ['as' => 'ma.revised', 'uses' => 'AdController@Revised']);
-    Route::get('/Ma/revised/List', ['as' => 'ma.revised.list', 'uses' => 'AdController@RevisedList']);
+    Route::get('/Ma/revised/Init', ['as' => 'ma.revised.init', 'uses' => 'AdController@RevisedInit']);
     Route::get('/Ma/revised/Data', ['as' => 'ma.revised.data', 'uses' => 'AdController@RevisedData']);
     Route::get('/Ma/revised/Add/Pg', ['as' => 'ma.revised.add.pg', 'uses' => 'AdController@RevisedAddPg']);
     Route::get('/Ma/revised/Edit/Pg', ['as' => 'ma.revised.edit.pg', 'uses' => 'AdController@RevisedEditPg']);

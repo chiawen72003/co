@@ -683,15 +683,26 @@ class AdController extends Controller
     }
 
     /**
-     * 所有評閱者資料的資料
+     * 評閱者資料頁面的初始化資料
      *
      *
      */
-    public function RevisedList()
+    public function RevisedInit()
     {
-        $revised = new UserItem();
+        $t_obj = new SchoolItem();
+        $school = $t_obj->getSchool();
+        $t_obj = new UserItem();
+        $revised = $t_obj->getAllRevised();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school' => $school['data'],
+                'revised' => $revised['data'],
+            ),
+        );
 
-        echo json_encode($revised->getAllRevised());
+        echo json_encode($msg);
     }
 
     /**
