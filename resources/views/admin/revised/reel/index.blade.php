@@ -61,7 +61,6 @@
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
-    var li_item = $('#li_revised');
     var list_item = $('#revised_list');
     var tr_item = $('#copy_tr');
     var reel_item = $('#reel');
@@ -70,7 +69,7 @@
     var reel_obj = [];
     var list_obj = [];
     $( document ).ready(function() {
-        li_item.addClass( current);
+        setMenu('li_reel_modify', 'main_li_4');
         getInitData();
     });
 

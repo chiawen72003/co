@@ -120,7 +120,7 @@
     //取得初始化資料
     function getInitData() {
         $.ajax({
-            url: "[! route('ma.unit.list') !]",
+            url: "[! route('ma.reel.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -148,12 +148,12 @@
                         var t_data = response['data']['reel'][x];
                         reel_item.push(
                             {
-                                'id':response['data'][x]['id'],
-                                'version':response['data'][x]['version'],
-                                'subject':response['data'][x]['subject'],
-                                'book':response['data'][x]['book'],
-                                'unit':response['data'][x]['unit'],
-                                'reel_title':response['data'][x]['reel_title'],
+                                'id':t_data['id'],
+                                'version':t_data['version'],
+                                'subject':t_data['subject'],
+                                'book':t_data['book'],
+                                'unit':t_data['unit'],
+                                'reel_title':t_data['reel_title'],
                             }
                         );
                     }

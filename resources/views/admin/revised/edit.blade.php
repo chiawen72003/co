@@ -44,7 +44,7 @@
                             取消
                         </button>
                         <button type="button" class="i-btn i-btn-primary" onclick="sendData()">
-                            新增
+                            更新
                         </button>
                     </div>
                 </div>
