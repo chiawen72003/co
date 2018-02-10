@@ -115,10 +115,18 @@
             }
         }
         function setRevisedList() {
+            //todo 根據學校ID回推學校資料
             for(var x=0;x<revised_item.length;x++){
                 $('#login_name').val(revised_item[x]['login_name']);
                 $('#login_pw').val(revised_item[x]['login_pw']);
                 $('#user_name').val(revised_item[x]['name']);
+                for(var s=0;s<school_item.length;s++){
+                    if( school_item[s]['id'] == revised_item[x]['school_id']){
+                        area.val(school_item[s]['area']);
+                        setSchoolData();
+                        school.val(school_item[s]['id']);
+                    }
+                }
             }
         }
         var isSend = false;
