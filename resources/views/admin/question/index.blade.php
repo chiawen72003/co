@@ -174,7 +174,6 @@
      * 試卷選項設定
      */
     function setReelOption() {
-        console.log('in');
         var unit_val = unit_sw_item.val();
         $("#reel option").remove();
         for(var x=0;x<reel_item.length;x++){
