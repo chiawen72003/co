@@ -338,9 +338,12 @@
                 //使用者在每一個試題內打字的總數量
                 t.find('#count').attr('id', 'write_'+z+'_count');
                 //試題輸入區
+                var temp_num = 0;
                 t.find('#textarea').each(function(){
                     $(this).attr('name', 'write_'+div_total+'_text');
+                    $(this).html(question_item[z]['type_title'][temp_num]);
                     div_total++;
+                    temp_num++;
                 });
                 //上一試題按鈕
                 if(z == 0){

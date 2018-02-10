@@ -410,6 +410,7 @@
                 var temp_num = 0;
                 t.find('#textarea').each(function(){
                     $(this).html(test_item[x]['ans'][temp_num]);
+                    $(this).html(test_item[x]['type_title'][temp_num]);
                     temp_num++;
                 });
                 //上一試題按鈕
