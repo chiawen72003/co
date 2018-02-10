@@ -56,7 +56,7 @@
                         <th>
                             <div class="cell">姓名</div>
                         </th>
-                        <th width="120">
+                        <th width="200">
                             <div class="cell center">
                                 功能
                             </div>
@@ -73,8 +73,10 @@
         <td><div class="cell" id="login_name"></div></td>
         <td><div class="cell" id="name"></div></td>
         <td>
-            <div class="cell center"><a href="#" class="i-link" id="reel_area"><i class="ion-android-settings"></i>試卷管理</a></div>
-            <div class="cell center"><a href="#" class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a></div>
+            <div class="cell center">
+                <a href="#" class="i-link" id="reel_area"><i class="ion-android-settings"></i>試卷管理</a>
+                <a href="#" class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a>
+            </div>
         </td>
     </tr>
 </table>
