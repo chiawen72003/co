@@ -77,7 +77,7 @@
         </div>
         <div class="form-group">
             <label class="i-label">區塊標題</label>
-            <input class="i-input" value="" id="question_title">
+            <textarea class="i-textarea" id="question_title"></textarea>
         </div>
         <div class="form-group">
             <label class="i-label">能力指標</label>
@@ -102,45 +102,45 @@
         </div>
         <div class="form-group" id="title_1">
             <div class="form-group">
-                <label class="i-label">區塊標題</label>
+                <label class="i-label">作答區塊標題</label>
                 <input class="i-input" name="type_title_1[]" value="">
             </div>
         </div>
         <div class="form-group" id="title_2">
             <div class="form-group">
-                <label class="i-label">區塊標題</label>
+                <label class="i-label">作答區塊標題</label>
                 <input class="i-input" name="type_title_2[]" value="">
             </div>
         </div>
         <div class="form-group" id="title_3">
             <div class="form-group">
-                <label class="i-label">區塊標題_1</label>
+                <label class="i-label">作答區塊標題_1</label>
                 <input class="i-input" name="type_title_3[]" value="">
             </div>
             <div class="form-group">
-                <label class="i-label">區塊標題_2</label>
+                <label class="i-label">作答區塊標題_2</label>
                 <input class="i-input" name="type_title_3[]" value="">
             </div>
             <div class="form-group">
-                <label class="i-label">區塊標題_3</label>
+                <label class="i-label">作答區塊標題_3</label>
                 <input class="i-input" name="type_title_3[]" value="">
             </div>
         </div>
         <div class="form-group" id="title_4">
             <div class="form-group">
-                <label class="i-label">區塊標題_1</label>
+                <label class="i-label">作答區塊標題_1</label>
                 <input class="i-input" name="type_title_4[]" value="">
             </div>
             <div class="form-group">
-                <label class="i-label">區塊標題_2</label>
+                <label class="i-label">作答區塊標題_2</label>
                 <input class="i-input" name="type_title_4[]" value="">
             </div>
             <div class="form-group">
-                <label class="i-label">區塊標題_3</label>
+                <label class="i-label">作答區塊標題_3</label>
                 <input class="i-input" name="type_title_4[]" value="">
             </div>
             <div class="form-group">
-                <label class="i-label">區塊標題_4</label>
+                <label class="i-label">作答區塊標題_4</label>
                 <input class="i-input" name="type_title_4[]" value="">
             </div>
         </div>
@@ -376,7 +376,7 @@
                     $('#Q_'+z).find('#power').val(power[z]);
                 }
                 for (var z = 0; z < question_title.length; z++) {
-                    $('#Q_'+z).find('#question_title').val(question_title[z]);
+                    $('#Q_'+z).find('#question_title').text(question_title[z]);
                 }
                 for (var z = 0; z < type.length; z++) {
                     $('#Q_'+z).find('#type').val(type[z]);
