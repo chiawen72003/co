@@ -253,8 +253,8 @@
                     {
                         if(response['status'] == true)
                         {
-                           // alert(response['msg']);
-                            //location.replace("[! route('ma.question') !]");
+                            alert(response['msg']);
+                            location.replace("[! route('ma.question') !]");
                         }
                         isSend = false;
                     }
