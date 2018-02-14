@@ -522,6 +522,20 @@ class AdController extends Controller
 
 
     /**
+     * 刪除試題的資料
+     */
+    public function QuestionDel()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('reel_id');
+        $t_obj = new QuestionItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->deleteQuestion());
+    }
+
+
+    /**
      * 試題 api 回傳單元、試卷及使用者設定的資料
      */
     public function QuestionEditApi()

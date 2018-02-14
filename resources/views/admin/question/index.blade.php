@@ -82,7 +82,10 @@
     <tr id="copy_tr">
         <td><div class="cell" id="title_area"></div></td>
         <td>
-            <div class="cell center"><a href="#" class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a></div>
+            <div class="cell center">
+                <a href="#" class="i-link" id="a_area"><i class="ion-android-settings"></i>編輯</a>
+                <a class="i-link" id="a_del"><i class="ion-trash-a"></i>移除</a>
+            </div>
         </td>
     </tr>
 </table>
@@ -234,6 +237,7 @@
             var r = question_item[x]['question_name'];
             t.find('#title_area').html(r).removeAttr('id');
             t.find('#a_area').attr('href',a).removeAttr('id');
+            t.find('#a_del').attr('onclick','unsetQuestion("'+question_item[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -254,6 +258,30 @@
                 setReelOption();
                 $('#reel').val(t_obj['id']);
             }
+        }
+    }
+
+    //移除試題資料
+    function unsetQuestion(id) {
+        if(confirm("確定刪除試題的資料嗎?\r\n")) {
+            $.ajax({
+                url: "[! route('ma.question.del') !]",
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    _token: '[! csrf_token() !]',
+                    unit_id: id,
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    if (response['status'] == true) {
+                        alert(response['msg']);
+                    }
+                    location.reload();
+                }
+            });
         }
     }
 </script>

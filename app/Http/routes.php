@@ -69,7 +69,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/Unit', ['as' => 'ma.unit', 'uses' => 'AdController@Unit']);
     Route::get('/Ma/Unit/list', ['as' => 'ma.unit.list', 'uses' => 'AdController@UnitList']);
     Route::post('/Ma/Unit/Add', ['as' => 'ma.unit.add', 'uses' => 'AdController@UnitAdd']);
-    Route::post('/Ma/Reel/Del', ['as' => 'ma.unit.del', 'uses' => 'AdController@UnitDel']);
+    Route::post('/Ma/Unit/Del', ['as' => 'ma.unit.del', 'uses' => 'AdController@UnitDel']);
 
     //管理員 試卷設定
     Route::get('/Ma/Reel', ['as' => 'ma.reel', 'uses' => 'AdController@Reel']);
@@ -87,6 +87,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::post('/Ma/Question/api', ['as' => 'ma.question.api', 'uses' => 'AdController@QuestionEditApi']);
     Route::post('/Ma/Question/Add', ['as' => 'ma.question.add', 'uses' => 'AdController@QuestionAdd']);
     Route::post('/Ma/Question/Update', ['as' => 'ma.question.update', 'uses' => 'AdController@QuestionUpdate']);
+    Route::post('/Ma/Question/Del', ['as' => 'ma.question.del', 'uses' => 'AdController@QuestionDel']);
 
     //管理員 注意事項
     Route::get('/Ma/Precautions', ['as' => 'ma.precautions', 'uses' => 'AdController@Precautions']);
