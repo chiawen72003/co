@@ -69,6 +69,9 @@
                         <th>
                             <div class="cell">單元名稱</div>
                         </th>
+                        <th>
+                            <div class="cell">功能</div>
+                        </th>
                     </tr>
                     <!--  -->
                 </table>
@@ -82,6 +85,11 @@
         <td><div class="cell"  id="subject_area"></div></td>
         <td><div class="cell"  id="book_area"></div></td>
         <td><div class="cell"  id="name_area"></div></td>
+        <td>
+            <div class="cell center">
+                <a class="i-link" id="a_del"><i class="ion-trash-a"></i>移除</a>
+            </div>
+        </td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
@@ -137,6 +145,7 @@
             t.find('#subject_area').html(s).removeAttr('id');
             t.find('#book_area').html(b).removeAttr('id');
             t.find('#name_area').html(unit_item[x]['unit_title']).removeAttr('id');
+            t.find('#a_del').attr('onclick','unsetUnit("'+unit_item[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -171,7 +180,7 @@
                                 'unit_title':response['unit_title'],
                             }
                         );
-                        addList(response['version'],response['subject'],response['book'],response['unit_title']);
+                        addList(response['id'],response['version'],response['subject'],response['book'],response['unit_title']);
                         alert(response['msg']);
                     }
                     isSend = false;
@@ -182,7 +191,7 @@
         }
     }
 
-    function addList(version,subject,book,title) {
+    function addList(id,version,subject,book,title) {
         var t = tr_item.clone();
         var v = $("#version option[value="+ version +"]").text();
         var s = $("#subject option[value="+ subject +"]").text();
@@ -191,6 +200,7 @@
         t.find('#subject_area').html(s).removeAttr('id');
         t.find('#book_area').html(b).removeAttr('id');
         t.find('#name_area').html(title).removeAttr('id');
+        t.find('#a_del').attr('onclick','unsetUnit("'+id+'")').removeAttr('id');
         t.removeAttr('id');
         list_item.append(t);
     }
@@ -200,6 +210,30 @@
         //subject_item.val(1);
         //book_item.val(1);
         title_item.val('');
+    }
+
+    //移除單元資料
+    function unsetUnit(id) {
+        if(confirm("確定刪除單元的資料嗎?\r\n")) {
+            $.ajax({
+                url: "[! route('ma.unit.del') !]",
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    _token: '[! csrf_token() !]',
+                    unit_id: id,
+                },
+                error: function(xhr) {
+                    //alert('Ajax request 發生錯誤');
+                },
+                success: function(response) {
+                    if (response['status'] == true) {
+                        alert(response['msg']);
+                    }
+                    location.reload();
+                }
+            });
+        }
     }
 </script>
 @stop

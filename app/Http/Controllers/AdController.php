@@ -399,6 +399,19 @@ class AdController extends Controller
     }
 
     /**
+     * 刪除單元的資料
+     */
+    public function UnitDel()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('unit_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->deleteUnit());
+    }
+
+    /**
      * 試卷
      *
      *
