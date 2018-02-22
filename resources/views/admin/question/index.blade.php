@@ -67,7 +67,7 @@
                         <th>
                             <div class="cell">試題名稱</div>
                         </th>
-                        <th width="100">
+                        <th width="300">
                             <div class="cell center">
                                 功能
                             </div>
