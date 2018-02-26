@@ -77,7 +77,7 @@
         </div>
         <div class="form-group">
             <label class="i-label">區塊標題</label>
-            <textarea class="i-textarea" id="question_title"></textarea>
+            <input class="i-input" id="question_title" value="">
         </div>
         <div class="form-group">
             <label class="i-label">能力指標</label>
@@ -95,7 +95,7 @@
             <label class="i-label">試題類型</label>
             <select class="i-select" id="type" onchange="showTypeTitle()">
                 <option value="1">一大區塊</option>
-                <option value="2">一大區塊，包含同意選項</option>
+                <option value="2">兩大區塊</option>
                 <option value="3">三大區塊</option>
                 <option value="4">四大區塊</option>
             </select>
@@ -103,45 +103,49 @@
         <div class="form-group" id="title_1">
             <div class="form-group">
                 <label class="i-label">作答區塊標題</label>
-                <input class="i-input" name="type_title_1[]" value="">
+                <textarea class="i-textarea" name="type_title_1[]"></textarea>
             </div>
         </div>
         <div class="form-group" id="title_2">
             <div class="form-group">
-                <label class="i-label">作答區塊標題</label>
-                <input class="i-input" name="type_title_2[]" value="">
+                <label class="i-label">作答區塊標題_1</label>
+                <textarea class="i-textarea" name="type_title_2[]"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="i-label">作答區塊標題_2</label>
+                <textarea class="i-textarea" name="type_title_2[]"></textarea>
             </div>
         </div>
         <div class="form-group" id="title_3">
             <div class="form-group">
                 <label class="i-label">作答區塊標題_1</label>
-                <input class="i-input" name="type_title_3[]" value="">
+                <textarea class="i-textarea" name="type_title_3[]"></textarea>
             </div>
             <div class="form-group">
                 <label class="i-label">作答區塊標題_2</label>
-                <input class="i-input" name="type_title_3[]" value="">
+                <textarea class="i-textarea" name="type_title_3[]"></textarea>
             </div>
             <div class="form-group">
                 <label class="i-label">作答區塊標題_3</label>
-                <input class="i-input" name="type_title_3[]" value="">
+                <textarea class="i-textarea" name="type_title_3[]"></textarea>
             </div>
         </div>
         <div class="form-group" id="title_4">
             <div class="form-group">
                 <label class="i-label">作答區塊標題_1</label>
-                <input class="i-input" name="type_title_4[]" value="">
+                <textarea class="i-textarea" name="type_title_4[]"></textarea>
             </div>
             <div class="form-group">
                 <label class="i-label">作答區塊標題_2</label>
-                <input class="i-input" name="type_title_4[]" value="">
+                <textarea class="i-textarea" name="type_title_4[]"></textarea>
             </div>
             <div class="form-group">
                 <label class="i-label">作答區塊標題_3</label>
-                <input class="i-input" name="type_title_4[]" value="">
+                <textarea class="i-textarea" name="type_title_4[]"></textarea>
             </div>
             <div class="form-group">
                 <label class="i-label">作答區塊標題_4</label>
-                <input class="i-input" name="type_title_4[]" value="">
+                <textarea class="i-textarea" name="type_title_4[]"></textarea>
             </div>
         </div>
     </div>
@@ -223,7 +227,8 @@
                         var temp_array = [];
                         question_title.push(t.find('#question_title').val());
                         type.push(t.find('#type').val());
-                        t.find('input[name="type_title_'+type_val+'[]"]').each(function() {
+                        t.find('textarea[name="type_title_'+type_val+'[]"]').each(function() {
+                            console.log($(this).val());
                             temp_array.push($(this).val());
                         });
                         type_titles.push(temp_array);
