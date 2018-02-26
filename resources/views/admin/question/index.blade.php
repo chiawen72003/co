@@ -270,7 +270,7 @@
                 dataType: "json",
                 data: {
                     _token: '[! csrf_token() !]',
-                    unit_id: id,
+                    reel_id: id,
                 },
                 error: function(xhr) {
                     //alert('Ajax request 發生錯誤');
