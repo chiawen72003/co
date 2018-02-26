@@ -31,7 +31,7 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link disabled" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
                             <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
@@ -85,28 +85,21 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link disabled" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
                             <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="chapter-content-wrap">
-                <div class="chapter-content-title" >
-                    <br id="title">
-                    <br>(請點選
-                    <div class="form-inline checkbox-group">
-                        <input type="radio" id="radio1" name="agree" value="0" checked />
-                        <label for="radio1" name="radio">同意</label>
-                    </div>或<div class="form-inline checkbox-group">
-                        <input type="radio" id="radio2" name="agree" value="1" />
-                        <label for="radio2" name="radio">不同意</label>
-                        </div>，150字為限，5分)
+                <div class="chapter-content-title" id="title">
                 </div>
                 <div class="chapter-content" style="border-top: 0;">
                     <div class="chapter-content-article-right">
-                        <div class="textarea-wrap">
+                        <div class="textarea-wrap textarea-wrap2">
                             <div id="textarea" name="text_1" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
+                        </div>
+                        <div class="textarea-wrap textarea-wrap2">
                             <div id="textarea" name="text_2" contenteditable="true" onkeypress="return onKeyPress_(event);"></div>
                         </div>
                         <div class="chapter-content-page">
@@ -148,7 +141,7 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link disabled" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
                             <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
@@ -207,7 +200,7 @@
                     </div>
                     <div class="chapter-content-page">
                         <ul class="i-pages">
-                            <li><a class="i-link" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
+                            <li><a class="i-link disabled" id="dsc_prev"><i class="ion-ios-arrow-back"></i> 上一頁</a></li>
                             <li><a class="i-link" id="dsc_next">下一頁 <i class="ion-ios-arrow-forward"></i></a></li>
                         </ul>
                     </div>
@@ -374,28 +367,7 @@
                     t = obj_4.clone();
                 }
                 //試題標題
-                if(test_item[x]['type'] == 2){
-                    t.find('#title').after(test_item[x]['question_title']).removeAttr('id');
-                    if(test_item[x]['agree'] == 0){
-                        t.find('#radio1').prop('checked', true).removeAttr('id');
-                    }
-                    if(test_item[x]['agree'] == 1){
-                        t.find('#radio2').prop('checked', true).removeAttr('id');
-                    }
-                    var temp_num = 0;
-                    t.find('#textarea').each(function(){
-                        if(test_item[x]['agree'] == temp_num){
-                            $(this).show();
-                        }else{
-                            $(this).hide();
-                        }
-
-                        temp_num++;
-                    });
-
-                }else{
-                    t.find('#title').html(test_item[x]['question_title']).removeAttr('id');
-                }
+                t.find('#title').html(test_item[x]['question_title']).removeAttr('id');
                 //試題內容
                 for(var k=0;k<question_item.length;k++){
                     if(question_item[k]['id'] == test_item[x]['question_id']){
