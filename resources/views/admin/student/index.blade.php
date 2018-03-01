@@ -158,6 +158,10 @@
                 <input class="i-input" value="" id="up_student_id">
             </div>
             <div class="form-group">
+                <label class="i-label">原始密碼</label>
+                <input class="i-input" value="" id="up_login_pw" disabled>
+            </div>
+            <div class="form-group">
                 <label class="i-label">新密碼</label>
                 <input type="password" class="i-input" id="up_pw">
             </div>
@@ -473,6 +477,7 @@
            if(student_item[x]['id'] == u_id){
                $('#up_school_name').val(student_item[x]['school_title']);
                $('#up_login_name').val(student_item[x]['login_name']);
+               $('#up_login_pw').val(student_item[x]['login_pw']);
                $('#up_name').val(student_item[x]['name']);
                $('#up_student_id').val(student_item[x]['student_id']);
            }
