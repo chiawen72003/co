@@ -47,5 +47,6 @@ class Kernel extends HttpKernel
         'StudentCheck' => \App\Http\Middleware\StudentCheck::class,
         'AdSessionCheck' => \App\Http\Middleware\AdSessionCheck::class,
         'RevisedCheck' => \App\Http\Middleware\RevisedCheck::class,
+        'SchoolMenCheck' => \App\Http\Middleware\SchoolMenCheck::class,
     ];
 }

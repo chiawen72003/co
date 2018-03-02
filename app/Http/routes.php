@@ -192,3 +192,9 @@ Route::group(['middleware' => 'RevisedCheck'], function () {
     Route::get('/Rv/Files/Download/{id}', ['as' => 'rv.files.download', 'uses' => 'RvController@FilesDownload']);
 });
 
+//校管理
+Route::group(['middleware' => 'SchoolMenCheck'], function () {
+
+});
+
+
