@@ -4,6 +4,7 @@ namespace App\Http\Providers;
 
 use App\Http\Models\Admin;
 use App\Http\Models\Revised;
+use App\Http\Models\SchoolMan;
 use App\Http\Models\Student;
 use \Input;
 use \Session;
@@ -55,6 +56,28 @@ class UserItem
                 'redir' => route('ma.school'),
             );
             $has_data = true;
+        }
+        if(!$has_data){
+            $temp_obj = SchoolMan::select('id','name')
+                ->where('login_name',$this->input_array['login_name'])
+                ->where('login_pw',$this->input_array['login_pw'])
+                ->where('school_id',$this->input_array['school_id'])
+                ->get();
+            foreach($temp_obj as $v ){
+                session([
+                    'user_type' => 'SchoolMen',
+                    'user_id' => $v['id'],
+                    'school_id' => $v['school_id'],
+                    'name' => $v['name'],
+                    'login_name' => $v['login_name'],
+                ]);
+                $this->msg = array(
+                    'status' => true,
+                    'msg' => '',
+                    'redir' => route('sm.course'),
+                );
+                $has_data = true;
+            }
         }
 
         if(!$has_data){

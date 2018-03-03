@@ -194,7 +194,10 @@ Route::group(['middleware' => 'RevisedCheck'], function () {
 
 //校管理
 Route::group(['middleware' => 'SchoolMenCheck'], function () {
-
+    //管理員 課程設定 新增課程
+    Route::get('/Sm/Course', ['as' => 'sm.course', 'uses' => 'SmController@Course']);
+    Route::get('/Sm/Course/list', ['as' => 'sm.course.list', 'uses' => 'SmController@CourseList']);
+    Route::post('/Sm/Course/Add', ['as' => 'sm.course.add', 'uses' => 'SmController@CourseAdd']);
 });
 
 
