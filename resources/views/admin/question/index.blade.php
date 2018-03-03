@@ -58,7 +58,11 @@
                 <i class="ion-information-circled"></i>
                 已新增試題
                 <div class="title-right">
-                    <a href="[! route('ma.question.pg.add') !]" class="i-add i-btn-primary"><i class="ion-android-add"></i>新增試題</a>
+                    @if($has_reel_id)
+                        <a href="[! route('ma.question.pg.add') !]?reelID=[! $reel_id !]" class="i-add i-btn-primary"><i class="ion-android-add"></i>新增試題</a>
+                    @else
+                        <a href="[! route('ma.question.pg.add') !]" class="i-add i-btn-primary"><i class="ion-android-add"></i>新增試題</a>
+                    @endif
                 </div>
             </div>
             <div class="table-wrapper">

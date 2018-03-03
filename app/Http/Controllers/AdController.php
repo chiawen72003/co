@@ -582,6 +582,14 @@ class AdController extends Controller
      */
     public function QuestionPgAdd()
     {
+        //reelID => 試卷id
+        $reel_id = app('request')->get('reelID');
+        $this->data['has_reel_id'] = false;
+        if(!is_null($reel_id))
+        {
+            $this->data['reel_id'] =$reel_id;
+            $this->data['has_reel_id'] =true;
+        }
         //設定ckfinder
         //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
         $this->data['ck_finder_path'] = url('/js/ckfinder');

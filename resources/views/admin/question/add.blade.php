@@ -46,7 +46,7 @@
                         <option value="20">20</option>
                     </select>
                     <label class="i-label">單元</label>
-                    <select id="unit" class="i-select" onchange="setReel()">
+                    <select id="unit" class="i-select" onchange="setReelOption()">
                     </select>
                     <label class="i-label">試卷名稱</label>
                     <select id="reel" class="i-select">
@@ -259,7 +259,11 @@
                         if(response['status'] == true)
                         {
                             alert(response['msg']);
-                            location.replace("[! route('ma.question') !]");
+                            @if($has_reel_id)
+                               location.replace("[! route('ma.question') !]?reelID=[! $reel_id !]");
+                            @else
+                               location.replace("[! route('ma.question') !]");
+                            @endif
                         }
                         isSend = false;
                     }
@@ -305,7 +309,10 @@
                         }
                     }
                     setUnit();
-                    setReel();
+                    setReelOption();
+                    @if($has_reel_id)
+                    setReel('[! $reel_id !]');
+                    @endif
                 }
             });
         }
@@ -324,13 +331,13 @@
                     unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
                 }
             }
-            setReel();
+            setReelOption();
         }
 
         /**
          * 試卷選項設定
          */
-        function setReel() {
+        function setReelOption() {
             var unit_val = unit_sw_item.val();
             $("#reel option").remove();
             for(var x=0;x<reel_item.length;x++){
@@ -338,6 +345,41 @@
                     reel_sw_item.append($("<option></option>").attr("value", reel_item[x]['id']).text(reel_item[x]['reel_title']));
                 }
             }
+        }
+
+        /**
+         * 根據試卷ID設定單元跟試卷的下拉選項
+         */
+        function setReel(reel_id) {
+            for(var x=0;x<reel_item.length;x++){
+                if(reel_item[x]['id'] == reel_id){
+                    var t_obj = reel_item[x];
+                    $('#version').val(t_obj['version']);
+                    $('#subject').val(t_obj['subject']);
+                    $('#book').val(t_obj['book']);
+                    setUnitOption();
+                    $('#unit').val(t_obj['unit']);
+                    setReelOption();
+                    $('#reel').val(t_obj['id']);
+                }
+            }
+        }
+
+        /**
+         * 單元選項設定
+         */
+        function setUnitOption() {
+            var v = version_item.val();
+            var s = subject_item.val();
+            var b = book_item.val();
+            $("#unit option").remove();
+            $("#reel option").remove();
+            for(var x=0;x<unit_item.length;x++){
+                if(unit_item[x]['version'] == v && unit_item[x]['subject'] == s && unit_item[x]['book'] == b){
+                    unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
+                }
+            }
+            setReelOption();
         }
     </script>
 @stop
