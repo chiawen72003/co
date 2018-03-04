@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('schoolman.layout.layout')
 @section('content')
 <div class="article">
     <div class="article-header">
@@ -95,7 +95,7 @@
     //資料初始化 課程、學校、班級(?學生)
     function geInitData() {
         $.ajax({
-            url: "[! route('ma.course.student.init') !]",
+            url: "[! route('sm.course.student.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -260,7 +260,7 @@
     function add(){
         if(!isSend && courseName.val() != '' && classes.val() != ''){
             $.ajax({
-                url: "[! route('ma.course.student.add') !]",
+                url: "[! route('sm.course.student.add') !]",
                 type:'POST',
                 dataType: "json",
                 data: {

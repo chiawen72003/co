@@ -25,6 +25,16 @@ class SmController extends Controller
     }
 
     /**
+     * 學校
+     */
+    public function School()
+    {
+
+        return view('schoolman.school.index', $this->data);
+    }
+
+
+    /**
      * 課程設定
      *
      *
@@ -64,4 +74,198 @@ class SmController extends Controller
         $t_obj->init($data);
         echo json_encode($t_obj->addCourse());
     }
+
+
+    /**
+     * 學生資訊
+     *
+     *
+     */
+    public function Student()
+    {
+
+        return view('schoolman.student.index', $this->data);
+    }
+
+    /**
+     * 課程-學員對應設定
+     *
+     *
+     */
+    public function CourseStudent()
+    {
+
+        return view('schoolman.course.student.index', $this->data);
+    }
+
+    /**
+     * 課程-學員對應 初始化資料
+     */
+    public function CourseStudentInit()
+    {
+        $structure = new StructureItem();
+        $school_item = new SchoolItem();
+        $course = $structure->getCourse();
+        $school = $school_item->getSchool();
+        $classes = $school_item->getAllClasses();
+        $list = $structure->getCourseStudent();
+        $return = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'course' => $course['data'],
+                'school' => $school['data'],
+                'classes' => $classes['data'],
+                'list' => $list['data'],
+            ),
+        );
+
+        echo json_encode($return);
+    }
+
+
+    /**
+     * 所有課程-學員對應的資料
+     *
+     *
+     */
+    public function CourseStudentList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getCourseStudent());
+    }
+
+    /**
+     * 新增課程-學員對應的資料
+     *
+     *
+     */
+    public function CourseStudentAdd()
+    {
+        $data = array();
+        $data['course_id'] = app('request')->get('course_id');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['classes_id'] = app('request')->get('classes_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->addCourseStudent());
+    }
+
+    /**
+     * 課程-試卷對應設定
+     *
+     *
+     */
+    public function CourseReel()
+    {
+
+        return view('schoolman.course.reel.index', $this->data);
+    }
+
+    /**
+     * 課程與試卷對應 初始化資料
+     */
+    public function CourseReelInit()
+    {
+        $structure = new StructureItem();
+        $course = $structure->getCourse();
+        $reel = $structure->getReel();
+        $list = $structure->getCourseReel();
+
+        $return = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'course' => $course['data'],
+                'reel' => $reel['data'],
+                'list' => $list['data'],
+            ),
+        );
+
+        echo json_encode($return);
+    }
+
+    /**
+     * 所有課程-試卷對應的資料
+     */
+    public function CourseReelList()
+    {
+        $school = new StructureItem();
+
+        echo json_encode($school->getCourseReel());
+    }
+
+    /**
+     * 新增課程-試卷對應的資料
+     *
+     *
+     */
+    public function CourseReelAdd()
+    {
+        $data = array();
+        $data['course_id'] = app('request')->get('course_id');
+        $data['reel_id'] = app('request')->get('reel_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+        echo json_encode($t_obj->addCourseReel());
+    }
+
+    /**
+     * 移除課程-試卷對應的資料
+     *
+     *
+     */
+    public function CourseReelDel()
+    {
+        $data = array();
+        $data['reel_id'] = app('request')->get('reel_id');
+        $data['course_id'] = app('request')->get('course_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+        echo json_encode($t_obj->unsetCourseReel());
+    }
+
+
+    /**
+     * 個人資料管理
+     *
+     *
+     */
+    public function User()
+    {
+
+        return view('schoolman.userdata.index', $this->data);
+    }
+
+    /**
+     * 個人資料的資料
+     *
+     *
+     */
+    public function UserData()
+    {
+        $user = new UserItem();
+        $user->init(array('user_id' => $this->data['user_id']));
+
+        echo json_encode($user->getAdmin());
+    }
+
+    /**
+     * 更新個人資料的資料
+     *
+     *
+     */
+    public function UserUpdate()
+    {
+        $data = array();
+        $data['new_pw'] = app('request')->get('new_pw');
+        $data['id'] = $this->data['user_id'];
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->setAdminPw());
+    }
+
 }

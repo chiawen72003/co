@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('schoolman.layout.layout')
 @section('content')
 <div class="article">
     <div class="article-header">
@@ -87,7 +87,7 @@
     //資料初始
     function getInitData() {
         $.ajax({
-            url: "[! route('ma.course.reel.init') !]",
+            url: "[! route('sm.course.reel.init') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -210,7 +210,7 @@
     function add(){
         if(!isSend && courseName.val() != '' && reelName.val() != ''){
             $.ajax({
-                url: "[! route('ma.course.reel.add') !]",
+                url: "[! route('sm.course.reel.add') !]",
                 type:'POST',
                 dataType: "json",
                 data: {
@@ -240,7 +240,7 @@
     {
         list_obj = [];
         $.ajax({
-            url: "[! route('ma.course.reel.list') !]",
+            url: "[! route('sm.course.reel.list') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -271,7 +271,7 @@
     //移除資料
     function unset(reelid,courseid) {
         $.ajax({
-            url: "[! route('ma.course.reel.del') !]",
+            url: "[! route('sm.course.reel.del') !]",
             type: 'POST',
             dataType: "json",
             data: {
