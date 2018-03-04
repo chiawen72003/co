@@ -36,8 +36,8 @@
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
-                            <li id="li_classes"><a href="[! route('ma.school') !]">新增學校/班級</a></li>
-                            <li id="li_member"><a href="[! route('ma.student') !]">查詢/編輯使用者資料</a></li>
+                            <li id="li_classes"><a href="[! route('sm.school') !]">新增學校/班級</a></li>
+                            <li id="li_member"><a href="[! route('sm.student') !]">查詢/編輯使用者資料</a></li>
                         </ul>
                     </li>
                     <li class="hs-sub" id="main_li_2">
@@ -47,9 +47,9 @@
                             <i class="mainnav-arrow ion-ios-arrow-down"></i>
                         </a>
                         <ul class="mainnav-sub">
-                            <li id="li_course"><a href="[! route('ma.course') !]">新增課程</a></li>
-                            <li id="li_course_student"><a href="[! route('ma.course.student') !]">課程與班級對應</a></li>
-                            <li id="li_course_reel"><a href="[! route('ma.course.reel') !]">課程與試卷存取控制</a></li>
+                            <li id="li_course"><a href="[! route('sm.course') !]">新增課程</a></li>
+                            <li id="li_course_student"><a href="[! route('sm.course.student') !]">課程與班級對應</a></li>
+                            <li id="li_course_reel"><a href="[! route('sm.course.reel') !]">課程與試卷存取控制</a></li>
                         </ul>
                     </li>
                     <li>
@@ -65,7 +65,7 @@
                         </a>
                     </li>
                     <li id="li_user">
-                        <a href="[! route('ma.user') !]">
+                        <a href="[! route('sm.user') !]">
                             <i class="mainnav-title-icon ion-person"></i>
                             修改個人資訊
                         </a>

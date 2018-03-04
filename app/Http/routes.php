@@ -194,10 +194,42 @@ Route::group(['middleware' => 'RevisedCheck'], function () {
 
 //校管理
 Route::group(['middleware' => 'SchoolMenCheck'], function () {
-    //管理員 課程設定 新增課程
+    //課程設定 新增課程
     Route::get('/Sm/Course', ['as' => 'sm.course', 'uses' => 'SmController@Course']);
     Route::get('/Sm/Course/list', ['as' => 'sm.course.list', 'uses' => 'SmController@CourseList']);
     Route::post('/Sm/Course/Add', ['as' => 'sm.course.add', 'uses' => 'SmController@CourseAdd']);
+
+    //管理使用者-匯入學校/代碼
+    Route::get('/Sm/School', ['as' => 'sm.school', 'uses' => 'SmController@School']);
+    Route::get('/Sm/School/list', ['as' => 'sm.school.list', 'uses' => 'SmController@SchoolList']);
+    Route::get('/Sm/School/Init', ['as' => 'sm.school.init', 'uses' => 'SmController@SchoolInit']);
+
+    //修改學生資訊
+    Route::get('/Sm/Student', ['as' => 'sm.student', 'uses' => 'SmController@Student']);
+    Route::get('/Sm/Student/Init', ['as' => 'sm.student.init', 'uses' => 'SmController@StudentInit']);
+    Route::get('/Sm/Student/List', ['as' => 'sm.student.list', 'uses' => 'SmController@StudentList']);
+    Route::post('/Sm/Student/Add', ['as' => 'sm.student.add', 'uses' => 'SmController@StudentAdd']);
+    Route::post('/Sm/Student/Update', ['as' => 'sm.student.update', 'uses' => 'SmController@StudentUpdate']);
+    Route::post('/Sm/Student/Del', ['as' => 'sm.student.del', 'uses' => 'SmController@StudentDel']);
+
+    //課程設定 課程與學員對應
+    Route::get('/Sm/Course/Student', ['as' => 'sm.course.student', 'uses' => 'SmController@CourseStudent']);
+    Route::get('/Sm/Course/Student/Init', ['as' => 'sm.course.student.init', 'uses' => 'SmController@CourseStudentInit']);
+    Route::get('/Sm/Course/Student/list', ['as' => 'sm.course.student.list', 'uses' => 'SmController@CourseStudentList']);
+    Route::post('/Sm/Course/Student/Add', ['as' => 'sm.course.student.add', 'uses' => 'SmController@CourseStudentAdd']);
+
+    //課程設定 課程-試卷對應
+    Route::get('/Sm/Course/Reel', ['as' => 'sm.course.reel', 'uses' => 'SmController@CourseReel']);
+    Route::get('/Sm/Course/Reel/Init', ['as' => 'sm.course.reel.init', 'uses' => 'SmController@CourseReelInit']);
+    Route::get('/Sm/Course/Reel/list', ['as' => 'sm.course.reel.list', 'uses' => 'SmController@CourseReelList']);
+    Route::post('/Sm/Course/Reel/Add', ['as' => 'sm.course.reel.add', 'uses' => 'SmController@CourseReelAdd']);
+    Route::post('/Sm/Course/Reel/Del', ['as' => 'sm.course.reel.del', 'uses' => 'SmController@CourseReelDel']);
+
+    //修改個人資訊
+    Route::get('/Sm/User', ['as' => 'sm.user', 'uses' => 'SmController@User']);
+    Route::get('/Sm/User/Data', ['as' => 'smuser.data', 'uses' => 'SmController@UserData']);
+    Route::post('/Sm/User/Update', ['as' => 'sm.user.update', 'uses' => 'SmController@UserUpdate']);
+
 });
 
 

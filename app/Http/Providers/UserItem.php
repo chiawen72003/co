@@ -74,7 +74,7 @@ class UserItem
                 $this->msg = array(
                     'status' => true,
                     'msg' => '',
-                    'redir' => route('sm.course'),
+                    'redir' => route('sm.school'),
                 );
                 $has_data = true;
             }
