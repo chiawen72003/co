@@ -39,6 +39,7 @@ class UserItem
     {
         $this->msg['msg'] = '帳號或密碼錯誤!!';
         $has_data = false;
+        //總管理員
         $temp_obj = Admin::select('id','name')
             ->where('login_name',$this->input_array['login_name'])
             ->where('login_pw',$this->input_array['login_pw'])
@@ -57,6 +58,7 @@ class UserItem
             );
             $has_data = true;
         }
+        //學校管理員
         if(!$has_data){
             $temp_obj = SchoolMan::select('id','name')
                 ->where('login_name',$this->input_array['login_name'])
@@ -74,12 +76,12 @@ class UserItem
                 $this->msg = array(
                     'status' => true,
                     'msg' => '',
-                    'redir' => route('sm.school'),
+                    'redir' => route('sm.classes'),
                 );
                 $has_data = true;
             }
         }
-
+        //評閱者
         if(!$has_data){
             $temp_obj = Revised::select('id','name')
                 ->where('login_name',$this->input_array['login_name'])
@@ -101,7 +103,7 @@ class UserItem
                 $has_data = true;
             }
         }
-
+        //受測者
         if(!$has_data){
             $temp_obj = Student::select('id','name', 'student_id')
                 ->where('login_name',$this->input_array['login_name'])
