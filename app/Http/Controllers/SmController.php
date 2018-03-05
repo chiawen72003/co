@@ -150,6 +150,97 @@ class SmController extends Controller
     }
 
     /**
+     * 學生的資料
+     *
+     *
+     */
+    public function StudentList()
+    {
+        $user = new UserItem();
+        $user->init(array(
+            'school_id' =>  $this->data['school_id'],
+            'classes_id' => app('request')->get('classes_id'),
+        ));
+
+        echo json_encode($user->getStudentBySubject(),JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 學生的資料 初始化的資料
+     *
+     * 包含所有學校、班級資料
+     */
+    public function StudentInit()
+    {
+        $s_obj = new SchoolItem(array(
+            'id' => $this->data['school_id'],
+        ));
+        $school = $s_obj->getOneSchool();
+        $classes = $s_obj->getAllClasses();
+        $return  = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school' => $school['data'],
+                'classes' => $classes['data'],
+            ),
+        );
+
+        echo json_encode($return);
+    }
+
+    /**
+     * 新增學生的資料
+     *
+     *
+     */
+    public function StudentAdd()
+    {
+        $data = array();
+        $data['login_name'] = app('request')->get('login_name');
+        $data['login_pw'] = app('request')->get('login_pw');
+        $data['school_id'] = $this->data['school_id'];
+        $data['classes_id'] = app('request')->get('classes_id');
+        $data['student_id'] = app('request')->get('student_id');
+        $data['name'] = app('request')->get('name');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->addStudent(),JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 更新學生的資料
+     *
+     *
+     */
+    public function StudentUpdate()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('user_id');
+        $data['student_id'] = app('request')->get('student_id');
+        $data['name'] = app('request')->get('name');
+        $data['new_pw'] = app('request')->get('new_pw');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->setStudent(),JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 刪除學生的資料
+     */
+    public function StudentDel()
+    {
+        $data = array();
+        $data['id'] = app('request')->get('user_id');
+        $t_obj = new UserItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->unsetStudent(),JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
      * 課程-學員對應設定
      *
      *

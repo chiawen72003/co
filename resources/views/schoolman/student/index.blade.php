@@ -7,20 +7,9 @@
     <div class="article-content">
         <div class="article-content-header">
             <form>
-                <label class="i-label">區域</label>
-                <select id="area" class="i-select" onchange="setSchoolOption('area','school_id','year_val','classes_id')">
-                    <option value="1">北區</option>
-                    <option value="2">桃竹苗區</option>
-                    <option value="3">中區</option>
-                    <option value="4">雲嘉南區</option>
-                    <option value="5">高屏東區</option>
-                    <option value="6">外島</option>
-                </select>
-                <label class="i-label">學校</label>
-                <select id="school_id" class="i-select" onchange="setSubjectOption('school_id','year_val','classes_id')">
-                </select>
+                <label class="i-label" id="school_name">學校名稱</label>
                 <label class="i-label">學年度</label>
-                <select id="year_val" class="i-select" onchange="setClassesOption('school_id','year_val','classes_id')">
+                <select id="year_val" class="i-select" onchange="setClassesOption('year_val','classes_id')">
                 </select>
                 <label class="i-label">班級</label>
                 <select id="classes_id" class="i-select">
@@ -79,24 +68,11 @@
                 新增使用者
             </div>
             <div class="form-group">
-                <label class="i-label">區域</label>
-                <select id="area_add" onchange="setSchoolOption('area_add','school_id_add','year_val_add','classes_id_add')">
-                    <option value="1">北區</option>
-                    <option value="2">桃竹苗區</option>
-                    <option value="3">中區</option>
-                    <option value="4">雲嘉南區</option>
-                    <option value="5">高屏東區</option>
-                    <option value="6">外島</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="i-label">學校</label>
-                <select id="school_id_add" onchange="setSubjectOption('school_id_add','year_val_add','classes_id_add')">
-                </select>
+                <label class="i-label" id="school_id_add">學校</label>
             </div>
             <div class="form-group">
                 <label class="i-label">學年度</label>
-                <select id="year_val_add" onchange="setClassesOption('school_id_add','year_val_add','classes_id_add')">
+                <select id="year_val_add" onchange="setClassesOption('year_val_add','classes_id_add')">
                 </select>
             </div>
             <div class="form-group">
@@ -224,17 +200,17 @@
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data']['school'].length;x++){
-                        var school = response['data']['school'][x];
-                        school_item.push(
-                            {
-                                'id':school['id'],
-                                'code':school['code'],
-                                'area':school['area'],
-                                'school_title':school['school_title']
-                            }
-                        );
-                    }
+                    var school = response['data']['school'];
+                    school_item.push(
+                        {
+                            'id':school['id'],
+                            'code':school['code'],
+                            'area':school['area'],
+                            'school_title':school['school_title']
+                        }
+                    );
+                    $('#school_name').html(school['school_title']);
+                    $('#school_id_add').html(school['school_title']);
                     for(var x=0;x<response['data']['classes'].length;x++){
                         var classes = response['data']['classes'][x];
                         classes_item.push(
@@ -247,51 +223,33 @@
                         );
                     }
                 }
-                setSchoolOption('area','school_id','year_val', 'classes_id');
+                setSubjectOption('year_val', 'classes_id');
             }
         });
     }
 
-    //設定學校下拉選單資料
-    function setSchoolOption(item1,item2,item3,item4) {
-        var t_val = $('#'+item1).val();
-        $("#"+item2+" option").remove();
-        $("#"+item3+" option").remove();
-        $("#"+item4+" option").remove();
-        for(var x=0;x<school_item.length;x++){
-            if(school_item[x]['area'] == t_val){
-                $("#"+item2).append($("<option></option>").attr("value", school_item[x]['id']).text(school_item[x]['school_title']));
-            }
-        }
-        setSubjectOption(item2,item3,item4);
-    }
-
-    //設定學年度跟班級下拉選單資料
-    function setSubjectOption(item1,item2,item3) {
-        var t_val = $('#'+item1).val();
+    //設定學年度下拉選單資料
+    function setSubjectOption(item1,item2) {
         var years = [];
-        $("#"+item2+" option").remove();
+        $("#"+item1+" option").remove();
         for(var x=0;x<classes_item.length;x++){
-            if(classes_item[x]['school_id'] == t_val){
-                if(jQuery.inArray(classes_item[x]['school_year'], years) == -1){
-                    years.push(classes_item[x]['school_year']);
-                }
+            if(jQuery.inArray(classes_item[x]['school_year'], years) == -1){
+                years.push(classes_item[x]['school_year']);
             }
         }
         for(var x=0;x<years.length;x++){
-            $("#"+item2).append($("<option></option>").attr("value", years[x]).text(years[x]));
+            $("#"+item1).append($("<option></option>").attr("value", years[x]).text(years[x]));
         }
-        setClassesOption(item1,item2,item3);
+        setClassesOption(item1,item2);
     }
 
-    //設定學年度跟班級下拉選單資料
-    function setClassesOption(item1,item2,item3) {
+    //設定班級下拉選單資料
+    function setClassesOption(item1,item2) {
         var t_val = $('#'+item1).val();
-        var t_val_2 = $('#'+item2).val();
-        $("#"+item3+" option").remove();
+        $("#"+item2+" option").remove();
         for(var x=0;x<classes_item.length;x++){
-            if(classes_item[x]['school_id'] == t_val && classes_item[x]['school_year'] == t_val_2){
-                $("#"+item3).append($("<option></option>").attr("value", classes_item[x]['id']).text(classes_item[x]['title']));
+            if(classes_item[x]['school_year'] == t_val){
+                $("#"+item2).append($("<option></option>").attr("value", classes_item[x]['id']).text(classes_item[x]['title']));
             }
         }
     }
@@ -312,8 +270,7 @@
                 type:'GET',
                 dataType: "json",
                 data: {
-                    'school':$('#school_id').val(),
-                    'classes_id':$('#classes_id').val(),
+                    'classes_id':$('#classes_id').val()
                 },
                 error: function(xhr) {
                     //alert('Ajax request 發生錯誤');
@@ -341,7 +298,7 @@
 
     //設定學生列表的資料
     function setStudentList() {
-        var school = $("#school_id").find(":selected").text();
+        var school = $("#school_name").html();
         var classes = $("#classes_id").find(":selected").text();
         var year = $("#year_val").find(":selected").text();
         for(var x=0;x<student_item.length;x++){
@@ -387,7 +344,7 @@
     function showAddArea() {
         $('#add_div').show();
         $('#list_div').hide();
-        setSchoolOption('area_add','school_id_add','year_val_add','classes_id_add');
+        setSubjectOption('year_val_add','classes_id_add');
     }
 
     function returnList() {
@@ -438,9 +395,6 @@
     function chkInput()
     {
         var msg = '';
-        if($('#school_id_add').val() == ''){
-            msg = msg + '請選擇學校!!\r\n';
-        }
         if($('#year_val_add').val() == ''){
             msg = msg + '請選擇學年度!!\r\n';
         }
@@ -473,13 +427,11 @@
         $('#add_div').hide();
         $('#list_div').hide();
         for(var x=0;x<student_item.length;x++){
-           if(student_item[x]['id'] == u_id){
-               $('#up_school_name').val(student_item[x]['school_title']);
-               $('#up_login_name').val(student_item[x]['login_name']);
-               $('#up_login_pw').val(student_item[x]['login_pw']);
-               $('#up_name').val(student_item[x]['name']);
-               $('#up_student_id').val(student_item[x]['student_id']);
-           }
+           $('#up_school_name').val(student_item[x]['school_title']);
+           $('#up_login_name').val(student_item[x]['login_name']);
+           $('#up_login_pw').val(student_item[x]['login_pw']);
+           $('#up_name').val(student_item[x]['name']);
+           $('#up_student_id').val(student_item[x]['student_id']);
         }
         update_id = u_id;
     }
