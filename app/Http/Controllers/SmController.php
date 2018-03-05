@@ -22,17 +22,80 @@ class SmController extends Controller
     {
         $this->data['user_name'] = app('request')->session()->get('name');
         $this->data['user_id'] = app('request')->session()->get('user_id');
+        $this->data['school_id'] = app('request')->session()->get('school_id');
+    }
+
+
+    /**
+     * 學校-班級
+     */
+    public function Classes()
+    {
+
+        return view('admin.school_classes.index', $this->data);
     }
 
     /**
-     * 學校
+     * 指定學校跟班級的資料
      */
-    public function School()
+    public function ClassesInit()
     {
+        $school_id = app('request')->get('sid');
+        $school = new SchoolItem(array(
+            'id' => $school_id,
+        ));
+        $school_obj = $school->getOneSchool();
+        $classses = $school->getClasses();
+        $return  = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school_data' => $school_obj['data'],
+                'classes_data' => $classses['data'],
+                'area_data' => config('area'),
+            ),
+        );
 
-        return view('schoolman.school.index', $this->data);
+
+        echo json_encode($return);
     }
 
+    /**
+     * 新增學校-班級的資料
+     *
+     *
+     */
+    public function ClassesAdd()
+    {
+        $data = array();
+        $data['school_year'] = app('request')->get('school_year');
+        $data['school_id'] = app('request')->get('school_id');
+        $data['title'] = app('request')->get('title');
+        $t_obj = new SchoolItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->addClasses());
+    }
+
+
+    /**
+     * 匯入班級內的學生資料
+     *
+     *
+     */
+    public function ClassesAddStudent()
+    {
+        $fp = Input::all();
+        $data = array(
+            'school_id' => isset($fp['school_id']) ? $fp['school_id'] : null,
+            'classes_id' => isset($fp['classes_id']) ? $fp['classes_id'] : null,
+            'import_user_file' => Input::file('import_file') ? Input::file('import_file') : null,
+        );
+        $member_obj = new SchoolItem();
+        $member_obj->init($data);
+
+        echo json_encode($member_obj->get_import_student());
+    }
 
     /**
      * 課程設定

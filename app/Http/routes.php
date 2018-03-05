@@ -199,11 +199,6 @@ Route::group(['middleware' => 'SchoolMenCheck'], function () {
     Route::get('/Sm/Course/list', ['as' => 'sm.course.list', 'uses' => 'SmController@CourseList']);
     Route::post('/Sm/Course/Add', ['as' => 'sm.course.add', 'uses' => 'SmController@CourseAdd']);
 
-    //管理使用者-匯入學校/代碼
-    Route::get('/Sm/School', ['as' => 'sm.school', 'uses' => 'SmController@School']);
-    Route::get('/Sm/School/list', ['as' => 'sm.school.list', 'uses' => 'SmController@SchoolList']);
-    Route::get('/Sm/School/Init', ['as' => 'sm.school.init', 'uses' => 'SmController@SchoolInit']);
-
     //學校-班級
     Route::get('/Sm/Classes/', ['as' => 'sm.classes', 'uses' => 'SmController@Classes']);
     Route::get('/Sm/Classes/Init', ['as' => 'sm.classes.init', 'uses' => 'SmController@ClassesInit']);
