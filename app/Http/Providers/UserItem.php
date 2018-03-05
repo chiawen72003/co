@@ -60,7 +60,7 @@ class UserItem
         }
         //學校管理員
         if(!$has_data){
-            $temp_obj = SchoolMan::select('id','name')
+            $temp_obj = SchoolMan::select('id','name','school_id')
                 ->where('login_name',$this->input_array['login_name'])
                 ->where('login_pw',$this->input_array['login_pw'])
                 ->where('school_id',$this->input_array['school_id'])
@@ -83,7 +83,7 @@ class UserItem
         }
         //評閱者
         if(!$has_data){
-            $temp_obj = Revised::select('id','name')
+            $temp_obj = Revised::select('id','name','school_id')
                 ->where('login_name',$this->input_array['login_name'])
                 ->where('login_pw',$this->input_array['login_pw'])
                 ->where('school_id',$this->input_array['school_id'])
@@ -92,6 +92,7 @@ class UserItem
                 session([
                     'user_type' => 'Revised',
                     'user_id' => $v['id'],
+                    'school_id' => $v['school_id'],
                     'name' => $v['name'],
                     'login_name' => $v['login_name'],
                 ]);
@@ -105,11 +106,6 @@ class UserItem
         }
         //受測者
         if(!$has_data){
-            $temp_obj = Student::select('id','name', 'student_id')
-                ->where('login_name',$this->input_array['login_name'])
-                ->where('login_pw',$this->input_array['login_pw'])
-                ->where('school_id',$this->input_array['school_id'])
-                ->get();
             $temp_obj = Student::where('student.login_name',$this->input_array['login_name'])
                 ->where('student.login_pw',$this->input_array['login_pw'])
                 ->where('student.school_id',$this->input_array['school_id'])

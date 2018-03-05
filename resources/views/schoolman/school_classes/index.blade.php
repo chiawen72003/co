@@ -75,7 +75,6 @@
             type:'GET',
             dataType: "json",
             data: {
-                'sid':'[! $school_id !]'
             },
             error: function(xhr) {
                 //alert('Ajax request 發生錯誤');
@@ -153,8 +152,7 @@
                 data: {
                     _token: '[! csrf_token() !]',
                     school_year:$('#classes_year').val(),
-                    title:$('#classes_name').val(),
-                    school_id:'[! $school_id !]'
+                    title:$('#classes_name').val()
                 },
                 error: function(xhr) {
                     //alert('Ajax request 發生錯誤');
@@ -182,7 +180,6 @@
             form_data.append('import_file', $("#up_file_"+id)[0].files[0]);
             form_data.append('_token', '[! csrf_token() !]');
             form_data.append('classes_id', classes_id);
-            form_data.append('school_id', '[! $school_id !]');
             $.ajax({
                 type:'POST',
                 dataType: "json",

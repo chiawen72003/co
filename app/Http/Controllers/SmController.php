@@ -32,7 +32,7 @@ class SmController extends Controller
     public function Classes()
     {
 
-        return view('admin.school_classes.index', $this->data);
+        return view('schoolman.school_classes.index', $this->data);
     }
 
     /**
@@ -40,9 +40,8 @@ class SmController extends Controller
      */
     public function ClassesInit()
     {
-        $school_id = app('request')->get('sid');
         $school = new SchoolItem(array(
-            'id' => $school_id,
+            'id' => $this->data['school_id'],
         ));
         $school_obj = $school->getOneSchool();
         $classses = $school->getClasses();
@@ -69,7 +68,7 @@ class SmController extends Controller
     {
         $data = array();
         $data['school_year'] = app('request')->get('school_year');
-        $data['school_id'] = app('request')->get('school_id');
+        $data['school_id'] = $this->data['school_id'];
         $data['title'] = app('request')->get('title');
         $t_obj = new SchoolItem();
         $t_obj->init($data);
@@ -87,7 +86,7 @@ class SmController extends Controller
     {
         $fp = Input::all();
         $data = array(
-            'school_id' => isset($fp['school_id']) ? $fp['school_id'] : null,
+            'school_id' => $this->data['school_id'],
             'classes_id' => isset($fp['classes_id']) ? $fp['classes_id'] : null,
             'import_user_file' => Input::file('import_file') ? Input::file('import_file') : null,
         );
