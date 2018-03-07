@@ -52,8 +52,8 @@
                             <li id="li_course_reel"><a href="[! route('ma.course.reel') !]">課程與試卷存取控制</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="">
+                    <li id="li_reel_analysis">
+                        <a href="[! route('ma.reel.analysis') !]">
                             <i class="mainnav-title-icon ion-ios-star"></i>
                             作答結果查詢
                         </a>

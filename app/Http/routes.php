@@ -129,10 +129,8 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
 
     //管理員 作答結果查詢設定
     Route::get('/Ma/Reel/Analysis', ['as' => 'ma.reel.analysis', 'uses' => 'AdController@ReelAnalysis']);
-    Route::get('/Ma/Reel/Init', ['as' => 'ma.reel.analysis.init', 'uses' => 'AdController@ReelAnalysisInit']);
-    Route::get('/Ma/Reel/List', ['as' => 'ma.reel.list', 'uses' => 'AdController@ReelList']);
-    Route::post('/Ma/Reel/Add', ['as' => 'ma.reel.add', 'uses' => 'AdController@ReelAdd']);
-    Route::post('/Ma/Reel/Del', ['as' => 'ma.reel.del', 'uses' => 'AdController@ReelDel']);
+    Route::get('/Ma/Reel/Analysis/Init', ['as' => 'ma.reel.analysis.init', 'uses' => 'AdController@ReelAnalysisInit']);
+    Route::get('/Ma/Reel/Analysis/List', ['as' => 'ma.reel.analysis.list', 'uses' => 'AdController@ReelAnalysisList']);
 });
 
 //受測者

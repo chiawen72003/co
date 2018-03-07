@@ -1100,4 +1100,58 @@ class AdController extends Controller
 
         echo json_encode($tobj->deleteFile(),JSON_UNESCAPED_UNICODE);
     }
+
+    /**
+     * 作答結果查詢頁面
+     */
+    public function ReelAnalysis()
+    {
+
+        $unit_id = app('request')->get('unit_id');
+        if(!is_null($unit_id))
+        {
+            $this->data['unit_id'] = $unit_id;
+        }
+
+        return view('admin.reel_analysis.index', $this->data);
+    }
+
+    /**
+     * 作答結果查詢頁面 初始化用的資料
+     */
+    public function ReelAnalysisInit()
+    {
+        $obj = new StructureItem();
+        $unit = $obj->getUnit();
+        $reel = $obj->getReel();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'unit' => $unit['data'],
+                'reel' => $reel['data'],
+            ),
+        );
+
+        echo json_encode($msg);
+    }
+
+    /**
+     * 作答結果查詢頁面 顯示試題分析頁面
+     */
+    public function ReelAnalysisList()
+    {
+        $unit_id = app('request')->get('unit_id');
+        $reel_id = app('request')->get('reel_id');
+        if(!is_null($unit_id))
+        {
+            $this->data['unit_id'] = $unit_id;
+        }
+        if(!is_null($reel_id))
+        {
+            $this->data['reel_id'] = $reel_id;
+        }
+
+        return view('admin.reel_analysis.list', $this->data);
+    }
 }
