@@ -15,8 +15,8 @@
             <div class="table-wrapper">
                 <table class="table" id="reel_list">
                     <tr id="tr_title">
-                        <th width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <th width="300">
+                            <div class="cell center"></div>
                         </th>
                         <th>
                             <div class="cell">級分</div>
@@ -44,8 +44,8 @@
                         </th>
                     </tr>
                     <tr id="tr_title">
-                        <td width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <td width="300">
+                            <div class="cell">3-1能書寫切合功能性寫作文本目的的內容</div>
                         </td>
                         <td>
                             <div class="cell">級分</div>
@@ -73,8 +73,8 @@
                         </td>
                     </tr>
                     <tr id="tr_title">
-                        <td width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <td width="300">
+                            <div class="cell">3-2能寫出切合功能性寫作文本語意清楚、語用正確、組織有條理的內容</div>
                         </td>
                         <td>
                             <div class="cell">級分</div>
@@ -111,8 +111,8 @@
             <div class="table-wrapper">
                 <table class="table" id="reel_list">
                     <tr id="tr_title">
-                        <th width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <th width="300">
+                            <div class="cell center"></div>
                         </th>
                         <th>
                             <div class="cell">級分</div>
@@ -140,8 +140,8 @@
                         </th>
                     </tr>
                     <tr id="tr_title">
-                        <td width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <td width="300">
+                            <div class="cell">3-3能書寫切合批判性寫作文本目的的內容</div>
                         </td>
                         <td>
                             <div class="cell">級分</div>
@@ -169,8 +169,66 @@
                         </td>
                     </tr>
                     <tr id="tr_title">
-                        <td width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <td width="300">
+                            <div class="cell">3-4能寫出切合批判性寫作文本語意清楚、語用正確、組織有條理的內容</div>
+                        </td>
+                        <td>
+                            <div class="cell">級分</div>
+                        </td>
+                        <td>
+                            <div class="cell">0</div>
+                        </td>
+                        <td>
+                            <div class="cell">1</div>
+                        </td>
+                        <td>
+                            <div class="cell">2</div>
+                        </td>
+                        <td>
+                            <div class="cell">3</div>
+                        </td>
+                        <td>
+                            <div class="cell">4</div>
+                        </td>
+                        <td>
+                            <div class="cell">5</div>
+                        </td>
+                        <td>
+                            <div class="cell">空白</div>
+                        </td>
+                    </tr>
+                    <tr id="tr_title">
+                        <td width="300">
+                            <div class="cell">3-5能針對批判性寫作文本之特定議題寫出個人立場或想法</div>
+                        </td>
+                        <td>
+                            <div class="cell">級分</div>
+                        </td>
+                        <td>
+                            <div class="cell">0</div>
+                        </td>
+                        <td>
+                            <div class="cell">1</div>
+                        </td>
+                        <td>
+                            <div class="cell">2</div>
+                        </td>
+                        <td>
+                            <div class="cell">3</div>
+                        </td>
+                        <td>
+                            <div class="cell">4</div>
+                        </td>
+                        <td>
+                            <div class="cell">5</div>
+                        </td>
+                        <td>
+                            <div class="cell">空白</div>
+                        </td>
+                    </tr>
+                    <tr id="tr_title">
+                        <td width="300">
+                            <div class="cell">3-6能整合與評估批判性寫作文本特定議題的兩方觀點並寫出來</div>
                         </td>
                         <td>
                             <div class="cell">級分</div>
@@ -208,8 +266,8 @@
             <div class="table-wrapper">
                 <table class="table" id="reel_list">
                     <tr id="tr_title">
-                        <th width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <th width="300">
+                            <div class="cell center"></div>
                         </th>
                         <th>
                             <div class="cell">級分</div>
@@ -237,8 +295,8 @@
                         </th>
                     </tr>
                     <tr id="tr_title">
-                        <td width="120">
-                            <div class="cell center">功能性題組 </div>
+                        <td width="300">
+                            <div class="cell">3-7能針對命題寫出個人之經歷與感受</div>
                         </td>
                         <td>
                             <div class="cell">級分</div>
@@ -265,35 +323,7 @@
                             <div class="cell">空白</div>
                         </td>
                     </tr>
-                    <tr id="tr_title">
-                        <td width="120">
-                            <div class="cell center">功能性題組 </div>
-                        </td>
-                        <td>
-                            <div class="cell">級分</div>
-                        </td>
-                        <td>
-                            <div class="cell">0</div>
-                        </td>
-                        <td>
-                            <div class="cell">1</div>
-                        </td>
-                        <td>
-                            <div class="cell">2</div>
-                        </td>
-                        <td>
-                            <div class="cell">3</div>
-                        </td>
-                        <td>
-                            <div class="cell">4</div>
-                        </td>
-                        <td>
-                            <div class="cell">5</div>
-                        </td>
-                        <td>
-                            <div class="cell">空白</div>
-                        </td>
-                    </tr>
+
                     <!--  -->
                 </table>
             </div>
