@@ -1,7 +1,7 @@
 @extends('admin.layout.layout')
 @section('content')
 <div class="article">
-    <div class="article-header">
+    <div class="article-header" id="reel_name">
         試卷名稱
     </div>
     <div class="article-content">
@@ -48,28 +48,28 @@
                             <div class="cell">3-1能書寫切合功能性寫作文本目的的內容</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_1_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_1_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_1_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_1_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_1_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_1_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_1_blank"></div>
                         </td>
                     </tr>
                     <tr id="tr_title">
@@ -77,28 +77,28 @@
                             <div class="cell">3-2能寫出切合功能性寫作文本語意清楚、語用正確、組織有條理的內容</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_2_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_2_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_2_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_2_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_2_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_2_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_2_blank"></div>
                         </td>
                     </tr>
                     <!--  -->
@@ -144,28 +144,28 @@
                             <div class="cell">3-3能書寫切合批判性寫作文本目的的內容</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_3_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_3_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_3_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_3_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_3_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_3_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_3_blank"></div>
                         </td>
                     </tr>
                     <tr id="tr_title">
@@ -173,28 +173,28 @@
                             <div class="cell">3-4能寫出切合批判性寫作文本語意清楚、語用正確、組織有條理的內容</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_4_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_4_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_4_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_4_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_4_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_4_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_4_blank"></div>
                         </td>
                     </tr>
                     <tr id="tr_title">
@@ -202,28 +202,28 @@
                             <div class="cell">3-5能針對批判性寫作文本之特定議題寫出個人立場或想法</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_5_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_5_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_5_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_5_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_5_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_5_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_5_blank"></div>
                         </td>
                     </tr>
                     <tr id="tr_title">
@@ -231,28 +231,28 @@
                             <div class="cell">3-6能整合與評估批判性寫作文本特定議題的兩方觀點並寫出來</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_6_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_6_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_6_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_6_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_6_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_6_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_6_blank"></div>
                         </td>
                     </tr>
                     <!--  -->
@@ -270,7 +270,7 @@
                             <div class="cell center"></div>
                         </th>
                         <th>
-                            <div class="cell">級分</div>
+                             <div class="cell">級分</div>
                         </th>
                         <th>
                             <div class="cell">0</div>
@@ -299,28 +299,28 @@
                             <div class="cell">3-7能針對命題寫出個人之經歷與感受</div>
                         </td>
                         <td>
-                            <div class="cell">級分</div>
+                            <div class="cell"></div>
                         </td>
                         <td>
-                            <div class="cell">0</div>
+                            <div class="cell" id="num_7_0"></div>
                         </td>
                         <td>
-                            <div class="cell">1</div>
+                            <div class="cell" id="num_7_1"></div>
                         </td>
                         <td>
-                            <div class="cell">2</div>
+                            <div class="cell" id="num_7_2"></div>
                         </td>
                         <td>
-                            <div class="cell">3</div>
+                            <div class="cell" id="num_7_3"></div>
                         </td>
                         <td>
-                            <div class="cell">4</div>
+                            <div class="cell" id="num_7_4"></div>
                         </td>
                         <td>
-                            <div class="cell">5</div>
+                            <div class="cell" id="num_7_5"></div>
                         </td>
                         <td>
-                            <div class="cell">空白</div>
+                            <div class="cell" id="num_7_blank"></div>
                         </td>
                     </tr>
 
@@ -331,32 +331,15 @@
         </div>
     </div>
 </div>
-<table style="display: none">
-    <tr id="copy_tr" >
-        <td><div class="cell center" id="version_area"></div></td>
-        <td><div class="cell"  id="subject_area"></div></td>
-        <td><div class="cell"  id="book_area"></div></td>
-        <td><div class="cell"  id="unit_area"></div></td>
-        <td><div class="cell"  id="name_area"></div></td>
-        <td>
-            <div class="cell center">
-                <a class="i-link" id="a_search"><i class="ion-trash-a"></i>查詢</a>
-            </div>
-        </td>
-    </tr>
-</table>
 [! Html::script('js/jquery-1.11.3.js') !]
 <script>
     var list_item = $('#reel_list');
     var version_item = $('#version');
     var subject_item = $('#subject');
     var book_item = $('#book');
-    var unit_sw_item = $('#unit');
     var tr_item = $('#copy_tr');
     var current = 'current';
-    var unit_item = [];
     var reel_item = [];
-    var unit_id = [! isset($unit_id)?$unit_id:0 !];
     $( document ).ready(function() {
         setMenu('li_reel_analysis', '');
         getInitData();
@@ -365,66 +348,33 @@
     //取得初始化資料
     function getInitData() {
         $.ajax({
-            url: "[! route('ma.reel.analysis.init') !]",
+            url: "[! route('ma.reel.analysis.list.init') !]",
             type:'GET',
             dataType: "json",
             data: {
+                'reel_id':'[! $reel_id !]'
             },
             error: function(xhr) {
                 //alert('Ajax request 發生錯誤');
             },
             success: function(response) {
                 if(response['status'] == true){
-                    for(var x=0;x<response['data']['unit'].length;x++)
+                    $('#reel_name').html('試卷名稱：'+response['reelname']);
+                    for(var x=1;x<8;x++)
                     {
-                        var t_data = response['data']['unit'][x];
-                        unit_item.push(
-                            {
-                                'id':t_data['id'],
-                                'version':t_data['version'],
-                                'subject':t_data['subject'],
-                                'book':t_data['book'],
-                                'unit_title':t_data['unit_title'],
-                            }
-                        );
-                        //如果有指定查詢的單元ID時
-                        if(t_data['id'] == unit_id){
-                            version_item.val(t_data['version']);
-                            subject_item.val(t_data['subject']);
-                            book_item.val(t_data['book']);
-                        }
-                    }
-                    for(var x=0;x<response['data']['reel'].length;x++)
-                    {
-                        var t_data = response['data']['reel'][x];
-                        reel_item.push(
-                            {
-                                'id':t_data['id'],
-                                'version':t_data['version'],
-                                'subject':t_data['subject'],
-                                'book':t_data['book'],
-                                'unit':t_data['unit'],
-                                'reel_title':t_data['reel_title'],
-                            }
-                        );
+                        var t_array = response['data'][x];
+                        console.log(response['data'][x]);
+                        $('#num_'+x+'_0').html(t_array['0']);
+                        $('#num_'+x+'_1').html(t_array['1']);
+                        $('#num_'+x+'_2').html(t_array['2']);
+                        $('#num_'+x+'_3').html(t_array['3']);
+                        $('#num_'+x+'_4').html(t_array['4']);
+                        $('#num_'+x+'_5').html(t_array['5']);
+                        $('#num_'+x+'_blank').html(t_array['blank']);
                     }
                 }
-                setUnitList();
-                setList();
             }
         });
-    }
-
-    function setUnitList() {
-        var v = version_item.val();
-        var s = subject_item.val();
-        var b = book_item.val();
-        $("#unit option").remove();
-        for(var x=0;x<unit_item.length;x++){
-            if(unit_item[x]['version'] == v && unit_item[x]['subject'] == s && unit_item[x]['book'] == b){
-                unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
-            }
-        }
     }
 
     function setList() {
@@ -452,29 +402,5 @@
         }
     }
 
-    function getUnitName(id)
-    {
-        for(var x=0;x<unit_item.length;x++){
-            if(unit_item[x]['id'] == id){
-
-               return unit_item[x]['unit_title'];
-            }
-        }
-    }
-    
-    function searchReel()
-    {
-        if(unit_sw_item.val() != null)
-        {
-            location.href = "[! route('ma.reel.analysis') !]?unit_id="+unit_sw_item.val();
-        }else{
-            alert("請選擇要查詢的單元!!");
-        }
-    }
-
-    function chgList(id)
-    {
-        location.href = "[! route('ma.reel.analysis.list') !]?unit_id="+unit_id+'&reel_id='+id;
-    }
 </script>
 @stop

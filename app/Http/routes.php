@@ -131,6 +131,8 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/Reel/Analysis', ['as' => 'ma.reel.analysis', 'uses' => 'AdController@ReelAnalysis']);
     Route::get('/Ma/Reel/Analysis/Init', ['as' => 'ma.reel.analysis.init', 'uses' => 'AdController@ReelAnalysisInit']);
     Route::get('/Ma/Reel/Analysis/List', ['as' => 'ma.reel.analysis.list', 'uses' => 'AdController@ReelAnalysisList']);
+    Route::get('/Ma/Reel/Analysis/List/Init', ['as' => 'ma.reel.analysis.list.init', 'uses' => 'AdController@ReelAnalysisListInit']);
+
 });
 
 //受測者

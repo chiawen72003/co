@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Providers\MeasuredItem;
 use App\Http\Providers\UserItem;
 use \Input;
 use \Validator;
@@ -16,7 +17,7 @@ use App\Http\Providers\FileItem;
 
 class AdController extends Controller
 {
-    private $data =array();
+    private $data = array();
 
     public function __construct()
     {
@@ -45,7 +46,7 @@ class AdController extends Controller
         ));
         $school_obj = $school->getOneSchool();
         $classses = $school->getClasses();
-        $return  = array(
+        $return = array(
             'status' => true,
             'msg' => '',
             'data' => array(
@@ -95,6 +96,7 @@ class AdController extends Controller
 
         echo json_encode($member_obj->get_import_student());
     }
+
     /**
      * 學校-科系
      */
@@ -293,6 +295,7 @@ class AdController extends Controller
         $t_obj->init($data);
         echo json_encode($t_obj->unsetCourseReel());
     }
+
     /**
      * 課程-學員對應設定
      *
@@ -490,12 +493,11 @@ class AdController extends Controller
     {
         $reel_id = app('request')->get('reelID');
         $this->data['has_reel_id'] = false;
-        $this->data['reel_id'] =0;
+        $this->data['reel_id'] = 0;
 
-        if(!is_null($reel_id))
-        {
-            $this->data['reel_id'] =$reel_id;
-            $this->data['has_reel_id'] =true;
+        if (!is_null($reel_id)) {
+            $this->data['reel_id'] = $reel_id;
+            $this->data['has_reel_id'] = true;
         }
 
         return view('admin.question.index', $this->data);
@@ -585,10 +587,9 @@ class AdController extends Controller
         //reelID => 試卷id
         $reel_id = app('request')->get('reelID');
         $this->data['has_reel_id'] = false;
-        if(!is_null($reel_id))
-        {
-            $this->data['reel_id'] =$reel_id;
-            $this->data['has_reel_id'] =true;
+        if (!is_null($reel_id)) {
+            $this->data['reel_id'] = $reel_id;
+            $this->data['has_reel_id'] = true;
         }
         //設定ckfinder
         //https://dotblogs.com.tw/jellycheng/archive/2013/09/11/118175.aspx
@@ -771,6 +772,7 @@ class AdController extends Controller
 
         echo json_encode($msg);
     }
+
     /**
      * 新增評閱者資料的編輯頁面
      *
@@ -950,7 +952,7 @@ class AdController extends Controller
         $s_obj = new SchoolItem();
         $school = $s_obj->getSchool();
         $classes = $s_obj->getAllClasses();
-        $return  = array(
+        $return = array(
             'status' => true,
             'msg' => '',
             'data' => array(
@@ -976,7 +978,7 @@ class AdController extends Controller
             'classes_id' => app('request')->get('classes_id'),
         ));
 
-        echo json_encode($user->getStudentBySubject(),JSON_UNESCAPED_UNICODE);
+        echo json_encode($user->getStudentBySubject(), JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -996,7 +998,7 @@ class AdController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->addStudent(),JSON_UNESCAPED_UNICODE);
+        echo json_encode($t_obj->addStudent(), JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -1014,7 +1016,7 @@ class AdController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->setStudent(),JSON_UNESCAPED_UNICODE);
+        echo json_encode($t_obj->setStudent(), JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -1027,7 +1029,7 @@ class AdController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->unsetStudent(),JSON_UNESCAPED_UNICODE);
+        echo json_encode($t_obj->unsetStudent(), JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -1037,7 +1039,7 @@ class AdController extends Controller
     public function Files()
     {
         $t_obj = new FileItem();
-        $this->data['list_data'] = $t_obj -> getFilesData();
+        $this->data['list_data'] = $t_obj->getFilesData();
 
         return view('admin.files.index', $this->data);
     }
@@ -1050,17 +1052,17 @@ class AdController extends Controller
     public function FilesDownload($id)
     {
         $news_obj = new FileItem();
-        $news_obj -> init(array('id'=>$id));
-        $news_data = $news_obj ->getOneFilesData();
-        if(isset($news_data['file_path']) and $news_data['file_path'] != ''){
-            try{
+        $news_obj->init(array('id' => $id));
+        $news_data = $news_obj->getOneFilesData();
+        if (isset($news_data['file_path']) and $news_data['file_path'] != '') {
+            try {
 
-                return response()->download($news_data['file_path'],$news_data['file_name']);
-            }catch (\Exception $e){
+                return response()->download($news_data['file_path'], $news_data['file_name']);
+            } catch (\Exception $e) {
             }
         }
 
-        return ;
+        return;
     }
 
     /**
@@ -1070,9 +1072,9 @@ class AdController extends Controller
     public function FilesAdd()
     {
         if (Input::file('import_file') != null) {
-            $save_path = 'files/upfile/'. date("Ymd");
+            $save_path = 'files/upfile/' . date("Ymd");
             $extension = Input::file('import_file')->getClientOriginalExtension(); //取得副檔名
-            $file_name =  Input::file('import_file')->getClientOriginalName();//原始檔名
+            $file_name = Input::file('import_file')->getClientOriginalName();//原始檔名
             $new_file_name = time() . '.' . $extension; // renameing image
             Input::file('import_file')->move($save_path, $new_file_name); // uploading file to given path
             $data['file_name'] = $file_name;
@@ -1081,7 +1083,7 @@ class AdController extends Controller
             $t_obj = new FileItem();
             $t_obj->init($data);
 
-            echo json_encode($t_obj->addFile(),JSON_UNESCAPED_UNICODE);
+            echo json_encode($t_obj->addFile(), JSON_UNESCAPED_UNICODE);
         }
 
         echo '';
@@ -1098,7 +1100,7 @@ class AdController extends Controller
             'id' => app('request')->get('id')
         ));
 
-        echo json_encode($tobj->deleteFile(),JSON_UNESCAPED_UNICODE);
+        echo json_encode($tobj->deleteFile(), JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -1108,8 +1110,7 @@ class AdController extends Controller
     {
 
         $unit_id = app('request')->get('unit_id');
-        if(!is_null($unit_id))
-        {
+        if (!is_null($unit_id)) {
             $this->data['unit_id'] = $unit_id;
         }
 
@@ -1143,15 +1144,26 @@ class AdController extends Controller
     {
         $unit_id = app('request')->get('unit_id');
         $reel_id = app('request')->get('reel_id');
-        if(!is_null($unit_id))
-        {
+        if (!is_null($unit_id)) {
             $this->data['unit_id'] = $unit_id;
         }
-        if(!is_null($reel_id))
-        {
+        if (!is_null($reel_id)) {
             $this->data['reel_id'] = $reel_id;
         }
 
         return view('admin.reel_analysis.list', $this->data);
+    }
+
+    /**
+     * 作答結果查詢頁面 顯示試題分析頁面
+     */
+    public function ReelAnalysisListInit()
+    {
+        $t_obj = new MeasuredItem();
+        $t_obj->init(array(
+            'reel_id' => app('request')->get('reel_id')
+        ));
+
+        echo json_encode($t_obj->getReelAnalys(), JSON_UNESCAPED_UNICODE);
     }
 }

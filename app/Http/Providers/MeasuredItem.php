@@ -6,7 +6,6 @@ use App\Http\Models\CourseStudent;
 use App\Http\Models\ListUnderTest;
 use App\Http\Models\Questions;
 use App\Http\Models\Reel;
-use App\Http\Models\ReelQuestion;
 use App\Http\Models\ReelModify;
 use Illuminate\Support\Str;
 use \Input;
@@ -460,6 +459,137 @@ class MeasuredItem
             'status' => true,
             'msg' => '',
             'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
+     * 分析指定試卷的所有作答結果，取得能力指標相關統計資料
+     */
+    public function getReelAnalys()
+    {
+        $Analys =  array(
+            '1' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '2' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '3' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '4' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '5' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '6' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '7' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+        );
+        $t_array = array();
+        $reel_name = '';
+        //試卷的名稱
+        $temp_obj = Reel::select(
+            'reel_title'
+        )
+            ->where('id', $this->init['reel_id'])
+            ->get();
+        foreach ($temp_obj as $v) {
+            $reel_name = $v['reel_title'];
+        }
+        //先分析能力指表的分佈
+        $temp_obj = Questions::select(
+            'power'
+        )
+            ->where('reel_id', $this->init['reel_id'])
+            ->get();
+        foreach ($temp_obj as $v) {
+            $json = json_decode($v['power'], true);
+            $t_array = array_merge($t_array, $json);
+        }
+        //取得所有已經有評閱過的試卷，統計分數
+        $temp_obj = ListUnderTest::select(
+            'modify_id',
+            's_modify_id',
+            'review_1',
+            'review_2'
+        )
+            ->where('reel_id', $this->init['reel_id'])
+            ->where('has_test', 1)
+            ->where('has_review', 1)
+            ->get();
+        foreach ($temp_obj as $v) {
+            $json = array();
+            if($v['s_modify_id'] > 0){
+                $json = json_decode($v['review_2'], true);
+            }else{
+                $json = json_decode($v['review_1'], true);
+            }
+            if(isset($json['view_data'])){
+                foreach ($json['view_data'] as $key => $r){
+                    $power_index = $t_array[$key];
+                    if($r['is_blank'] == 'true'){
+                        $Analys[$power_index]['blank']++;
+                    }else{
+                        $Analys[$power_index][$r['score']]++;
+                    }
+                }
+            }
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $Analys,
+            'reelname' => $reel_name,
         );
 
         return $this->msg;
