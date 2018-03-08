@@ -174,7 +174,12 @@
         $("#unit option").remove();
         for(var x=0;x<unit_item.length;x++){
             if(unit_item[x]['version'] == v && unit_item[x]['subject'] == s && unit_item[x]['book'] == b){
-                unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
+                //如果有指定查詢的單元ID時
+                if(unit_item[x]['id'] == unit_id){
+                    unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).attr('selected', true).text(unit_item[x]['unit_title']));
+                }else{
+                    unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
+                }
             }
         }
     }
@@ -183,8 +188,9 @@
         version = version_item.val();
         subject = subject_item.val();
         book = book_item.val();
+        unit = unit_sw_item.val();
         for(var x=0;x<reel_item.length;x++){
-            if(reel_item[x]['version'] == version && reel_item[x]['subject'] == subject &&reel_item[x]['book'] == book )
+            if(reel_item[x]['version'] == version && reel_item[x]['subject'] == subject && reel_item[x]['book'] == book  && reel_item[x]['unit'] == unit)
             {
                 var t = tr_item.clone();
                 var v = $("#version option[value="+ reel_item[x]['version'] +"]").text();
