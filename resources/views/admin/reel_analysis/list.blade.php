@@ -327,7 +327,14 @@
                     <!--  -->
                 </table>
             </div>
-
+            <div class="form-group form-bottom" id="insert_point">
+                <button type="button" class="i-btn" onclick="history.back()">
+                    回上一頁
+                </button>
+                <button type="button" class="i-btn i-btn-primary" onclick="getExcel()">
+                    檔案下載
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -401,6 +408,7 @@
             }
         }
     }
+
 
 </script>
 @stop
