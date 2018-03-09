@@ -384,31 +384,10 @@
         });
     }
 
-    function setList() {
-        version = version_item.val();
-        subject = subject_item.val();
-        book = book_item.val();
-        for(var x=0;x<reel_item.length;x++){
-            if(reel_item[x]['version'] == version && reel_item[x]['subject'] == subject &&reel_item[x]['book'] == book )
-            {
-                var t = tr_item.clone();
-                var v = $("#version option[value="+ reel_item[x]['version'] +"]").text();
-                var s = $("#subject option[value="+ reel_item[x]['subject'] +"]").text();
-                var b = $("#book option[value="+ reel_item[x]['book'] +"]").text();
-                var u = getUnitName(reel_item[x]['unit']);
-                var r = reel_item[x]['reel_title'];
-                t.find('#version_area').html(v).removeAttr('id');
-                t.find('#subject_area').html(s).removeAttr('id');
-                t.find('#book_area').html(b).removeAttr('id');
-                t.find('#unit_area').html(u).removeAttr('id');
-                t.find('#name_area').html(r).removeAttr('id');
-                t.find('#a_search').attr('onclick','chgList("'+ reel_item[x]['id'] +'")').removeAttr('id');
-                t.removeAttr('id');
-                list_item.append(t);
-            }
-        }
+    //下載excel
+    function getExcel()
+    {
+        window.open('[! route("ma.reel.analysis.download.excel") !]?reel_id=[! $reel_id !]','_blank');
     }
-
-
 </script>
 @stop

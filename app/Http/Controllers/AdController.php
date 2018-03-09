@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Providers\MeasuredItem;
-use App\Http\Providers\UserItem;
 use \Input;
 use \Validator;
 use \Session;
 use \DB;
 use \Response;
+use App\Http\Providers\MeasuredItem;
+use App\Http\Providers\UserItem;
 use App\Http\Providers\SchoolItem;
 use App\Http\Providers\StructureItem;
 use App\Http\Providers\QuestionItem;
 use App\Http\Providers\ModifyItem;
 use App\Http\Providers\FileItem;
+use App\Http\Providers\PhpExcel;
 
 class AdController extends Controller
 {
@@ -1165,5 +1166,24 @@ class AdController extends Controller
         ));
 
         echo json_encode($t_obj->getReelAnalys(), JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 作答結果查詢頁面 下載指定試題統計資料的excel檔
+     */
+    public function ReelAnalysisDownloadExcel()
+    {
+        $t_obj = new MeasuredItem();
+        $t_obj->init(array(
+            'reel_id' => app('request')->get('reel_id')
+        ));
+        $data = $t_obj->getReelAnalysExcel();
+
+        $file_name = $data['reel_name'];
+        $file_name .= '.xls';
+        $excel_obj = new PhpExcel();
+        $excel_obj->set_file_name($file_name);
+        $excel_obj->set_excel_data($data['excel_data']);
+        $excel_obj->get_reel_analysis_data();
     }
 }

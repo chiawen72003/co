@@ -594,4 +594,185 @@ class MeasuredItem
 
         return $this->msg;
     }
+
+
+    /**
+     * 分析指定試卷的所有作答結果，取得能力指標相關統計資料，並轉換成Excel欄位格式
+     */
+    public function getReelAnalysExcel()
+    {
+        $return  = array(
+            'excel_data' => array(),
+            'reel_name' => '',
+        );
+
+        $Analys =  array(
+            '1' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '2' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '3' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '4' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '5' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '6' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+            '7' => array(
+                'blank'=>0,
+                '0'=>0,
+                '1'=>0,
+                '2'=>0,
+                '3'=>0,
+                '4'=>0,
+                '5'=>0,
+            ),
+        );
+        $t_array = array();
+        //試卷的名稱
+        $temp_obj = Reel::select(
+            'reel_title'
+        )
+            ->where('id', $this->init['reel_id'])
+            ->get();
+        foreach ($temp_obj as $v) {
+            $return['reel_name'] = $v['reel_title'];
+        }
+        //先分析能力指表的分佈
+        $temp_obj = Questions::select(
+            'power'
+        )
+            ->where('reel_id', $this->init['reel_id'])
+            ->get();
+        foreach ($temp_obj as $v) {
+            $json = json_decode($v['power'], true);
+            $t_array = array_merge($t_array, $json);
+        }
+        //取得所有已經有評閱過的試卷，統計分數
+        $temp_obj = ListUnderTest::select(
+            'modify_id',
+            's_modify_id',
+            'review_1',
+            'review_2'
+        )
+            ->where('reel_id', $this->init['reel_id'])
+            ->where('has_test', 1)
+            ->where('has_review', 1)
+            ->get();
+        foreach ($temp_obj as $v) {
+            $json = array();
+            if($v['s_modify_id'] > 0){
+                $json = json_decode($v['review_2'], true);
+            }else{
+                $json = json_decode($v['review_1'], true);
+            }
+            if(isset($json['view_data'])){
+                foreach ($json['view_data'] as $key => $r){
+                    $power_index = $t_array[$key];
+                    if($r['is_blank'] == 'true'){
+                        $Analys[$power_index]['blank']++;
+                    }else{
+                        $Analys[$power_index][$r['score']]++;
+                    }
+                }
+            }
+        }
+        $excel_data = array(
+            'C3' => $Analys['1']['0'],
+            'D3' => $Analys['1']['1'],
+            'E3' => $Analys['1']['2'],
+            'F3' => $Analys['1']['3'],
+            'G3' => $Analys['1']['4'],
+            'H3' => $Analys['1']['5'],
+            'I3' => $Analys['1']['blank'],
+            'C4' => $Analys['2']['0'],
+            'D4' => $Analys['2']['1'],
+            'E4' => $Analys['2']['2'],
+            'F4' => $Analys['2']['3'],
+            'G4' => $Analys['2']['4'],
+            'H4' => $Analys['2']['5'],
+            'I4' => $Analys['2']['blank'],
+            'C7' => $Analys['3']['0'],
+            'D7' => $Analys['3']['1'],
+            'E7' => $Analys['3']['2'],
+            'F7' => $Analys['3']['3'],
+            'G7' => $Analys['3']['4'],
+            'H7' => $Analys['3']['5'],
+            'I7' => $Analys['3']['blank'],
+            'C8' => $Analys['4']['0'],
+            'D8' => $Analys['4']['1'],
+            'E8' => $Analys['4']['2'],
+            'F8' => $Analys['4']['3'],
+            'G8' => $Analys['4']['4'],
+            'H8' => $Analys['4']['5'],
+            'I8' => $Analys['4']['blank'],
+            'C9' => $Analys['5']['0'],
+            'D9' => $Analys['5']['1'],
+            'E9' => $Analys['5']['2'],
+            'F9' => $Analys['5']['3'],
+            'G9' => $Analys['5']['4'],
+            'H9' => $Analys['5']['5'],
+            'I9' => $Analys['5']['blank'],
+            'C10' => $Analys['6']['0'],
+            'D10' => $Analys['6']['1'],
+            'E10' => $Analys['6']['2'],
+            'F10' => $Analys['6']['3'],
+            'G10' => $Analys['6']['4'],
+            'H10' => $Analys['6']['5'],
+            'I10' => $Analys['6']['blank'],
+            'C13' => $Analys['7']['0'],
+            'D13' => $Analys['7']['1'],
+            'E13' => $Analys['7']['2'],
+            'F13' => $Analys['7']['3'],
+            'G13' => $Analys['7']['4'],
+            'H13' => $Analys['7']['5'],
+            'I13' => $Analys['7']['blank'],
+        );
+        $return['excel_data'] = $excel_data;
+
+        return $return;
+    }
 }
