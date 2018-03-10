@@ -262,9 +262,15 @@ class SmController extends Controller
     {
         $structure = new StructureItem();
         $school_item = new SchoolItem();
+        $structure->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
+        $school_item->init(array(
+            'id' => $this->data['school_id'],
+        ));
         $course = $structure->getCourse();
-        $school = $school_item->getSchool();
-        $classes = $school_item->getAllClasses();
+        $school = $school_item->getOneSchool();
+        $classes = $school_item->getClasses();
         $list = $structure->getCourseStudent();
         $return = array(
             'status' => true,
@@ -302,7 +308,7 @@ class SmController extends Controller
     {
         $data = array();
         $data['course_id'] = app('request')->get('course_id');
-        $data['school_id'] = app('request')->get('school_id');
+        $data['school_id'] = $this->data['school_id'];
         $data['classes_id'] = app('request')->get('classes_id');
         $t_obj = new StructureItem();
         $t_obj->init($data);

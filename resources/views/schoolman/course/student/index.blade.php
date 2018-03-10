@@ -21,9 +21,6 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="i-label" class="i-select">學校</label>
-                    <select id="school" class="i-select" onchange="setClassesYear()">
-                    </select>
                     <label class="i-label" class="i-select">學年度</label>
                     <select id="classes_year" class="i-select" onchange="setClasses()">
                     </select>
@@ -49,9 +46,6 @@
                             <div class="cell center">課程名稱</div>
                         </th>
                         <th >
-                            <div class="cell center">學校名稱</div>
-                        </th>
-                        <th >
                             <div class="cell center">學年度</div>
                         </th>
                         <th >
@@ -67,7 +61,6 @@
 <table style="display: none">
     <tr id="copy_tr" >
         <td><div class="cell center" id="course_area"></div></td>
-        <td><div class="cell  center"  id="school_area"></div></td>
         <td><div class="cell  center"  id="classes_area"></div></td>
         <td><div class="cell  center"  id="classes_name"></div></td>
     </tr>
@@ -152,20 +145,12 @@
                 }
                 setYearOption();
                 setCourse();
-                setSchoolOption();
                 setClassesYear();
                 setList();
             }
         });
     }
-    
-    //設定學校的下拉選單
-    function setSchoolOption() {
-        $("#school option").remove();
-        for(var x=0;x<school_item.length;x++){
-            school.append($("<option></option>").attr("value", school_item[x]['id']).text(school_item[x]['school_title']));
-        }
-    }
+
     //設定學年度下拉選單
     function setYearOption() {
         var tt = [];
@@ -195,10 +180,8 @@
         $("#classes_year option").remove();
         var tt = [];
         for (var x = 0; x < classes_item.length; x++) {
-            if (classes_item[x]['school_id'] == school.val()) {
-                if ($.inArray(classes_item[x]['school_year'], tt) < 0) {
-                    tt.push(classes_item[x]['school_year']);
-                }
+            if ($.inArray(classes_item[x]['school_year'], tt) < 0) {
+                tt.push(classes_item[x]['school_year']);
             }
         }
 
@@ -214,7 +197,7 @@
         var tt = [];
         for (var x = 0; x < classes_item.length; x++) {
             var t = classes_item[x];
-            if (t['school_id'] == school.val() && t['school_year'] == classesYear.val()) {
+            if (t['school_year'] == classesYear.val()) {
                 classes.append($("<option></option>").attr("value", t['id']).text(t['title']));
             }
         }
@@ -248,7 +231,6 @@
             }
 
             t.find('#course_area').html(course).removeAttr('id');
-            t.find('#school_area').html(school).removeAttr('id');
             t.find('#classes_area').html(classes_year).removeAttr('id');
             t.find('#classes_name').html(classes).removeAttr('id');
             t.removeAttr('id');

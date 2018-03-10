@@ -131,7 +131,7 @@ class StructureItem
         $return_data = array();
         $temp_obj = Course::select('id','school_year', 'semester', 'course_title', 'reel_id');
         if(isset($this->input_array['school_id'])){
-            $temp_obj = Course::where('school_id',$this->input_array['school_id']);
+            $temp_obj = $temp_obj->where('school_id',$this->input_array['school_id']);
         }
         $temp_obj = $temp_obj->orderby('school_year', 'ASC')
             ->orderby('semester', 'ASC')
@@ -432,8 +432,12 @@ class StructureItem
     public function getCourseStudent()
     {
         $return_data = array();
-        $temp_obj = CourseStudent::select('id','course_id', 'school_id', 'classes_id')
-            ->orderBy('course_id')
+        $temp_obj = CourseStudent::select('id','course_id', 'school_id', 'classes_id');
+        if(isset($this->input_array['school_id']))
+        {
+            $temp_obj = $temp_obj->where('school_id',$this->input_array['school_id']);
+        }
+        $temp_obj = $temp_obj->orderBy('course_id')
             ->orderBy('school_id')
             ->orderBy('classes_id')
             ->get();
