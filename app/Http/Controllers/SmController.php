@@ -116,6 +116,9 @@ class SmController extends Controller
     public function CourseList()
     {
         $school = new StructureItem();
+        $school->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
 
         echo json_encode($school->getCourse());
     }
@@ -132,6 +135,7 @@ class SmController extends Controller
         $data['school_year'] = app('request')->get('school_year');
         $data['semester'] = app('request')->get('semester');
         $data['course_title'] = app('request')->get('course_title');
+        $data['school_id'] = $this->data['school_id'];
         $t_obj = new StructureItem();
         $t_obj->init($data);
         echo json_encode($t_obj->addCourse());

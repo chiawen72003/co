@@ -74,7 +74,7 @@
     
     function getListData() {
         $.ajax({
-            url: "[! route('ma.course.list') !]",
+            url: "[! route('sm.course.list') !]",
             type:'GET',
             dataType: "json",
             data: {
@@ -115,7 +115,7 @@
     function addCourse(){
         if(!isSend){
             $.ajax({
-                url: "[! route('ma.course.add') !]",
+                url: "[! route('sm.course.add') !]",
                 type:'POST',
                 dataType: "json",
                 data: {

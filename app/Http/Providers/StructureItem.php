@@ -129,8 +129,11 @@ class StructureItem
     public function getCourse()
     {
         $return_data = array();
-        $temp_obj = Course::select('id','school_year', 'semester', 'course_title', 'reel_id')
-            ->orderby('school_year', 'ASC')
+        $temp_obj = Course::select('id','school_year', 'semester', 'course_title', 'reel_id');
+        if(isset($this->input_array['school_id'])){
+            $temp_obj = Course::where('school_id',$this->input_array['school_id']);
+        }
+        $temp_obj = $temp_obj->orderby('school_year', 'ASC')
             ->orderby('semester', 'ASC')
             ->orderby('course_title', 'ASC')
             ->get();
@@ -155,6 +158,7 @@ class StructureItem
     public function addCourse()
     {
         $update = new Course();
+        $update->school_id = $this->input_array['school_id'];
         $update->school_year = $this->input_array['school_year'];
         $update->semester = $this->input_array['semester'];
         $update->course_title = $this->input_array['course_title'];
