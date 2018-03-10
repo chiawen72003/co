@@ -10,9 +10,9 @@ use \DB;
 use \Response;
 use App\Http\Providers\SchoolItem;
 use App\Http\Providers\StructureItem;
-use App\Http\Providers\QuestionItem;
-use App\Http\Providers\ModifyItem;
-use App\Http\Providers\FileItem;
+use App\Http\Providers\MeasuredItem;
+use App\Http\Providers\PhpExcel;
+
 
 class SmController extends Controller
 {
@@ -437,4 +437,88 @@ class SmController extends Controller
         echo json_encode($t_obj->setAdminPw());
     }
 
+
+    /**
+     * 作答結果查詢頁面
+     */
+    public function Analysis()
+    {
+
+        $unit_id = app('request')->get('unit_id');
+        if (!is_null($unit_id)) {
+            $this->data['unit_id'] = $unit_id;
+        }
+
+        return view('schoolman.reel_analysis.index', $this->data);
+    }
+
+    /**
+     * 作答結果查詢頁面 初始化用的資料
+     */
+    public function AnalysisInit()
+    {
+        $obj = new StructureItem();
+        $unit = $obj->getUnit();
+        $reel = $obj->getReel();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'unit' => $unit['data'],
+                'reel' => $reel['data'],
+            ),
+        );
+
+        echo json_encode($msg);
+    }
+
+    /**
+     * 作答結果查詢頁面 顯示試題分析頁面
+     */
+    public function AnalysisList()
+    {
+        $unit_id = app('request')->get('unit_id');
+        $reel_id = app('request')->get('reel_id');
+        if (!is_null($unit_id)) {
+            $this->data['unit_id'] = $unit_id;
+        }
+        if (!is_null($reel_id)) {
+            $this->data['reel_id'] = $reel_id;
+        }
+
+        return view('schoolman.reel_analysis.list', $this->data);
+    }
+
+    /**
+     * 作答結果查詢頁面 顯示試題分析頁面
+     */
+    public function AnalysisListInit()
+    {
+        $t_obj = new MeasuredItem();
+        $t_obj->init(array(
+            'reel_id' => app('request')->get('reel_id'),
+            'school_id' => $this->data['school_id']
+        ));
+
+        echo json_encode($t_obj->getReelAnalys(), JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 作答結果查詢頁面 下載指定試題統計資料的excel檔
+     */
+    public function AnalysisDownloadExcel()
+    {
+        $t_obj = new MeasuredItem();
+        $t_obj->init(array(
+            'reel_id' => app('request')->get('reel_id')
+        ));
+        $data = $t_obj->getReelAnalysExcel();
+
+        $file_name = $data['reel_name'];
+        $file_name .= '.xls';
+        $excel_obj = new PhpExcel();
+        $excel_obj->set_file_name($file_name);
+        $excel_obj->set_excel_data($data['excel_data']);
+        $excel_obj->get_reel_analysis_data();
+    }
 }

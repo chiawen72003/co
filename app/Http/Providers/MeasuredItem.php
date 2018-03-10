@@ -561,8 +561,11 @@ class MeasuredItem
             's_modify_id',
             'review_1',
             'review_2'
-        )
-            ->where('reel_id', $this->init['reel_id'])
+        );
+        if(isset($this->init['school_id'])){
+            $temp_obj = $temp_obj->where('school_id',$this->init['school_id']);
+        }
+        $temp_obj = $temp_obj->where('reel_id', $this->init['reel_id'])
             ->where('has_test', 1)
             ->where('has_review', 1)
             ->get();
