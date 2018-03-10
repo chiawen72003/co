@@ -333,6 +333,9 @@ class SmController extends Controller
     public function CourseReelInit()
     {
         $structure = new StructureItem();
+        $structure->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
         $course = $structure->getCourse();
         $reel = $structure->getReel();
         $list = $structure->getCourseReel();
@@ -356,6 +359,9 @@ class SmController extends Controller
     public function CourseReelList()
     {
         $school = new StructureItem();
+        $school->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
 
         echo json_encode($school->getCourseReel());
     }

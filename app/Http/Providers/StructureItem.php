@@ -357,8 +357,12 @@ class StructureItem
     public function getCourseReel()
     {
         $return_data = array();
-        $temp_obj = Course::select('id', 'reel_id')
-            ->get();
+        $temp_obj = Course::select('id', 'reel_id');
+        if(isset($this->input_array['school_id']))
+        {
+            $temp_obj = $temp_obj->where('school_id', $this->input_array['school_id']);
+        }
+        $temp_obj = $temp_obj->get();
         foreach($temp_obj as $v ){
             $data = json_decode($v['reel_id'],true);
             foreach ($data as $reel_id){
