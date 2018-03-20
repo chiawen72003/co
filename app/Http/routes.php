@@ -49,6 +49,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
 
     //管理員 課程設定 新增課程
     Route::get('/Ma/Course', ['as' => 'ma.course', 'uses' => 'AdController@Course']);
+    Route::get('/Ma/Course/page', ['as' => 'ma.course.page', 'uses' => 'AdController@CoursePage']);
     Route::get('/Ma/Course/list', ['as' => 'ma.course.list', 'uses' => 'AdController@CourseList']);
     Route::post('/Ma/Course/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseAdd']);
 

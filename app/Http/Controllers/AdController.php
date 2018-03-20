@@ -185,14 +185,25 @@ class AdController extends Controller
     }
 
     /**
-     * 課程設定
-     *
-     *
+     * 課程設定 所有學校列表
      */
     public function Course()
     {
 
         return view('admin.course.index', $this->data);
+    }
+
+
+    /**
+     * 課程設定 頁面
+     *
+     *
+     */
+    public function CoursePage()
+    {
+        $this->data['school_id'] = app('request')->get('s_id');
+
+        return view('admin.course.list', $this->data);
     }
 
     /**
@@ -202,9 +213,26 @@ class AdController extends Controller
      */
     public function CourseList()
     {
-        $school = new StructureItem();
-
-        echo json_encode($school->getCourse());
+        $school_id = app('request')->get('sid');
+        $school = new SchoolItem(array(
+            'id' => $school_id,
+        ));
+        $school_obj = $school->getOneSchool();
+        $course = new StructureItem();
+        $course->init(array(
+            'school_id' => $school_id,
+        ));
+        $course_obj = $course->getCourse();
+        $return = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'school_data' => $school_obj['data'],
+                'course_data' => $course_obj['data'],
+                'area_data' => config('area'),
+            ),
+        );
+        echo json_encode($return);
     }
 
     /**
@@ -215,11 +243,13 @@ class AdController extends Controller
     public function CourseAdd()
     {
         $data = array();
+        $data['school_id'] = app('request')->get('school_id');
         $data['school_year'] = app('request')->get('school_year');
         $data['semester'] = app('request')->get('semester');
         $data['course_title'] = app('request')->get('course_title');
         $t_obj = new StructureItem();
         $t_obj->init($data);
+
         echo json_encode($t_obj->addCourse());
     }
 
