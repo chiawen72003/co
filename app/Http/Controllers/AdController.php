@@ -328,7 +328,7 @@ class AdController extends Controller
     }
 
     /**
-     * 課程-學員對應設定
+     * 課程-學員對應設定 學校列表
      *
      *
      */
@@ -339,24 +339,44 @@ class AdController extends Controller
     }
 
     /**
+     * 課程-學員對應設定 設定頁面
+     *
+     *
+     */
+    public function CourseStudentPage()
+    {
+        $this->data['school_id'] = app('request')->get('s_id');
+
+        return view('admin.course.student.list', $this->data);
+    }
+    /**
      * 課程-學員對應 初始化資料
      */
     public function CourseStudentInit()
     {
+        $school_id = app('request')->get('sid');
         $structure = new StructureItem();
-        $school_item = new SchoolItem();
+        $structure->init(array(
+            'school_id' => $school_id,
+        ));
+        $school_item = new SchoolItem(
+            array(
+                'id' => $school_id,
+            )
+        );
         $course = $structure->getCourse();
-        $school = $school_item->getSchool();
-        $classes = $school_item->getAllClasses();
+        $school = $school_item->getOneSchool();
+        $classes = $school_item->getClasses();
         $list = $structure->getCourseStudent();
         $return = array(
             'status' => true,
             'msg' => '',
             'data' => array(
                 'course' => $course['data'],
-                'school' => $school['data'],
+                'school_data' => $school['data'],
                 'classes' => $classes['data'],
                 'list' => $list['data'],
+                'area_data' => config('area'),
             ),
         );
 
