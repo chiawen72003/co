@@ -11,7 +11,8 @@
                     <label class="i-label" id="school_area">區域</label>
                     <label class="i-label" id="school_code">學校代碼</label>
                     <label class="i-label" id="school_name">學校名稱</label>
-                    <br>
+                </div>
+                <div class="form-group">
                     <label class="i-label">學年度</label>
                     <input type="text" class="i-input" id="school_year">
                     <label class="i-label">學期</label>
@@ -21,10 +22,11 @@
                     </select>
                     <label class="i-label">課程名稱</label>
                     <input type="text" class="i-input" id="course_title">
-                <button type="button" class="i-btn i-btn-primary" onclick="addCourse()">
-                    <i class="ion-android-add"></i>
-                    新增
-                </button>
+                    <button type="button" class="i-btn i-btn-primary" onclick="addCourse()">
+                        <i class="ion-android-add"></i>
+                        新增
+                    </button>
+                </div>
                 </div>
             </form>
         </div>
