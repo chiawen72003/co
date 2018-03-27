@@ -237,7 +237,7 @@ Route::group(['middleware' => 'SchoolMenCheck'], function () {
 
     //修改個人資訊
     Route::get('/Sm/User', ['as' => 'sm.user', 'uses' => 'SmController@User']);
-    Route::get('/Sm/User/Data', ['as' => 'smuser.data', 'uses' => 'SmController@UserData']);
+    Route::get('/Sm/User/Data', ['as' => 'sm.user.data', 'uses' => 'SmController@UserData']);
     Route::post('/Sm/User/Update', ['as' => 'sm.user.update', 'uses' => 'SmController@UserUpdate']);
 
     //管理員 作答結果查詢設定
