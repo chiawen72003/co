@@ -3,7 +3,7 @@
 namespace App\Http\Providers;
 
 use App\Http\Models\CourseReel;
-use App\Http\Models\CourseStudent;
+use App\Http\Models\CourseClasses;
 use App\Http\Models\UnitStructure;
 use App\Http\Models\Course;
 use App\Http\Models\Reel;
@@ -436,7 +436,7 @@ class StructureItem
     public function getCourseStudent()
     {
         $return_data = array();
-        $temp_obj = CourseStudent::select('id','course_id', 'school_id', 'classes_id');
+        $temp_obj = CourseClasses::select('id','course_id', 'school_id', 'classes_id');
         if(isset($this->input_array['school_id']))
         {
             $temp_obj = $temp_obj->where('school_id',$this->input_array['school_id']);
@@ -464,7 +464,7 @@ class StructureItem
      */
     public function addCourseStudent()
     {
-        $update = new CourseStudent();
+        $update = new CourseClasses();
         $update->course_id = $this->input_array['course_id'];
         $update->school_id = $this->input_array['school_id'];
         $update->classes_id = $this->input_array['classes_id'];

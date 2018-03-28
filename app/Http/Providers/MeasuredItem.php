@@ -2,7 +2,7 @@
 
 namespace App\Http\Providers;
 
-use App\Http\Models\CourseStudent;
+use App\Http\Models\CourseClasses;
 use App\Http\Models\ListUnderTest;
 use App\Http\Models\Questions;
 use App\Http\Models\Reel;
@@ -51,7 +51,7 @@ class MeasuredItem
             $not_in[] = $v['reel_id'];
         }
 
-        $temp_obj = CourseStudent::where('course_student.classes_id', $this->init['classes_id'])
+        $temp_obj = CourseClasses::where('course_student.classes_id', $this->init['classes_id'])
             ->leftJoin('course', 'course.id', '=', 'course_student.course_id')
             ->select(
                 'course.reel_id'
