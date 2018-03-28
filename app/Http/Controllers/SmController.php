@@ -418,7 +418,7 @@ class SmController extends Controller
         $user = new UserItem();
         $user->init(array('user_id' => $this->data['user_id']));
 
-        echo json_encode($user->getAdmin());
+        echo json_encode($user->getSchoolMan());
     }
 
     /**
@@ -434,7 +434,7 @@ class SmController extends Controller
         $t_obj = new UserItem();
         $t_obj->init($data);
 
-        echo json_encode($t_obj->setAdminPw());
+        echo json_encode($t_obj->setSchoolManPw());
     }
 
 
