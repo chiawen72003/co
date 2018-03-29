@@ -427,11 +427,14 @@
         $('#add_div').hide();
         $('#list_div').hide();
         for(var x=0;x<student_item.length;x++){
-           $('#up_school_name').val(student_item[x]['school_title']);
-           $('#up_login_name').val(student_item[x]['login_name']);
-           $('#up_login_pw').val(student_item[x]['login_pw']);
-           $('#up_name').val(student_item[x]['name']);
-           $('#up_student_id').val(student_item[x]['student_id']);
+            if(student_item[x]['id'] == u_id)
+            {
+                $('#up_school_name').val(student_item[x]['school_title']);
+                $('#up_login_name').val(student_item[x]['login_name']);
+                $('#up_login_pw').val(student_item[x]['login_pw']);
+                $('#up_name').val(student_item[x]['name']);
+                $('#up_student_id').val(student_item[x]['student_id']);
+            }
         }
         update_id = u_id;
     }
