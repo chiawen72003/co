@@ -49,7 +49,7 @@
                         <ul class="mainnav-sub">
                             <li id="li_course"><a href="[! route('sm.course') !]">新增課程</a></li>
                             <li id="li_course_student"><a href="[! route('sm.course.student') !]">課程與班級對應</a></li>
-                            <li id="li_course_reel"><a href="[! route('sm.course.reel') !]">課程與試卷存取控制</a></li>
+                            <li id="li_course_reel"><a href="[! route('sm.course.reel') !]">課程與班級存取控制</a></li>
                         </ul>
                     </li>
                     <li id="li_reel_analysis">
