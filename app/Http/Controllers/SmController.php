@@ -333,19 +333,23 @@ class SmController extends Controller
     public function CourseReelInit()
     {
         $structure = new StructureItem();
+        $classes_obj = new SchoolItem(array(
+            'id' => $this->data['school_id']
+        ));
         $structure->init(array(
             'school_id' => $this->data['school_id'],
         ));
         $course = $structure->getCourse();
         $reel = $structure->getReel();
         $list = $structure->getCourseReel();
-
+        $classes = $classes_obj->getClasses();
         $return = array(
             'status' => true,
             'msg' => '',
             'data' => array(
                 'course' => $course['data'],
                 'reel' => $reel['data'],
+                'classes' => $classes['data'],
                 'list' => $list['data'],
             ),
         );
@@ -376,6 +380,9 @@ class SmController extends Controller
         $data = array();
         $data['course_id'] = app('request')->get('course_id');
         $data['reel_id'] = app('request')->get('reel_id');
+        $data['sw_class'] = app('request')->get('sw_class');
+        $data['test_time'] = app('request')->get('test_time');
+        $data['school_id'] = $this->data['school_id'];
         $t_obj = new StructureItem();
         $t_obj->init($data);
         echo json_encode($t_obj->addCourseReel());
@@ -391,6 +398,8 @@ class SmController extends Controller
         $data = array();
         $data['reel_id'] = app('request')->get('reel_id');
         $data['course_id'] = app('request')->get('course_id');
+        $data['classes_id'] = app('request')->get('classes_id');
+        $data['school_id'] = $this->data['school_id'];
         $t_obj = new StructureItem();
         $t_obj->init($data);
         echo json_encode($t_obj->unsetCourseReel());

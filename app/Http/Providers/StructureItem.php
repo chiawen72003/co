@@ -357,7 +357,7 @@ class StructureItem
     public function getCourseReel()
     {
         $return_data = array();
-        $temp_obj = Course::select('id', 'reel_id');
+        $temp_obj = CourseClasses::select('id', 'reel_id', 'classes_id', 'reel_times', 'course_id');
         if(isset($this->input_array['school_id']))
         {
             $temp_obj = $temp_obj->where('school_id', $this->input_array['school_id']);
@@ -365,11 +365,14 @@ class StructureItem
         $temp_obj = $temp_obj->get();
         foreach($temp_obj as $v ){
             $data = json_decode($v['reel_id'],true);
-            foreach ($data as $reel_id){
+            $test_time = json_decode($v['reel_times'],true);
+            foreach ($data as $key => $reel_id){
                 $return_data[] = array(
                     'id'=>$reel_id,
-                    'course_id'=>$v['id'],
+                    'course_id'=>$v['course_id'],
+                    'classes_id'=>$v['classes_id'],
                     'reel_id'=>$reel_id,
+                    'test_time'=>$test_time[$key],
                 );
             }
         }
@@ -389,14 +392,39 @@ class StructureItem
      */
     public function addCourseReel()
     {
-        $update = Course::where('id',$this->input_array['course_id'])
-        ->get();
-        foreach ($update as $v){
-            $t = json_decode($v['reel_id'],true);
-            $t[] = $this->input_array['reel_id'];
-            $v['reel_id'] = json_encode($t);
-            $v->save();
+        $update = CourseClasses::where('school_id',$this->input_array['school_id'])
+            ->where('course_id',$this->input_array['course_id'])
+            ->where('classes_id',$this->input_array['sw_class'])
+            ->get();
+        if(count($update) > 0){
+            foreach ($update as $v){
+                $reels = json_decode($v['reel_id'],true);
+                $test_time = json_decode($v['reel_times'],true);
+                //如果已經有試卷資料時，只更新測驗時間
+                if(in_array($this->input_array['reel_id'],$reels)){
+                    foreach ($reels as $k => $y){
+                        if($y == $this->input_array['reel_id']){
+                            $test_time[$k] = $this->input_array['test_time'];
+                        }
+                    }
+                }else{
+                    $reels[] = $this->input_array['reel_id'];
+                    $test_time[] = $this->input_array['test_time'];
+                }
+                $v['reel_id'] = json_encode($reels);
+                $v['reel_times'] = json_encode($test_time);
+                $v->save();
+            }
+        }else{
+            $update = new CourseClasses();
+            $update->course_id = $this->input_array['course_id'];
+            $update->school_id = $this->input_array['school_id'];
+            $update->classes_id = $this->input_array['sw_class'];
+            $update->reel_id = json_encode(array($this->input_array['reel_id']));
+            $update->reel_times = json_encode(array($this->input_array['test_time']));
+            $update->save();
         }
+
         $this->msg = array(
             'status' => true,
             'msg' => '新增成功!',
@@ -412,14 +440,19 @@ class StructureItem
      */
     public function unsetCourseReel()
     {
-        $t = Course::where('id', $this->input_array['course_id'])
+        $t = CourseClasses::where('school_id',$this->input_array['school_id'])
+            ->where('course_id',$this->input_array['course_id'])
+            ->where('classes_id',$this->input_array['classes_id'])
             ->get();
         foreach ($t as $v){
             $reel_ids = json_decode($v['reel_id'],true);
+            $test_times = json_decode($v['reel_times'],true);
             if (($key = array_search($this->input_array['reel_id'], $reel_ids)) !== false) {
                 unset($reel_ids[$key]);
+                unset($test_times[$key]);
             }
             $v['reel_id'] = json_encode(array_values($reel_ids));
+            $v['reel_times'] = json_encode(array_values($test_times));
             $v->save();
         }
         $this->msg = array(
