@@ -254,6 +254,22 @@ class AdController extends Controller
     }
 
     /**
+     * 刪除課程的資料
+     *
+     *
+     */
+    public function CourseDel()
+    {
+        $data = array();
+        $data['course_id'] = app('request')->get('course_id');
+        $data['school_id'] = app('request')->get('school_id');
+        $t_obj = new StructureItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->deleteCourse());
+    }
+
+    /**
      * 課程-試卷對應設定
      *
      *

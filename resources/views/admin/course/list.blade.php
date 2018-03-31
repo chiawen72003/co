@@ -46,6 +46,9 @@
                         <th>
                             <div class="cell">課程名稱</div>
                         </th>
+                        <th>
+                            <div class="cell">功能</div>
+                        </th>
                     </tr>
                     <!--  -->
                 </table>
@@ -58,6 +61,11 @@
         <td><div class="cell center" id="year_area"></div></td>
         <td><div class="cell center"  id="semester_area"></div></td>
         <td><div class="cell"  id="name_area"></div></td>
+        <td>
+            <div class="cell" >
+                <a class="i-link" id="a_del"><i class="ion-trash-a"></i>移除</a>
+            </div>
+        </td>
     </tr>
 </table>
 [! Html::script('js/jquery-1.11.3.js') !]
@@ -146,6 +154,7 @@
             t.find('#year_area').html(course_item[x]['school_year']).removeAttr('id');
             t.find('#semester_area').html(s).removeAttr('id');
             t.find('#name_area').html(course_item[x]['course_title']).removeAttr('id');
+            t.find('#a_del').attr('onclick','unset("'+course_item[x]['id']+'")').removeAttr('id');
             t.removeAttr('id');
             list_item.append(t);
         }
@@ -179,7 +188,7 @@
                                 'course_title':response['course_title']
                             }
                         );
-                        addList(response['school_year'],response['semester'],response['course_title']);
+                        addList(response['school_year'],response['semester'],response['course_title'],response['id']);
                         alert(response['msg']);
                     }
                     isSend = false;
@@ -190,12 +199,13 @@
         }
     }
 
-    function addList(year,semester,title) {
+    function addList(year,semester,title,id) {
         var t = tr_item.clone();
         var s = $("#semester option[value="+ semester +"]").text();
         t.find('#year_area').html(year).removeAttr('id');
         t.find('#semester_area').html(s).removeAttr('id');
         t.find('#name_area').html(title).removeAttr('id');
+        t.find('#a_del').attr('onclick','unset("'+id+'")').removeAttr('id');
         t.removeAttr('id');
         list_item.append(t);
     }
@@ -204,6 +214,29 @@
         $('#school_year').val('');
         $('#semester').val(1);
         $('#course_title').val('');
+    }
+
+    //刪除課程
+    function unset(courseid) {
+        $.ajax({
+            url: "[! route('ma.course.del') !]",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                _token: '[! csrf_token() !]',
+                course_id: courseid,
+                school_id:'[! $school_id !]',
+            },
+            error: function (xhr) {
+                //alert('Ajax request 發生錯誤');
+            },
+            success: function (response) {
+                if(response['status'] == true){
+                    alert(response['msg']);
+                }
+                location.reload();
+            }
+        });
     }
 </script>
 @stop

@@ -52,6 +52,7 @@ Route::group(['middleware' => 'AdSessionCheck'], function () {
     Route::get('/Ma/Course/page', ['as' => 'ma.course.page', 'uses' => 'AdController@CoursePage']);
     Route::get('/Ma/Course/list', ['as' => 'ma.course.list', 'uses' => 'AdController@CourseList']);
     Route::post('/Ma/Course/Add', ['as' => 'ma.course.add', 'uses' => 'AdController@CourseAdd']);
+    Route::post('/Ma/Course/Del', ['as' => 'ma.course.del', 'uses' => 'AdController@CourseDel']);
 
     //管理員 課程設定 課程與班級對應
     Route::get('/Ma/Course/Student', ['as' => 'ma.course.student', 'uses' => 'AdController@CourseStudent']);
@@ -207,6 +208,7 @@ Route::group(['middleware' => 'SchoolMenCheck'], function () {
     Route::get('/Sm/Course', ['as' => 'sm.course', 'uses' => 'SmController@Course']);
     Route::get('/Sm/Course/list', ['as' => 'sm.course.list', 'uses' => 'SmController@CourseList']);
     Route::post('/Sm/Course/Add', ['as' => 'sm.course.add', 'uses' => 'SmController@CourseAdd']);
+    Route::post('/Sm/Course/Del', ['as' => 'sm.course.del', 'uses' => 'SmController@CourseDel']);
 
     //學校-班級
     Route::get('/Sm/Classes/', ['as' => 'sm.classes', 'uses' => 'SmController@Classes']);

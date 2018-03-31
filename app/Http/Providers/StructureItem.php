@@ -4,6 +4,7 @@ namespace App\Http\Providers;
 
 use App\Http\Models\CourseReel;
 use App\Http\Models\CourseClasses;
+use App\Http\Models\ListUnderTest;
 use App\Http\Models\UnitStructure;
 use App\Http\Models\Course;
 use App\Http\Models\Reel;
@@ -203,8 +204,18 @@ class StructureItem
      */
     public function deleteCourse()
     {
-        if (isset($this->input_array['id'])) {
-            Course::destroy($this->input_array['id']);
+        if (isset($this->input_array['course_id'])
+            && isset($this->input_array['school_id'])
+        ) {
+            Course::where('id',$this->input_array['course_id'])
+                ->where('school_id',$this->input_array['school_id'])
+                ->delete();
+            CourseClasses::where('course_id',$this->input_array['course_id'])
+                ->where('school_id',$this->input_array['school_id'])
+                ->delete();
+            ListUnderTest::where('course_id',$this->input_array['course_id'])
+                ->where('school_id',$this->input_array['school_id'])
+                ->delete();
             $this->msg = array(
                 'status' => true,
                 'msg' => '刪除成功!',
