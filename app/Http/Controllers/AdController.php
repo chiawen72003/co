@@ -270,9 +270,7 @@ class AdController extends Controller
     }
 
     /**
-     * 課程-試卷對應設定
-     *
-     *
+     * 試卷與班級存取控制 選擇學校頁面
      */
     public function CourseReel()
     {
@@ -281,22 +279,44 @@ class AdController extends Controller
     }
 
     /**
+     * 試卷與班級存取控制 設定頁面
+     */
+    public function CourseReelPage()
+    {
+
+        $this->data['school_id'] = app('request')->get('s_id');
+
+        return view('admin.course.reel.list', $this->data);
+    }
+
+    /**
      * 課程與試卷對應 初始化資料
      */
     public function CourseReelInit()
     {
         $structure = new StructureItem();
+        $classes_obj = new SchoolItem(array(
+            'id' => app('request')->get('school_id')
+        ));
+        $structure->init(array(
+            'school_id' => app('request')->get('school_id'),
+        ));
+
         $course = $structure->getCourse();
         $reel = $structure->getReel();
         $list = $structure->getCourseReel();
-
+        $classes = $classes_obj->getClasses();
+        $school = $classes_obj->getOneSchool();
         $return = array(
             'status' => true,
             'msg' => '',
             'data' => array(
                 'course' => $course['data'],
                 'reel' => $reel['data'],
+                'classes' => $classes['data'],
                 'list' => $list['data'],
+                'school_data' => $school['data'],
+                'area_data' => config('area'),
             ),
         );
 
@@ -309,22 +329,27 @@ class AdController extends Controller
     public function CourseReelList()
     {
         $school = new StructureItem();
+        $school->init(array(
+            'school_id' => app('request')->get('school_id'),
+        ));
 
         echo json_encode($school->getCourseReel());
     }
 
     /**
      * 新增課程-試卷對應的資料
-     *
-     *
      */
     public function CourseReelAdd()
     {
         $data = array();
         $data['course_id'] = app('request')->get('course_id');
         $data['reel_id'] = app('request')->get('reel_id');
+        $data['sw_class'] = app('request')->get('sw_class');
+        $data['test_time'] = app('request')->get('test_time');
+        $data['school_id'] = app('request')->get('school_id');
         $t_obj = new StructureItem();
         $t_obj->init($data);
+
         echo json_encode($t_obj->addCourseReel());
     }
 
@@ -338,6 +363,8 @@ class AdController extends Controller
         $data = array();
         $data['reel_id'] = app('request')->get('reel_id');
         $data['course_id'] = app('request')->get('course_id');
+        $data['classes_id'] = app('request')->get('classes_id');
+        $data['school_id'] = app('request')->get('school_id');
         $t_obj = new StructureItem();
         $t_obj->init($data);
         echo json_encode($t_obj->unsetCourseReel());
