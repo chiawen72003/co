@@ -23,7 +23,7 @@
                         功能列表
                     </div>
                     <ul class="bigLink-list mt1 clearfix">
-                        <li><a href="[! route('ur.reel') !]">參加測驗</a></li>
+                        <li><a href="[! route('ur.reel.edit') !]">參加測驗</a></li>
                         <li><a href="[! route('ur.score') !]">成果查詢</a></li>
                     </ul>
                 </div>
