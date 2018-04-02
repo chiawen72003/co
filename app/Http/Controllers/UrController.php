@@ -19,6 +19,10 @@ class UrController extends Controller
     {
         $this->data['user_name'] = app('request')->session()->get('name');
         $this->data['user_id'] = app('request')->session()->get('user_id');
+        $this->data['classes_id'] = app('request')->session()->get('classes_id');
+        $this->data['school_id'] = app('request')->session()->get('school_id');
+        $this->data['student_id'] = app('request')->session()->get('student_id');
+        $this->data['school_title'] = app('request')->session()->get('school_title');
     }
 
     /**
@@ -83,6 +87,7 @@ class UrController extends Controller
         $data = array();
         $data['user_id'] = $this->data['user_id'];
         $data['classes_id'] = app('request')->session()->get('classes_id');
+        $data['school_id'] = app('request')->session()->get('school_id');
         $reel = new MeasuredItem();
         $reel->init($data);
 
@@ -91,15 +96,15 @@ class UrController extends Controller
 
 
     /**
-     * 試卷 填寫頁面
+     * 試卷 填寫頁面 每次載入時由系統自動給予試卷id
      */
-    public function ReelEdit($id)
+    public function ReelEdit()
     {
-        $this->data['id'] = $id;
-        $this->data['user_name'] = app('request')->session()->get('name');
-        $this->data['user_id'] = app('request')->session()->get('user_id');
-        $this->data['student_id'] = app('request')->session()->get('student_id');
-        $this->data['school_title'] = app('request')->session()->get('school_title');
+        $reel = new MeasuredItem();
+        $reel->init($this->data);
+        $reel_datas = $reel->getMeasured();//試卷id跟受測時間
+        $this->data['id'] = $reel_datas['reel_id'];
+        $this->data['test_times'] = $reel_datas['times'];
 
         return view('user.reel.edit', $this->data);
     }

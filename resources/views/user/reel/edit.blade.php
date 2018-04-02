@@ -244,6 +244,8 @@
         var obj_3 = $('#obj_3');//輸入區模組3
         var obj_4 = $('#obj_4');//輸入區模組4
         var test_area = $('#test_area');
+        var cont_down_times = [! $test_times !];
+
         $( document ).ready(function() {
             getData();
         });
@@ -284,6 +286,10 @@
                         }
                     }
                     setList();
+                    //判斷是否需要倒數
+                    if(cont_down_times > 0){
+
+                    }
                 }
             });
         }
@@ -445,7 +451,7 @@
                     success: function(response) {
                         if(response['status'] == true){
                             alert(response['msg']);
-                            location.replace("[! route('ur.reel') !]");
+                            location.replace("[! route('ur.index') !]");
                         }
                     }
                 });

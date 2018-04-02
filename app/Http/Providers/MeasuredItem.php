@@ -39,60 +39,53 @@ class MeasuredItem
      */
     public function getMeasured()
     {
-        $return_data = array();
-        $not_in = array();
-        $has_in = array();
+        $return_data = array(
+            'reel_id' => null,
+            'times' => 0
+        );
+        $has_tests = array();
+        //取得各單元內有受測過的試卷資料
         $temp_obj = ListUnderTest::where('user_id', $this->init['user_id'])
+            ->where('school_id', $this->init['school_id'])
             ->select(
-                'reel_id'
+                'reel_id', 'course_id'
             )
             ->get();
         foreach ($temp_obj as $v) {
-            $not_in[] = $v['reel_id'];
+            $has_tests[$v['course_id']][] = $v['reel_id'];
         }
-
-        $temp_obj = CourseClasses::where('course_student.classes_id', $this->init['classes_id'])
-            ->leftJoin('course', 'course.id', '=', 'course_student.course_id')
+        //找出設定需要受測的課程與試卷資料
+        $temp_obj = CourseClasses::where('classes_id', $this->init['classes_id'])
+            ->where('school_id', $this->init['school_id'])
             ->select(
-                'course.reel_id'
+                'reel_id', 'course_id', 'reel_times'
             )
             ->get();
         foreach ($temp_obj as $v) {
-            $t = json_decode($v->reel_id, true);
-            if (is_array($t)) {
-                foreach ($t as $reel_id) {
-                    if (!in_array($reel_id, $not_in)) {
-                        $has_in[] = $reel_id;
+            $reel_ids = json_decode($v->reel_id, true);
+            $test_times = json_decode($v->reel_times, true);
+            foreach ($reel_ids as $k => $reel_id) {
+                if (!isset($has_tests[$v->course_id])) {
+                    if (is_null($return_data['reel_id'])) {
+                        $return_data['reel_id'] = $reel_id;
+                        $return_data['times'] = $test_times[$k];
+                    }
+                } else {
+                    if (!in_array($reel_id, $has_tests[$v->course_id])
+                        && is_null($return_data['reel_id'])
+                    ) {
+                        $return_data['reel_id'] = $reel_id;
+                        $return_data['times'] = $test_times[$k];
                     }
                 }
             }
         }
-        if (count($has_in) > 0) {
-            $temp_obj = Reel::whereIn('id', $has_in)
-                ->select(
-                    'id',
-                    'reel_title'
-                )
-                ->get();
-            foreach ($temp_obj as $v) {
-                $return_data[] = array(
-                    'path' => route('ur.reel.edit', array($v->id)),
-                    'reel_title' => $v->reel_title,
-                );
-            }
-        }
 
-        $this->msg = array(
-            'status' => true,
-            'msg' => '',
-            'data' => $return_data,
-        );
-
-        return $this->msg;
+    return $return_data;
     }
 
     /**
-     * 回傳指定試卷內所有試題資料
+    * 回傳指定試卷內所有試題資料
      *
      */
     public function getReelQuation()
@@ -428,31 +421,31 @@ class MeasuredItem
                 'title' => $v->reel_title,
                 'date' => substr($date, 0, 16),
             );
-            if($v->review_1 !=''){
+            if ($v->review_1 != '') {
                 $t = json_decode($v->review_1, true);
                 $t_array['total'] += $t['total_score'];
-                foreach($t['view_data'] as $k => $data){
-                    if(!isset($t_array['scores'][$k])){
+                foreach ($t['view_data'] as $k => $data) {
+                    if (!isset($t_array['scores'][$k])) {
                         $t_array['scores'][$k] = $data['score'];
-                    }else{
+                    } else {
                         $t_array['scores'][$k] += $data['score'];
                     }
                 }
             }
-            if($v->review_2 !=''){
+            if ($v->review_2 != '') {
                 $t = json_decode($v->review_2, true);
                 $t_array['total'] += $t['total_score'];
-                foreach($t['view_data'] as $k => $data){
-                    if(!isset($t_array['scores'][$k])){
+                foreach ($t['view_data'] as $k => $data) {
+                    if (!isset($t_array['scores'][$k])) {
                         $t_array['scores'][$k] = $data['score'];
-                    }else{
+                    } else {
                         $t_array['scores'][$k] += $data['score'];
                     }
                 }
             }
 
             $t_array['scores'] = array_values($t_array['scores']);
-            $t_array['scores'] = implode(" ",$t_array['scores']);
+            $t_array['scores'] = implode(" ", $t_array['scores']);
             $return_data[] = $t_array;
         }
         $this->msg = array(
@@ -467,71 +460,72 @@ class MeasuredItem
     /**
      * 分析指定試卷的所有作答結果，取得能力指標相關統計資料
      */
-    public function getReelAnalys()
+    public
+    function getReelAnalys()
     {
-        $Analys =  array(
+        $Analys = array(
             '1' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '2' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '3' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '4' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '5' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '6' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '7' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
         );
         $t_array = array();
@@ -562,8 +556,8 @@ class MeasuredItem
             'review_1',
             'review_2'
         );
-        if(isset($this->init['school_id'])){
-            $temp_obj = $temp_obj->where('school_id',$this->init['school_id']);
+        if (isset($this->init['school_id'])) {
+            $temp_obj = $temp_obj->where('school_id', $this->init['school_id']);
         }
         $temp_obj = $temp_obj->where('reel_id', $this->init['reel_id'])
             ->where('has_test', 1)
@@ -571,17 +565,17 @@ class MeasuredItem
             ->get();
         foreach ($temp_obj as $v) {
             $json = array();
-            if($v['s_modify_id'] > 0){
+            if ($v['s_modify_id'] > 0) {
                 $json = json_decode($v['review_2'], true);
-            }else{
+            } else {
                 $json = json_decode($v['review_1'], true);
             }
-            if(isset($json['view_data'])){
-                foreach ($json['view_data'] as $key => $r){
+            if (isset($json['view_data'])) {
+                foreach ($json['view_data'] as $key => $r) {
                     $power_index = $t_array[$key];
-                    if($r['is_blank'] == 'true'){
+                    if ($r['is_blank'] == 'true') {
                         $Analys[$power_index]['blank']++;
-                    }else{
+                    } else {
                         $Analys[$power_index][$r['score']]++;
                     }
                 }
@@ -602,76 +596,77 @@ class MeasuredItem
     /**
      * 分析指定試卷的所有作答結果，取得能力指標相關統計資料，並轉換成Excel欄位格式
      */
-    public function getReelAnalysExcel()
+    public
+    function getReelAnalysExcel()
     {
-        $return  = array(
+        $return = array(
             'excel_data' => array(),
             'reel_name' => '',
         );
 
-        $Analys =  array(
+        $Analys = array(
             '1' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '2' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '3' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '4' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '5' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '6' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
             '7' => array(
-                'blank'=>0,
-                '0'=>0,
-                '1'=>0,
-                '2'=>0,
-                '3'=>0,
-                '4'=>0,
-                '5'=>0,
+                'blank' => 0,
+                '0' => 0,
+                '1' => 0,
+                '2' => 0,
+                '3' => 0,
+                '4' => 0,
+                '5' => 0,
             ),
         );
         $t_array = array();
@@ -707,17 +702,17 @@ class MeasuredItem
             ->get();
         foreach ($temp_obj as $v) {
             $json = array();
-            if($v['s_modify_id'] > 0){
+            if ($v['s_modify_id'] > 0) {
                 $json = json_decode($v['review_2'], true);
-            }else{
+            } else {
                 $json = json_decode($v['review_1'], true);
             }
-            if(isset($json['view_data'])){
-                foreach ($json['view_data'] as $key => $r){
+            if (isset($json['view_data'])) {
+                foreach ($json['view_data'] as $key => $r) {
                     $power_index = $t_array[$key];
-                    if($r['is_blank'] == 'true'){
+                    if ($r['is_blank'] == 'true') {
                         $Analys[$power_index]['blank']++;
-                    }else{
+                    } else {
                         $Analys[$power_index][$r['score']]++;
                     }
                 }
