@@ -4,7 +4,7 @@
         <div id="page-body" class="clearfix">
             <div class="time-wrap">
                 <div class="time">
-                    剩餘測驗時間: 59 分 57 秒
+                    剩餘測驗時間: <span id="left_min"></span> 分 <span id="left_sec"></span> 秒
                 </div>
             </div>
             <div class="chapter">
@@ -245,6 +245,9 @@
         var obj_4 = $('#obj_4');//輸入區模組4
         var test_area = $('#test_area');
         var cont_down_times = [! $test_times !];
+        var need_cont_down = [! ($test_times > 0)?'true':'false' !];
+        var left_min = $('#left_min');//倒數模組 時
+        var left_sec = $('#left_sec');//倒數模組 秒
 
         $( document ).ready(function() {
             getData();
@@ -287,8 +290,8 @@
                     }
                     setList();
                     //判斷是否需要倒數
-                    if(cont_down_times > 0){
-
+                    if(need_cont_down > 0){
+                        set_cont_down();
                     }
                 }
             });
@@ -455,6 +458,35 @@
                         }
                     }
                 });
+            }
+        }
+
+        //倒數計時
+        function set_cont_down()
+        {
+            cont_down_times = cont_down_times - 1;
+             if(cont_down_times == 0){
+                send_data();
+            }
+            if(cont_down_times > 0){
+                var t_left_min = parseInt(cont_down_times/60);
+                var t_left_sec = parseInt(cont_down_times%60);
+                if(t_left_min > 9){
+                    left_min.html(t_left_min);
+                }else if(t_left_min < 10 && t_left_min > 0){
+                    left_min.html('0'+t_left_min);
+                }else{
+                    left_min.html('00');
+                }
+                if(t_left_sec > 9){
+                    left_min.html(t_left_min);
+                }else if(t_left_sec < 10 && t_left_sec > 0){
+                    left_min.html('0'+t_left_min);
+                }else{
+                    left_min.html('00');
+                }
+
+                setTimeout("set_cont_down()",1000);
             }
         }
 
