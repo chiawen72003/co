@@ -270,6 +270,10 @@
                 },
                 success: function(response) {
                     if(response['status'] == true){
+                        if(response['data'].length == 0){
+                            alert('目前無試卷可測試!!');
+                            location.href="[! route('ur.index') !]";
+                        }
                         for(var x=0;x<response['data'].length;x++){
                             //先將所有試題內的小題都展開成物件資料
                             var temp_item = response['data'][x];
@@ -445,6 +449,7 @@
                     data: {
                         _token: '[! csrf_token() !]',
                         reel_id:'[! $id !]',
+                        course_id:'[! $course_id !]',
                         add_data:add_data,
                         questions_id:questions_id,
                     },
@@ -479,11 +484,11 @@
                     left_min.html('00');
                 }
                 if(t_left_sec > 9){
-                    left_min.html(t_left_min);
+                    left_sec.html(t_left_sec);
                 }else if(t_left_sec < 10 && t_left_sec > 0){
-                    left_min.html('0'+t_left_min);
+                    left_sec.html('0'+t_left_sec);
                 }else{
-                    left_min.html('00');
+                    left_sec.html('00');
                 }
 
                 setTimeout("set_cont_down()",1000);

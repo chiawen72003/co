@@ -105,6 +105,7 @@ class UrController extends Controller
         $reel_datas = $reel->getMeasured();//試卷id跟受測時間
         $this->data['id'] = $reel_datas['reel_id'];
         $this->data['test_times'] = $reel_datas['times'];
+        $this->data['course_id'] = $reel_datas['course_id'];
 
         return view('user.reel.edit', $this->data);
     }
@@ -132,8 +133,10 @@ class UrController extends Controller
         $data = array();
         $data['user_id'] = $this->data['user_id'];
         $data['reel_id'] = app('request')->get('reel_id');
+        $data['course_id'] = app('request')->get('course_id');
         $data['add_data'] = app('request')->get('add_data');
         $data['questions_id'] = app('request')->get('questions_id');
+        $data['school_id'] = app('request')->session()->get('school_id');
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 

@@ -41,6 +41,7 @@ class MeasuredItem
     {
         $return_data = array(
             'reel_id' => null,
+            'course_id' => 0,
             'times' => 0
         );
         $has_tests = array();
@@ -64,11 +65,13 @@ class MeasuredItem
         foreach ($temp_obj as $v) {
             $reel_ids = json_decode($v->reel_id, true);
             $test_times = json_decode($v->reel_times, true);
+            $course_id = $v->course_id;
             foreach ($reel_ids as $k => $reel_id) {
                 if (!isset($has_tests[$v->course_id])) {
                     if (is_null($return_data['reel_id'])) {
                         $return_data['reel_id'] = $reel_id;
                         $return_data['times'] = $test_times[$k];
+                        $return_data['course_id'] = $course_id;
                     }
                 } else {
                     if (!in_array($reel_id, $has_tests[$v->course_id])
@@ -76,6 +79,7 @@ class MeasuredItem
                     ) {
                         $return_data['reel_id'] = $reel_id;
                         $return_data['times'] = $test_times[$k];
+                        $return_data['course_id'] = $course_id;
                     }
                 }
             }
@@ -146,6 +150,8 @@ class MeasuredItem
             $temp_obj = new ListUnderTest();
             $temp_obj->user_id = $this->init['user_id'];
             $temp_obj->reel_id = $this->init['reel_id'];
+            $temp_obj->course_id = $this->init['course_id'];
+            $temp_obj->school_id = $this->init['school_id'];
             $temp_obj->questions_id = json_encode($this->init['questions_id']);
             $temp_obj->test_data = json_encode($this->init['add_data'], JSON_UNESCAPED_UNICODE);
             $temp_obj->has_test = 1;
