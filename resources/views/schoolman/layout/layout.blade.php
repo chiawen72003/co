@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="[! route('sm.score') !]">
                             <i class="mainnav-title-icon ion-ios-star"></i>
                             學生成績查詢
                         </a>
