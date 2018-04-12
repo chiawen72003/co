@@ -253,7 +253,7 @@ Route::group(['middleware' => 'SchoolMenCheck'], function () {
     //學生成績查詢
     Route::get('/Sm/Score', ['as' => 'sm.score', 'uses' => 'SmController@Score']);
     Route::get('/Sm/Score/Api', ['as' => 'sm.score.api', 'uses' => 'SmController@ScoreApi']);
-    Route::get('/Sm/Score/Init', ['as' => '！！', 'uses' => 'SmController@ScoreInit']);
+    Route::get('/Sm/Score/Init', ['as' => 'sm.score.init', 'uses' => 'SmController@ScoreInit']);
 });
 
 

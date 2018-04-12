@@ -517,12 +517,15 @@ class MeasuredItem
             $t_array['scores'] = array_values($t_array['scores']);
             $t_array['scores'] = implode(" ", $t_array['scores']);
             $return_data[$v->reel_id]['list'][] = $t_array;
-            $return_data[$v->reel_id]['title'][] = $v->reel_title;
+            $return_data[$v->reel_id]['title'] = $v->reel_title;
+            $return_data[$v->reel_id]['reel_id'] = $v->reel_id;
+            $return_data[$v->reel_id]['course_id'] = $this->init['course_id'];
+            $return_data[$v->reel_id]['classes_id'] = $this->init['classes_id'];
         }
         $this->msg = array(
             'status' => true,
             'msg' => '',
-            'data' => $return_data,
+            'data' => array_values($return_data),
         );
 
         return $this->msg;

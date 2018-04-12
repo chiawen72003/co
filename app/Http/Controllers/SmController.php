@@ -552,7 +552,7 @@ class SmController extends Controller
     public function Score()
     {
 
-        return view('user.score.index', $this->data);
+        return view('schoolman.score.index', $this->data);
     }
 
     /**
@@ -564,7 +564,7 @@ class SmController extends Controller
         $obj->init(array(
             'school_id' => $this->data['school_id'],
         ));
-        $course_data = $obj->getC！！ourse();
+        $course_data = $obj->getCourse();
         $course_classes = $obj->getCourseReel();
         $school = new SchoolItem(array(
             'id' => $this->data['school_id'],
@@ -596,8 +596,8 @@ class SmController extends Controller
     {
         $data = array();
         $data['school_id'] = $this->data['school_id'];
-        $data['course_id'] = $this->data['course_id'];
-        $data['classes_id'] = $this->data['classes_id'];
+        $data['course_id'] = app('request')->get('course_id');
+        $data['classes_id'] = app('request')->get('classes_id');
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 
