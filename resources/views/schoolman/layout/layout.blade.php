@@ -58,7 +58,7 @@
                             作答結果查詢
                         </a>
                     </li>
-                    <li>
+                    <li id="li_score">
                         <a href="[! route('sm.score') !]">
                             <i class="mainnav-title-icon ion-ios-star"></i>
                             學生成績查詢
