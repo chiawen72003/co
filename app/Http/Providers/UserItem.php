@@ -367,6 +367,35 @@ class UserItem
     }
 
     /**
+     * 取得 指定學校所有學生姓名資料
+     *
+     */
+    public function getAllStudentName()
+    {
+        $return_data = array();
+        $temp_obj = Student::where('student.school_id',$this->input_array['school_id'])
+            ->select(
+                'id',
+                'name'
+            )
+            ->get();
+        foreach($temp_obj as $v ){
+            $return_data[] = array(
+                'id' => $v['id'],
+                'name' => $v['name'],
+            );
+        }
+
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+    /**
      * 更新 受測試者密碼資料
      *
      */
