@@ -243,13 +243,17 @@ Route::group(['middleware' => 'SchoolMenCheck'], function () {
     Route::get('/Sm/User/Data', ['as' => 'sm.user.data', 'uses' => 'SmController@UserData']);
     Route::post('/Sm/User/Update', ['as' => 'sm.user.update', 'uses' => 'SmController@UserUpdate']);
 
-    //管理員 作答結果查詢設定
+    //作答結果查詢設定
     Route::get('/Sm/Analysis', ['as' => 'sm.analysis', 'uses' => 'SmController@Analysis']);
     Route::get('/Sm/Analysis/Init', ['as' => 'sm.analysis.init', 'uses' => 'SmController@AnalysisInit']);
     Route::get('/Sm/Analysis/List', ['as' => 'sm.analysis.list', 'uses' => 'SmController@AnalysisList']);
     Route::get('/Sm/Analysis/List/Init', ['as' => 'sm.analysis.list.init', 'uses' => 'SmController@AnalysisListInit']);
     Route::get('/Sm/Analysis/Download/Excel', ['as' => 'sm.analysis.download.excel', 'uses' => 'SmController@AnalysisDownloadExcel']);
 
+    //學生成績查詢
+    Route::get('/Sm/Score', ['as' => 'sm.score', 'uses' => 'SmController@Score']);
+    Route::get('/Sm/Score/Api', ['as' => 'sm.score.api', 'uses' => 'SmController@ScoreApi']);
+    Route::get('/Sm/Score/Init', ['as' => '！！', 'uses' => 'SmController@ScoreInit']);
 });
 
 

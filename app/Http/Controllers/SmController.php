@@ -545,4 +545,62 @@ class SmController extends Controller
         $excel_obj->set_excel_data($data['excel_data']);
         $excel_obj->get_reel_analysis_data();
     }
+
+    /**
+     * 學生成績查詢頁面
+     */
+    public function Score()
+    {
+
+        return view('user.score.index', $this->data);
+    }
+
+    /**
+     * 學生成績的初始化資料
+     */
+    public function ScoreInit()
+    {
+        $obj = new StructureItem();
+        $obj->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
+        $course_data = $obj->getC！！ourse();
+        $course_classes = $obj->getCourseReel();
+        $school = new SchoolItem(array(
+            'id' => $this->data['school_id'],
+        ));
+        $classses = $school->getClasses();
+        $t_obj = new UserItem();
+        $t_obj->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
+        $student_name = $t_obj->getAllStudentName();
+        $msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => array(
+                'course' => $course_data['data'],
+                'course_classes' => $course_classes['data'],
+                'classes' => $classses['data'],
+                'student' => $student_name['data'],
+            ),
+        );
+
+        echo json_encode($msg);
+    }
+
+    /**
+     * 學生成績的資料
+     */
+    public function ScoreApi()
+    {
+        $data = array();
+        $data['school_id'] = $this->data['school_id'];
+        $data['course_id'] = $this->data['course_id'];
+        $data['classes_id'] = $this->data['classes_id'];
+        $t_obj = new MeasuredItem();
+        $t_obj->init($data);
+
+        echo json_encode($t_obj->getCourseReelScore());
+    }
 }

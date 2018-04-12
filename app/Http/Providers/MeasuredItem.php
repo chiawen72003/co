@@ -463,6 +463,72 @@ class MeasuredItem
         return $this->msg;
     }
 
+
+    /**
+     * 取得 指定
+     */
+    public function getCourseReelScore()
+    {
+        $return_data = array();
+        $temp_obj = ListUnderTest::select(
+            'list_under_test.review_1',
+            'list_under_test.review_2',
+            'list_under_test.cp_review',
+            'list_under_test.user_id',
+            'list_under_test.created_at',
+            'list_under_test.reel_id',
+            'reel.reel_title'
+        )
+            ->leftJoin('reel', 'reel.id', '=', 'list_under_test.reel_id')
+            ->where('list_under_test.school_id', $this->init['school_id'])
+            ->where('list_under_test.course_id', $this->init['course_id'])
+            ->where('list_under_test.classes_id', $this->init['classes_id'])
+            ->orderBy('reel.reel_title', 'ASC')
+            ->get();
+        foreach ($temp_obj as $v) {
+            $t_array = array(
+                'total' => 0,
+                'scores' => array(),
+                'student_id' => $v->user_id,
+            );
+            if ($v->review_1 != '') {
+                $t = json_decode($v->review_1, true);
+                $t_array['total'] += $t['total_score'];
+                foreach ($t['view_data'] as $k => $data) {
+                    if (!isset($t_array['scores'][$k])) {
+                        $t_array['scores'][$k] = $data['score'];
+                    } else {
+                        $t_array['scores'][$k] += $data['score'];
+                    }
+                }
+            }
+            if ($v->review_2 != '') {
+                $t = json_decode($v->review_2, true);
+                $t_array['total'] += $t['total_score'];
+                foreach ($t['view_data'] as $k => $data) {
+                    if (!isset($t_array['scores'][$k])) {
+                        $t_array['scores'][$k] = $data['score'];
+                    } else {
+                        $t_array['scores'][$k] += $data['score'];
+                    }
+                }
+            }
+
+            $t_array['scores'] = array_values($t_array['scores']);
+            $t_array['scores'] = implode(" ", $t_array['scores']);
+            $return_data[$v->reel_id]['list'][] = $t_array;
+            $return_data[$v->reel_id]['title'][] = $v->reel_title;
+        }
+        $this->msg = array(
+            'status' => true,
+            'msg' => '',
+            'data' => $return_data,
+        );
+
+        return $this->msg;
+    }
+
+
     /**
      * 分析指定試卷的所有作答結果，取得能力指標相關統計資料
      */

@@ -178,8 +178,7 @@
                 if(unit_item[x]['id'] == unit_id){
                     unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).attr('selected', true).text(unit_item[x]['unit_title']));
                 }else{
-                    unit_sw_item.append($("<option></option>").attr("value", unit_item[x]['id']).text(unit_item[x]['unit_title']));
-                }
+！！                }
             }
         }
     }
