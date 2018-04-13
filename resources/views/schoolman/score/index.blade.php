@@ -60,8 +60,8 @@
                     </th>
                 </tr>
             </table>
-            <button type="button" class="i-btn" onclick="getListData()">
-                查詢
+            <button type="button" class="i-btn" id="get_excel_btn">
+                下載
             </button>
         </div>
     </div>
@@ -91,6 +91,8 @@
     var course_classes_data = [];
     var classes_data = [];
     var student_data = [];
+    //查詢資料
+    var option_year, option_course, option_classes;
     $( document ).ready(function() {
         setMenu('li_score', 'main_li_2');
         getInitData();
@@ -243,6 +245,9 @@
     function getListData() {
         if(school_year.val() != '' && semester.val() != '' && course.val() != '' && classes_id.val() != '')
         {
+            option_year = school_year.val();
+            option_course = course.val();
+            option_classes = classes_id.val();
             insert_area.html('');
             $.ajax({
                 url: "[! route('sm.score.api') !]",
@@ -261,10 +266,12 @@
                             var reel_data = response['data'][x];
                             var cp_div = copy_div_area.clone();
                             cp_div.find('#reel_title').append(reel_data['title']).removeAttr('id');
+                            cp_div.find('#get_excel_btn').attr('onclick','getExcel("'+option_year+'","'+option_course+'","'+option_classes+'","'+reel_data['reel_id']+'")').removeAttr('id');
                             for(y=0;y<reel_data['list'].length;y++){
                                 var data = reel_data['list'][y];
                                 var t = tr_item.clone();
-                                t.find('#name').html(data['student_id']).removeAttr('id');
+                                var student_name = getStudentName(data['student_id']);
+                                t.find('#name').html(student_name).removeAttr('id');
                                 t.find('#scores').html(data['scores']).removeAttr('id');
                                 t.find('#total').html(data['total']).removeAttr('id');
                                 t.removeAttr('id');
@@ -282,5 +289,30 @@
         }
     }
 
+    //查詢學生姓名
+    function getStudentName(s_id)
+    {
+        for(var x=0;x<student_data.length;x++)
+        {
+            if(s_id == student_data[x]['id']){
+
+                return student_data[x]['name'];
+            }
+        }
+
+        return '';
+    }
+
+    //下載成績excel資料
+    function getExcel(year,course_id,classes_id,reel_id)
+    {
+        var path = '[! route("sm.score.download.excel") !]';
+        path = path + '?year=' + year;
+        path = path + '?course_id=' + course_id;
+        path = path + '&classes_id=' + classes_id;
+        path = path + '&reel_id=' + reel_id;
+
+        window.open(path, '_blank');
+    }
 </script>
 @stop

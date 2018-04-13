@@ -89,4 +89,21 @@ class PhpExcel
         $writer = new Excel5($spreadsheet);
         $writer->save('php://output');
     }
+
+    /**
+     * 輸出 指定試題統計資料的excel檔
+     */
+    public function get_score_analysis_data()
+    {
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="' . $this->file_name . '"');
+        //外部讀取檔案
+        $spreadsheet = IOFactory::load(public_path().'\demo_file\score_analysis_demo.xls');
+        $sheet = $spreadsheet->getActiveSheet();
+        foreach ($this->excel_data as $k => $v) {
+            $sheet->setCellValue($k, $v);
+        }
+        $writer = new Excel5($spreadsheet);
+        $writer->save('php://output');
+    }
 }

@@ -582,7 +582,7 @@ class SmController extends Controller
                 'course' => $course_data['data'],
                 'course_classes' => $course_classes['data'],
                 'classes' => $classses['data'],
-                'student' => $student_name['data'],
+                'student' => array_values($student_name['data']),
             ),
         );
 
@@ -602,5 +602,36 @@ class SmController extends Controller
         $t_obj->init($data);
 
         echo json_encode($t_obj->getCourseReelScore());
+    }
+
+    /**
+     * 下載指定課程跟班級內，指定試卷的excel檔
+     */
+    public function ScoreDownloadExcel()
+    {
+        //取出學生資料
+        $t_obj = new UserItem();
+        $t_obj->init(array(
+            'school_id' => $this->data['school_id'],
+        ));
+        $student_name = $t_obj->getAllStudentName();
+
+        $t_obj = new MeasuredItem();
+        $year = app('request')->get('year');
+        $t_obj->init(array(
+            'school_id' => $this->data['school_id'],
+            'course_id' => app('request')->get('course_id'),
+            'classes_id' => app('request')->get('classes_id'),
+            'reel_id' => app('request')->get('reel_id'),
+            'students' => $student_name['data'],
+        ));
+        $data = $t_obj->getScoreAnalysExcel();
+
+        $file_name = $year.'_'.$data['reel_name'];
+        $file_name .= '.xls';
+        $excel_obj = new PhpExcel();
+        $excel_obj->set_file_name($file_name);
+        $excel_obj->set_excel_data($data['excel_data']);
+        $excel_obj->get_score_analysis_data();
     }
 }
