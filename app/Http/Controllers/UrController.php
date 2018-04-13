@@ -137,6 +137,7 @@ class UrController extends Controller
         $data['add_data'] = app('request')->get('add_data');
         $data['questions_id'] = app('request')->get('questions_id');
         $data['school_id'] = app('request')->session()->get('school_id');
+        $data['classes_id'] = $this->data['classes_id'];
         $t_obj = new MeasuredItem();
         $t_obj->init($data);
 

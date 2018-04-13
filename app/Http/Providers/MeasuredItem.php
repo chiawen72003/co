@@ -152,6 +152,7 @@ class MeasuredItem
             $temp_obj->reel_id = $this->init['reel_id'];
             $temp_obj->course_id = $this->init['course_id'];
             $temp_obj->school_id = $this->init['school_id'];
+            $temp_obj->classes_id = $this->init['classes_id'];
             $temp_obj->questions_id = json_encode($this->init['questions_id']);
             $temp_obj->test_data = json_encode($this->init['add_data'], JSON_UNESCAPED_UNICODE);
             $temp_obj->has_test = 1;
