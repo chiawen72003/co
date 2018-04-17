@@ -195,6 +195,7 @@
                         setCourse();
                         setReel();
                         setSchoolData();
+                        setClassName();
                         setList();
                     }
                 }

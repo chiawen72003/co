@@ -512,6 +512,8 @@ class StructureItem
         $update->course_id = $this->input_array['course_id'];
         $update->school_id = $this->input_array['school_id'];
         $update->classes_id = $this->input_array['classes_id'];
+        $update->reel_id = '[]';
+        $update->reel_times = '[]';
         $update->save();
         $getID  = $update->id;
         $this->msg = array(
